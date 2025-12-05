@@ -25,7 +25,7 @@ export default function PasswordGate({ onAuthenticated }) {
             {/* Subtle gradient background */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-black pointer-events-none"></div>
             
-            <div className="relative z-10 flex flex-col items-center max-w-md w-full">
+            <div className="relative z-10 flex flex-col items-center">
                 {/* Lock Icon */}
                 <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8">
                     <Lock size={32} className="text-purple-400" />
@@ -39,7 +39,7 @@ export default function PasswordGate({ onAuthenticated }) {
                 </p>
 
                 {/* Password Form */}
-                <form onSubmit={handleSubmit} className="w-full">
+                <form onSubmit={handleSubmit} className="flex flex-col items-center">
                     <div className={`relative mb-4 ${isShaking ? 'animate-shake' : ''}`}>
                         <input
                             type="password"
@@ -49,7 +49,7 @@ export default function PasswordGate({ onAuthenticated }) {
                                 setError(false);
                             }}
                             placeholder="Enter password"
-                            className={`w-full px-6 py-4 rounded-full bg-white/5 border ${error ? 'border-red-500' : 'border-white/10'} text-white placeholder-zinc-500 focus:outline-none focus:border-purple-500 transition-colors text-center text-lg`}
+                            className={`w-64 px-6 py-4 rounded-full bg-white/5 border ${error ? 'border-red-500' : 'border-white/10'} text-white placeholder-zinc-500 focus:outline-none focus:border-purple-500 transition-colors text-center text-lg`}
                             autoFocus
                         />
                     </div>
@@ -62,7 +62,7 @@ export default function PasswordGate({ onAuthenticated }) {
 
                     <button
                         type="submit"
-                        className="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-full bg-white text-black font-semibold hover:bg-purple-200 transition-all duration-300 text-lg"
+                        className="flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-white text-black font-semibold hover:bg-purple-200 transition-all duration-300 text-lg"
                     >
                         <span>Enter Site</span>
                         <ArrowRight size={20} />

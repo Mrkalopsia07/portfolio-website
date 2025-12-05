@@ -8,7 +8,6 @@ import BrandTicker from './components/BrandTicker';
 import BackgroundScene from './components/BackgroundScene';
 import FadeIn from './components/FadeIn';
 import Navbar from './components/Navbar';
-import PasswordGate from './components/PasswordGate';
 import { ROLES, PROJECTS, SPOTLIGHT_MOMENTS } from './constants';
 
 class ErrorBoundary extends React.Component {
@@ -44,14 +43,6 @@ class ErrorBoundary extends React.Component {
 
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(() => {
-    return sessionStorage.getItem('kalopsia_authenticated') === 'true';
-  });
-
-  if (!isAuthenticated) {
-    return <PasswordGate onAuthenticated={() => setIsAuthenticated(true)} />;
-  }
-
   return (
     <ErrorBoundary>
       <AppContent />
@@ -67,6 +58,7 @@ function AppContent() {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [showReel, setShowReel] = useState(false);
   const [showPlayButton, setShowPlayButton] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
 
   const [text, setText] = useState('');
@@ -160,6 +152,16 @@ function AppContent() {
     requestAnimationFrame(updateProgress);
   }, []);
 
+  // Check mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia('(max-width: 768px)').matches);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   // Typewriter
   useEffect(() => {
     const handleTyping = () => {
@@ -183,7 +185,7 @@ function AppContent() {
   const textLeave = React.useCallback(() => setCursorVariant("default"), []);
 
   return (
-    <div className="text-white min-h-screen font-sans selection:bg-purple-500 selection:text-white overflow-x-hidden cursor-none relative">
+    <div className="text-white min-h-screen font-sans selection:bg-purple-500 selection:text-white overflow-x-hidden md:cursor-none cursor-auto relative">
 
       {/* Loader */}
       {showLoader && (
@@ -253,7 +255,7 @@ function AppContent() {
           background: 'linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.8) 12%, #000 15%, #000 100%)'
         }}></div>
         {/* HERO */}
-        <section ref={heroRef} className="relative z-10 h-screen flex flex-col items-center justify-center px-6 text-center">
+        <section ref={heroRef} className="relative z-10 min-h-[100dvh] flex flex-col items-center justify-center px-6 text-center py-24">
 
           {/* Role Badge */}
           <div className="flex flex-col items-center justify-center mb-5">
@@ -338,18 +340,28 @@ function AppContent() {
         <section className="py-16 px-6 relative z-20" id="work">
           <div className="max-w-7xl mx-auto">
             <FadeIn>
-              <div className="text-center mb-20"><h2 className="font-serif italic text-6xl mb-4">Featured Work</h2><p className="text-zinc-400 text-lg">A selection of projects that define my creative journey</p></div>
+              <div className="text-center mb-20"><h2 className="font-serif italic text-4xl md:text-6xl mb-4">Featured Work</h2><p className="text-zinc-400 text-lg">A selection of projects that define my creative journey</p></div>
             </FadeIn>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
               {PROJECTS.map((project, index) => (
                 <FadeIn key={index} delay={index * 100}>
-                  <div className="group flex flex-col gap-6 cursor-none" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                  <a href={project.link} className="group flex flex-col gap-6 cursor-none block" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                     <div className="relative aspect-[16/10] bg-zinc-900 rounded-2xl overflow-hidden transition-colors duration-500">
-                      <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0" />
-                      <video src={project.video} muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500" onMouseEnter={(e) => e.target.play()} onMouseLeave={(e) => { e.target.pause(); e.target.currentTime = 0; }} />
+                      <img src={project.image} alt={project.title} className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${isMobile ? 'opacity-0' : 'opacity-100 group-hover:opacity-0'}`} />
+                      <video
+                        src={project.video}
+                        muted
+                        loop
+                        playsInline
+                        preload="auto"
+                        autoPlay={isMobile}
+                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${isMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                        onMouseEnter={(e) => !isMobile && e.target.play()}
+                        onMouseLeave={(e) => !isMobile && e.target.pause()}
+                      />
                     </div>
                     <div className="flex flex-col px-2"><h3 className="text-2xl font-medium tracking-tight text-white mb-1 group-hover:text-purple-400 transition-colors duration-300" style={{ fontFamily: "'PT Serif', serif" }}>{project.title}</h3><p className="text-zinc-500 text-sm font-medium uppercase tracking-wide">{project.category}</p></div>
-                  </div>
+                  </a>
                 </FadeIn>
               ))}
             </div>
@@ -430,7 +442,7 @@ function AppContent() {
             </FadeIn>
             <div className="mt-12 md:mt-24 w-full relative">
               {/* Black background that extends full width */}
-              <div className="absolute bg-black -z-10" style={{ top: 0, bottom: '-100vh', left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw', width: '100vw' }}></div>
+              <div className="absolute bg-black -z-10" style={{ top: 0, bottom: 0, left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw', width: '100vw' }}></div>
               <div className="flex flex-col items-center md:flex-row md:justify-between border-t border-white/10 pt-6 md:pt-8 pb-6 md:pb-8 gap-6 md:gap-8">
                 <p className="text-zinc-500 text-xs md:text-sm uppercase tracking-widest order-last md:order-first">© 2025 Mr. Kalopsia. Eashan Misra.</p>
                 <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8">
