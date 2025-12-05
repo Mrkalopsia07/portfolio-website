@@ -11,7 +11,6 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
     const [duration, setDuration] = useState(0);
     const [isMuted, setIsMuted] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
-    const [showMobileModal, setShowMobileModal] = useState(false);
 
     // Check if mobile
     useEffect(() => {
@@ -38,29 +37,6 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
         }
     }, [showReel, isMobile]);
 
-    // Handle mobile modal
-    useEffect(() => {
-        if (showMobileModal && mobileVideoRef.current) {
-            mobileVideoRef.current.play();
-            setIsVideoPlaying(true);
-        } else if (!showMobileModal && mobileVideoRef.current) {
-            mobileVideoRef.current.pause();
-            mobileVideoRef.current.currentTime = 0;
-            setVideoProgress(0);
-            setCurrentTime(0);
-        }
-    }, [showMobileModal]);
-
-    // Lock scroll when mobile modal is open
-    useEffect(() => {
-        if (showMobileModal) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-        return () => { document.body.style.overflow = ''; };
-    }, [showMobileModal]);
-
     // Handle cursor state based on playing status
     useEffect(() => {
         if (showReel && isVideoPlaying) {
@@ -80,7 +56,28 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
 
     const handleVideoClick = () => {
         if (isMobile) {
-            setShowMobileModal(true);
+            if (mobileVideoRef.current) {
+                const video = mobileVideoRef.current;
+
+                // Native mobile behavior
+                video.controls = true;
+                video.removeAttribute('playsinline'); // Force fullscreen on iOS
+
+                // Play and attempt fullscreen
+                video.play().then(() => {
+                    if (video.requestFullscreen) {
+                        video.requestFullscreen();
+                    } else if (video.webkitRequestFullscreen) {
+                        video.webkitRequestFullscreen(); // iOS Safari / older WebKit
+                    } else if (video.mozRequestFullScreen) {
+                        video.mozRequestFullScreen(); // Firefox
+                    } else if (video.msRequestFullscreen) {
+                        video.msRequestFullscreen(); // IE/Edge
+                    } else if (video.webkitEnterFullscreen) {
+                        video.webkitEnterFullscreen(); // iOS native player
+                    }
+                }).catch(err => console.error("Video play failed:", err));
+            }
             return;
         }
 
@@ -98,11 +95,6 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
                 setCursorVariant('video');
             }
         }
-    };
-
-    const closeMobileModal = () => {
-        setShowMobileModal(false);
-        setIsVideoPlaying(false);
     };
 
     return (
@@ -182,34 +174,18 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
                 </div>
             </section>
 
-            {/* Mobile Fullscreen Modal */}
+            {/* Hidden Mobile Video Element */}
             {isMobile && (
-                <div
-                    className={`fixed inset-0 z-[200] bg-black transition-all duration-300 ${showMobileModal ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
-                >
-                    {/* Close Button - More prominent */}
-                    <button
-                        className="absolute top-4 right-4 z-[210] flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-semibold text-sm shadow-lg"
-                        onClick={closeMobileModal}
-                    >
-                        <X size={18} />
-                        Close
-                    </button>
-
-                    {/* Video Container */}
-                    <div className="h-full flex items-center justify-center p-4">
-                        <video
-                            ref={mobileVideoRef}
-                            src="/assets/showreel/showreel-full.mp4"
-                            className="w-full h-auto max-h-[85vh] object-contain rounded-xl"
-                            playsInline
-                            controls
-                            onTimeUpdate={(e) => { setCurrentTime(e.target.currentTime); setVideoProgress((e.target.currentTime / e.target.duration) * 100); }}
-                            onLoadedMetadata={(e) => setDuration(e.target.duration)}
-                            onEnded={closeMobileModal}
-                        />
-                    </div>
-                </div>
+                <video
+                    ref={mobileVideoRef}
+                    src="/assets/showreel/showreel-full.mp4"
+                    className="hidden" // Kept in DOM but invisible
+                    // No playsinline here to encourage automatic Fullscreen on iOS
+                    onEnded={() => {
+                        if (document.exitFullscreen) document.exitFullscreen();
+                        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                    }}
+                />
             )}
         </>
     );

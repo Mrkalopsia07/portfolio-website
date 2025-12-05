@@ -58,7 +58,6 @@ function AppContent() {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [showReel, setShowReel] = useState(false);
   const [showPlayButton, setShowPlayButton] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
 
   const [text, setText] = useState('');
@@ -150,16 +149,6 @@ function AppContent() {
     };
 
     requestAnimationFrame(updateProgress);
-  }, []);
-
-  // Check mobile
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.matchMedia('(max-width: 768px)').matches);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   // Typewriter
@@ -345,19 +334,37 @@ function AppContent() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
               {PROJECTS.map((project, index) => (
                 <FadeIn key={index} delay={index * 100}>
-                  <a href={project.link} className="group flex flex-col gap-6 cursor-none block" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                    <div className="relative aspect-[16/10] bg-zinc-900 rounded-2xl overflow-hidden transition-colors duration-500">
-                      <img src={project.image} alt={project.title} className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${isMobile ? 'opacity-0' : 'opacity-100 group-hover:opacity-0'}`} />
+                  <a href={project.link} className="group flex flex-col gap-6 cursor-none block">
+                    <div
+                      className="relative aspect-[16/10] bg-zinc-900 rounded-2xl overflow-hidden transition-colors duration-500"
+                      onMouseEnter={(e) => {
+                        const video = e.currentTarget.querySelector('video');
+                        if (video) {
+                          video.currentTime = 0;
+                          const playPromise = video.play();
+                          if (playPromise !== undefined) {
+                            playPromise.catch((error) => {
+                              console.log("Video play interrupted/failed:", error);
+                            });
+                          }
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        const video = e.currentTarget.querySelector('video');
+                        if (video) {
+                          video.pause();
+                          video.currentTime = 0;
+                        }
+                      }}
+                    >
+                      <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0" />
                       <video
                         src={project.video}
                         muted
                         loop
                         playsInline
                         preload="auto"
-                        autoPlay={isMobile}
-                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${isMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
-                        onMouseEnter={(e) => !isMobile && e.target.play()}
-                        onMouseLeave={(e) => !isMobile && e.target.pause()}
+                        className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                       />
                     </div>
                     <div className="flex flex-col px-2"><h3 className="text-2xl font-medium tracking-tight text-white mb-1 group-hover:text-purple-400 transition-colors duration-300" style={{ fontFamily: "'PT Serif', serif" }}>{project.title}</h3><p className="text-zinc-500 text-sm font-medium uppercase tracking-wide">{project.category}</p></div>
