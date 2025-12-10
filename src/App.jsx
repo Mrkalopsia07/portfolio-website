@@ -66,6 +66,7 @@ function AppContent() {
   const [typingSpeed, setTypingSpeed] = useState(150);
 
   const heroRef = useRef(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   // 1. USE STATE FOR LENIS
   const [lenis, setLenis] = useState(null);
@@ -168,6 +169,17 @@ function AppContent() {
     return () => clearTimeout(timer);
   }, [text, isDeleting, loopNum, typingSpeed]);
 
+  // Parallax mouse effect for gradient orbs
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
+      });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
 
   const textEnter = React.useCallback(() => setCursorVariant("text"), []);
@@ -243,6 +255,34 @@ function AppContent() {
         <div className="absolute inset-0 z-0 pointer-events-none md:hidden" style={{
           background: 'linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.8) 12%, #000 15%, #000 100%)'
         }}></div>
+
+        {/* Floating Gradient Orbs */}
+        <div className="fixed inset-0 z-[5] pointer-events-none overflow-hidden">
+          <div
+            className="absolute w-[500px] h-[500px] rounded-full bg-purple-500/[0.08] blur-[120px]"
+            style={{
+              top: '5%',
+              right: '10%',
+              transform: `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px)`
+            }}
+          />
+          <div
+            className="absolute w-[400px] h-[400px] rounded-full bg-pink-500/[0.07] blur-[100px]"
+            style={{
+              top: '40%',
+              left: '5%',
+              transform: `translate(${mousePosition.x * -0.3}px, ${mousePosition.y * -0.3}px)`
+            }}
+          />
+          <div
+            className="absolute w-[300px] h-[300px] rounded-full bg-blue-500/[0.06] blur-[80px]"
+            style={{
+              bottom: '20%',
+              right: '20%',
+              transform: `translate(${mousePosition.x * 0.4}px, ${mousePosition.y * 0.4}px)`
+            }}
+          />
+        </div>
         {/* HERO */}
         <section ref={heroRef} className="relative z-10 min-h-[100dvh] flex flex-col items-center justify-center px-6 text-center py-24">
 
@@ -376,7 +416,7 @@ function AppContent() {
         </section>
 
         {/* Spotlight */}
-        <section className="py-16 md:py-32 px-4 md:px-6 relative z-20">
+        <section className="pt-16 md:pt-32 pb-8 md:pb-16 px-4 md:px-6 relative z-20">
           <div className="max-w-5xl mx-auto">
             <FadeIn>
               <div className="text-center mb-10 md:mb-20">
@@ -414,7 +454,7 @@ function AppContent() {
         </section>
 
         {/* About Info */}
-        <section className="py-16 md:py-32 px-4 md:px-6 relative z-20" id="about">
+        <section className="pt-8 md:pt-16 pb-16 md:pb-32 px-4 md:px-6 relative z-20" id="about">
           <div className="max-w-6xl mx-auto">
             <FadeIn>
               <div className="relative p-6 md:p-20 rounded-2xl md:rounded-3xl bg-white/5 border border-white/5 text-center mb-12 md:mb-24 cursor-none" onMouseEnter={textEnter} onMouseLeave={textLeave}>
@@ -433,8 +473,8 @@ function AppContent() {
 
 
         {/* Footer */}
-        <footer className="py-16 md:py-32 px-4 md:px-6 relative z-20" id="contact">
-          <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
+        <footer className="pt-16 md:pt-32 pb-0 relative z-20" id="contact">
+          <div className="max-w-7xl mx-auto flex flex-col items-center text-center px-4 md:px-6">
             <FadeIn>
               <h2 className="font-serif italic text-4xl md:text-8xl mb-8 md:mb-12 opacity-90 leading-tight">Ready to build<br />something iconic?</h2>
               <a
@@ -447,21 +487,21 @@ function AppContent() {
                 <span>Say Hello</span>
               </a>
             </FadeIn>
-            <div className="mt-12 md:mt-24 w-full relative">
-              {/* Black background that extends full width */}
-              <div className="absolute bg-black -z-10" style={{ top: 0, bottom: 0, left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw', width: '100vw' }}></div>
-              <div className="flex flex-col items-center md:flex-row md:justify-between border-t border-white/10 pt-6 md:pt-8 pb-6 md:pb-8 gap-6 md:gap-8">
+          </div>
+          <div className="mt-12 md:mt-24 w-full bg-black">
+            <div className="max-w-7xl mx-auto px-4 md:px-6">
+              <div className="flex flex-col items-center md:flex-row md:justify-between border-t border-white/10 pt-6 md:pt-8 pb-12 md:pb-32 gap-6 md:gap-8">
                 <p className="text-zinc-500 text-xs md:text-sm uppercase tracking-widest order-last md:order-first">© 2025 Mr. Kalopsia. Eashan Misra.</p>
                 <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8">
                   <a href="https://instagram.com/mr.kalopsia/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-xs md:text-sm font-bold uppercase tracking-wider" onMouseEnter={textEnter} onMouseLeave={textLeave}><Instagram size={16} className="md:w-[18px] md:h-[18px]" /> Instagram</a>
                   <a href="https://www.linkedin.com/in/eashan-misra/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-xs md:text-sm font-bold uppercase tracking-wider" onMouseEnter={textEnter} onMouseLeave={textLeave}><Linkedin size={16} className="md:w-[18px] md:h-[18px]" /> LinkedIn</a>
-                  <a href="/404" className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors text-xs md:text-sm font-bold uppercase tracking-wider border border-purple-500/30 px-3 md:px-4 py-1.5 md:py-2 rounded-full hover:bg-purple-500/10" onMouseEnter={textEnter} onMouseLeave={textLeave}><Download size={16} className="md:w-[18px] md:h-[18px]" /> Resume</a>
+                  <a href="/resume" className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors text-xs md:text-sm font-bold uppercase tracking-wider border border-purple-500/30 px-3 md:px-4 py-1.5 md:py-2 rounded-full hover:bg-purple-500/10" onMouseEnter={textEnter} onMouseLeave={textLeave}><Download size={16} className="md:w-[18px] md:h-[18px]" /> Resume</a>
                 </div>
               </div>
             </div>
           </div>
         </footer>
       </main>
-    </div>
+    </div >
   );
 }

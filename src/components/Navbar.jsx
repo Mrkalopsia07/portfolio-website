@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Menu, X, Instagram, Linkedin } from 'lucide-react';
 import profileImg from '../assets/profile.jpg';
 
 export default function Navbar({ lenis, textEnter, textLeave }) {
     const [showNavbar, setShowNavbar] = useState(true);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const location = useLocation();
+    const isHome = location.pathname === '/';
 
     // Auto-hide logic specific to Navbar
     useEffect(() => {
@@ -44,23 +47,41 @@ export default function Navbar({ lenis, textEnter, textLeave }) {
                     </div>
 
                     <div className="hidden md:flex items-center pl-3">
-                        {['Work', 'About', 'Resume'].map((item) => (
-                            <a
-                                key={item}
-                                href={(item === 'Resume' || item === 'About') ? '/404' : `#${item.toLowerCase()}`}
-                                onClick={(e) => {
-                                    if (item !== 'Resume' && item !== 'About') {
-                                        e.preventDefault();
-                                        handleScrollTo(item.toLowerCase());
-                                    }
-                                }}
-                                className="text-white/70 hover:text-white hover:bg-white/5 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300"
-                                onMouseEnter={textEnter} onMouseLeave={textLeave}
-                            >
-                                {item}
-                            </a>
-                        ))}
-                        <a href="#contact" onClick={(e) => { e.preventDefault(); handleScrollTo('contact'); }} className="ml-2 bg-purple-500 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-purple-400 transition-all" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                        {['Work', 'About', 'Resume'].map((item) => {
+                            const isResume = item === 'Resume';
+                            const isAbout = item === 'About';
+                            const href = isResume ? '/resume' : isAbout ? '/about' : (isHome ? `#${item.toLowerCase()}` : `/#${item.toLowerCase()}`);
+
+                            return (
+                                <a
+                                    key={item}
+                                    href={href}
+                                    onClick={(e) => {
+                                        if (isResume || isAbout) return;
+                                        if (isHome) {
+                                            e.preventDefault();
+                                            handleScrollTo(item.toLowerCase());
+                                        }
+                                    }}
+                                    className={`text-white/70 hover:text-white hover:bg-white/5 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${(location.pathname === '/resume' && isResume) || (location.pathname === '/about' && isAbout) ? 'text-white bg-white/10' : ''}`}
+                                    onMouseEnter={textEnter} onMouseLeave={textLeave}
+                                >
+                                    {item}
+                                </a>
+                            );
+                        })}
+                        <a
+                            href={isHome ? "#contact" : "/#contact"}
+                            onClick={(e) => {
+                                if (isHome) {
+                                    e.preventDefault();
+                                    handleScrollTo('contact');
+                                }
+                            }}
+                            className="ml-2 bg-purple-500 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-purple-400 transition-all"
+                            onMouseEnter={textEnter}
+                            onMouseLeave={textLeave}
+                        >
                             Contact
                         </a>
                     </div>
@@ -76,24 +97,34 @@ export default function Navbar({ lenis, textEnter, textLeave }) {
                 <button className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center rounded-full border border-white/20 hover:bg-white/10 transition-colors duration-300" onClick={() => setMobileMenuOpen(false)}><X size={24} /></button>
 
                 <div className="h-full flex flex-col items-center justify-center gap-8">
-                    {['Work', 'About', 'Resume', 'Contact'].map((item, index) => (
-                        <a
-                            key={item}
-                            href={(item === 'Resume' || item === 'About') ? '/404' : `#${item.toLowerCase()}`}
-                            onClick={(e) => {
-                                if (item !== 'Resume' && item !== 'About') {
-                                    e.preventDefault();
-                                    handleScrollTo(item.toLowerCase());
-                                } else {
-                                    setMobileMenuOpen(false);
-                                }
-                            }}
-                            className={`text-4xl font-serif italic text-white/80 hover:text-white transition-all duration-500 transform ${mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
-                            style={{ transitionDelay: `${index * 100 + 200}ms` }}
-                        >
-                            {item}
-                        </a>
-                    ))}
+                    {['Work', 'About', 'Resume', 'Contact'].map((item, index) => {
+                        const isResume = item === 'Resume';
+                        const isAbout = item === 'About';
+                        const href = isResume ? '/resume' : isAbout ? '/about' : (isHome ? `#${item.toLowerCase()}` : `/#${item.toLowerCase()}`);
+
+                        return (
+                            <a
+                                key={item}
+                                href={href}
+                                onClick={(e) => {
+                                    if (isResume || isAbout) {
+                                        setMobileMenuOpen(false);
+                                        return;
+                                    }
+                                    if (isHome) {
+                                        e.preventDefault();
+                                        handleScrollTo(item.toLowerCase());
+                                    } else {
+                                        setMobileMenuOpen(false);
+                                    }
+                                }}
+                                className={`text-4xl font-serif italic text-white/80 hover:text-white transition-all duration-500 transform ${mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'} ${(location.pathname === '/resume' && isResume) || (location.pathname === '/about' && isAbout) ? 'text-white' : ''}`}
+                                style={{ transitionDelay: `${index * 100 + 200}ms` }}
+                            >
+                                {item}
+                            </a>
+                        );
+                    })}
 
                     {/* Social Links */}
                     <div
