@@ -42,12 +42,13 @@ export default function Navbar({ lenis, textEnter, textLeave }) {
         <>
             <nav className={`fixed top-0 left-0 w-full z-30 px-4 md:px-6 py-4 md:py-6 transition-transform duration-300 flex justify-center ${showNavbar ? 'translate-y-0' : '-translate-y-full'}`}>
                 <div className="flex items-center gap-2 p-2 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full">
-                    <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10">
+                    <a href="/" className="w-10 h-10 rounded-full overflow-hidden border border-white/10 relative group" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                         <img src={profileImg} alt="Mr. Kalopsia" className="w-full h-full object-cover" />
-                    </div>
+                        <div className="absolute inset-0 bg-white/0 group-hover:bg-white/20 transition-colors duration-300 rounded-full" />
+                    </a>
 
                     <div className="hidden md:flex items-center pl-3">
-                        {['Work', 'About', 'Resume'].map((item) => {
+                        {['About', 'Resume'].map((item) => {
                             const isResume = item === 'Resume';
                             const isAbout = item === 'About';
                             const href = isResume ? '/resume' : isAbout ? '/about' : (isHome ? `#${item.toLowerCase()}` : `/#${item.toLowerCase()}`);
@@ -71,13 +72,7 @@ export default function Navbar({ lenis, textEnter, textLeave }) {
                             );
                         })}
                         <a
-                            href={isHome ? "#contact" : "/#contact"}
-                            onClick={(e) => {
-                                if (isHome) {
-                                    e.preventDefault();
-                                    handleScrollTo('contact');
-                                }
-                            }}
+                            href="mailto:em@mrkalopsia.com"
                             className="ml-2 bg-purple-500 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-purple-400 transition-all"
                             onMouseEnter={textEnter}
                             onMouseLeave={textLeave}
@@ -97,7 +92,7 @@ export default function Navbar({ lenis, textEnter, textLeave }) {
                 <button className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center rounded-full border border-white/20 hover:bg-white/10 transition-colors duration-300" onClick={() => setMobileMenuOpen(false)}><X size={24} /></button>
 
                 <div className="h-full flex flex-col items-center justify-center gap-8">
-                    {['Work', 'About', 'Resume', 'Contact'].map((item, index) => {
+                    {['About', 'Resume'].map((item, index) => {
                         const isResume = item === 'Resume';
                         const isAbout = item === 'About';
                         const href = isResume ? '/resume' : isAbout ? '/about' : (isHome ? `#${item.toLowerCase()}` : `/#${item.toLowerCase()}`);
@@ -125,6 +120,14 @@ export default function Navbar({ lenis, textEnter, textLeave }) {
                             </a>
                         );
                     })}
+                    <a
+                        href="mailto:em@mrkalopsia.com"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`text-4xl font-serif italic text-white/80 hover:text-white transition-all duration-500 transform ${mobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
+                        style={{ transitionDelay: '400ms' }}
+                    >
+                        Contact
+                    </a>
 
                     {/* Social Links */}
                     <div
