@@ -8,6 +8,7 @@ import { Download, Mail, Phone, Globe, MapPin, ExternalLink, ArrowLeft } from 'l
 export default function Resume() {
     const [cursorVariant, setCursorVariant] = useState("default");
     const [lenis, setLenis] = useState(null);
+    const orbsRef = useRef(null);
 
     useEffect(() => {
         const lenisInstance = new Lenis({
@@ -30,6 +31,20 @@ export default function Resume() {
         };
     }, []);
 
+    // Parallax mouse effect for orbs (optimized with direct DOM manipulation)
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            if (orbsRef.current) {
+                const x = (e.clientX / window.innerWidth - 0.5) * 20;
+                const y = (e.clientY / window.innerHeight - 0.5) * 20;
+                orbsRef.current.style.setProperty('--mouse-x', `${x}px`);
+                orbsRef.current.style.setProperty('--mouse-y', `${y}px`);
+            }
+        };
+        window.addEventListener('mousemove', handleMouseMove, { passive: true });
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
+
     const textEnter = () => setCursorVariant("text");
     const textLeave = () => setCursorVariant("default");
 
@@ -38,7 +53,63 @@ export default function Resume() {
             <CustomCursor cursorVariant={cursorVariant} />
             <Navbar lenis={lenis} textEnter={textEnter} textLeave={textLeave} />
 
-            <main className="pt-32 pb-20 px-6 md:px-12 max-w-5xl mx-auto" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+            {/* Floating Orbs Background */}
+            <div ref={orbsRef} className="fixed inset-0 z-0 pointer-events-none overflow-hidden" style={{ '--mouse-x': '0px', '--mouse-y': '0px' }}>
+                <div
+                    className="absolute w-96 h-96 rounded-full bg-purple-500/10 blur-[60px] animate-float-slow"
+                    style={{
+                        top: '10%',
+                        left: '60%',
+                        transform: 'translate(calc(var(--mouse-x) * 0.5), calc(var(--mouse-y) * 0.5))',
+                        willChange: 'transform'
+                    }}
+                />
+                <div
+                    className="absolute w-64 h-64 rounded-full bg-pink-500/10 blur-[50px] animate-float-medium"
+                    style={{
+                        top: '50%',
+                        left: '20%',
+                        transform: 'translate(calc(var(--mouse-x) * -0.3), calc(var(--mouse-y) * -0.3))',
+                        willChange: 'transform'
+                    }}
+                />
+                <div
+                    className="absolute w-48 h-48 rounded-full bg-blue-500/10 blur-[40px] animate-float-fast"
+                    style={{
+                        top: '70%',
+                        right: '10%',
+                        transform: 'translate(calc(var(--mouse-x) * 0.4), calc(var(--mouse-y) * 0.4))',
+                        willChange: 'transform'
+                    }}
+                />
+            </div>
+
+            {/* Floating animation styles */}
+            <style>{`
+                @keyframes floatSlow {
+                    0%, 100% { transform: translate(calc(var(--mouse-x, 0px) * 0.5), calc(var(--mouse-y, 0px) * 0.5)); }
+                    25% { transform: translate(calc(var(--mouse-x, 0px) * 0.5 + 80px), calc(var(--mouse-y, 0px) * 0.5 - 60px)); }
+                    50% { transform: translate(calc(var(--mouse-x, 0px) * 0.5 - 40px), calc(var(--mouse-y, 0px) * 0.5 + 90px)); }
+                    75% { transform: translate(calc(var(--mouse-x, 0px) * 0.5 - 70px), calc(var(--mouse-y, 0px) * 0.5 - 30px)); }
+                }
+                @keyframes floatMedium {
+                    0%, 100% { transform: translate(calc(var(--mouse-x, 0px) * -0.3), calc(var(--mouse-y, 0px) * -0.3)); }
+                    25% { transform: translate(calc(var(--mouse-x, 0px) * -0.3 - 60px), calc(var(--mouse-y, 0px) * -0.3 + 50px)); }
+                    50% { transform: translate(calc(var(--mouse-x, 0px) * -0.3 + 70px), calc(var(--mouse-y, 0px) * -0.3 + 80px)); }
+                    75% { transform: translate(calc(var(--mouse-x, 0px) * -0.3 + 40px), calc(var(--mouse-y, 0px) * -0.3 - 70px)); }
+                }
+                @keyframes floatFast {
+                    0%, 100% { transform: translate(calc(var(--mouse-x, 0px) * 0.4), calc(var(--mouse-y, 0px) * 0.4)); }
+                    25% { transform: translate(calc(var(--mouse-x, 0px) * 0.4 + 50px), calc(var(--mouse-y, 0px) * 0.4 + 75px)); }
+                    50% { transform: translate(calc(var(--mouse-x, 0px) * 0.4 - 65px), calc(var(--mouse-y, 0px) * 0.4 - 55px)); }
+                    75% { transform: translate(calc(var(--mouse-x, 0px) * 0.4 - 80px), calc(var(--mouse-y, 0px) * 0.4 + 40px)); }
+                }
+                .animate-float-slow { animation: floatSlow 25s ease-in-out infinite; }
+                .animate-float-medium { animation: floatMedium 30s ease-in-out infinite; }
+                .animate-float-fast { animation: floatFast 22s ease-in-out infinite; }
+            `}</style>
+
+            <main className="relative z-10 pt-32 pb-20 px-6 md:px-12 max-w-5xl mx-auto" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                 <FadeIn>
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 border-b border-white/10 pb-12 gap-8">
                         <div>

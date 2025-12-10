@@ -500,7 +500,7 @@ function AppContent() {
                 <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8">
                   <a href="https://instagram.com/mr.kalopsia/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-xs md:text-sm font-bold uppercase tracking-wider" onMouseEnter={textEnter} onMouseLeave={textLeave}><Instagram size={16} className="md:w-[18px] md:h-[18px]" /> Instagram</a>
                   <a href="https://www.linkedin.com/in/eashan-misra/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-xs md:text-sm font-bold uppercase tracking-wider" onMouseEnter={textEnter} onMouseLeave={textLeave}><Linkedin size={16} className="md:w-[18px] md:h-[18px]" /> LinkedIn</a>
-                  <a href="/resume" className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors text-xs md:text-sm font-bold uppercase tracking-wider border border-purple-500/30 px-3 md:px-4 py-1.5 md:py-2 rounded-full hover:bg-purple-500/10" onMouseEnter={textEnter} onMouseLeave={textLeave}><Download size={16} className="md:w-[18px] md:h-[18px]" /> Resume</a>
+                  <a href="/Resume - Eashan Misra.docx" download className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors text-xs md:text-sm font-bold uppercase tracking-wider border border-purple-500/30 px-3 md:px-4 py-1.5 md:py-2 rounded-full hover:bg-purple-500/10" onMouseEnter={textEnter} onMouseLeave={textLeave}><Download size={16} className="md:w-[18px] md:h-[18px]" /> Resume</a>
                 </div>
               </div>
             </div>

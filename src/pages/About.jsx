@@ -56,7 +56,7 @@ export default function About() {
             {/* Floating Orbs Background */}
             <div ref={orbsRef} className="fixed inset-0 z-0 pointer-events-none overflow-hidden" style={{ '--mouse-x': '0px', '--mouse-y': '0px' }}>
                 <div
-                    className="absolute w-96 h-96 rounded-full bg-purple-500/10 blur-[60px]"
+                    className="absolute w-96 h-96 rounded-full bg-purple-500/10 blur-[60px] animate-float-slow"
                     style={{
                         top: '10%',
                         left: '60%',
@@ -65,7 +65,7 @@ export default function About() {
                     }}
                 />
                 <div
-                    className="absolute w-64 h-64 rounded-full bg-pink-500/10 blur-[50px]"
+                    className="absolute w-64 h-64 rounded-full bg-pink-500/10 blur-[50px] animate-float-medium"
                     style={{
                         top: '50%',
                         left: '20%',
@@ -74,7 +74,7 @@ export default function About() {
                     }}
                 />
                 <div
-                    className="absolute w-48 h-48 rounded-full bg-blue-500/10 blur-[40px]"
+                    className="absolute w-48 h-48 rounded-full bg-blue-500/10 blur-[40px] animate-float-fast"
                     style={{
                         top: '70%',
                         right: '10%',
@@ -83,6 +83,31 @@ export default function About() {
                     }}
                 />
             </div>
+
+            {/* Floating animation styles */}
+            <style>{`
+                @keyframes floatSlow {
+                    0%, 100% { transform: translate(calc(var(--mouse-x, 0px) * 0.5), calc(var(--mouse-y, 0px) * 0.5)); }
+                    25% { transform: translate(calc(var(--mouse-x, 0px) * 0.5 + 80px), calc(var(--mouse-y, 0px) * 0.5 - 60px)); }
+                    50% { transform: translate(calc(var(--mouse-x, 0px) * 0.5 - 40px), calc(var(--mouse-y, 0px) * 0.5 + 90px)); }
+                    75% { transform: translate(calc(var(--mouse-x, 0px) * 0.5 - 70px), calc(var(--mouse-y, 0px) * 0.5 - 30px)); }
+                }
+                @keyframes floatMedium {
+                    0%, 100% { transform: translate(calc(var(--mouse-x, 0px) * -0.3), calc(var(--mouse-y, 0px) * -0.3)); }
+                    25% { transform: translate(calc(var(--mouse-x, 0px) * -0.3 - 60px), calc(var(--mouse-y, 0px) * -0.3 + 50px)); }
+                    50% { transform: translate(calc(var(--mouse-x, 0px) * -0.3 + 70px), calc(var(--mouse-y, 0px) * -0.3 + 80px)); }
+                    75% { transform: translate(calc(var(--mouse-x, 0px) * -0.3 + 40px), calc(var(--mouse-y, 0px) * -0.3 - 70px)); }
+                }
+                @keyframes floatFast {
+                    0%, 100% { transform: translate(calc(var(--mouse-x, 0px) * 0.4), calc(var(--mouse-y, 0px) * 0.4)); }
+                    25% { transform: translate(calc(var(--mouse-x, 0px) * 0.4 + 50px), calc(var(--mouse-y, 0px) * 0.4 + 75px)); }
+                    50% { transform: translate(calc(var(--mouse-x, 0px) * 0.4 - 65px), calc(var(--mouse-y, 0px) * 0.4 - 55px)); }
+                    75% { transform: translate(calc(var(--mouse-x, 0px) * 0.4 - 80px), calc(var(--mouse-y, 0px) * 0.4 + 40px)); }
+                }
+                .animate-float-slow { animation: floatSlow 25s ease-in-out infinite; }
+                .animate-float-medium { animation: floatMedium 30s ease-in-out infinite; }
+                .animate-float-fast { animation: floatFast 22s ease-in-out infinite; }
+            `}</style>
 
             <main className="relative z-10">
                 {/* Hero Section */}

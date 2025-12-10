@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function BrandTicker({ textEnter, textLeave }) {
-    const brands = ['Logan Paul', 'Crypto', 'Futureverse', 'Gillette', 'Adobe', 'Rolling Stone', 'Wilder World'];
+    const brands = ['Logan Paul', 'Crypto', 'Futureverse', 'Gillette', 'Adobe', 'Rolling Stone', 'Wilder World', 'WD', 'eBay'];
 
     return (
         <div className="w-full">
