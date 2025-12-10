@@ -8,7 +8,7 @@ import { ArrowLeft, Sparkles, Palette, Film, Layers, Globe, Star, Heart, Coffee,
 export default function About() {
     const [cursorVariant, setCursorVariant] = useState("default");
     const [lenis, setLenis] = useState(null);
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const orbsRef = useRef(null);
 
     useEffect(() => {
         const lenisInstance = new Lenis({
@@ -31,15 +31,17 @@ export default function About() {
         };
     }, []);
 
-    // Parallax mouse effect
+    // Parallax mouse effect (optimized with direct DOM manipulation)
     useEffect(() => {
         const handleMouseMove = (e) => {
-            setMousePosition({
-                x: (e.clientX / window.innerWidth - 0.5) * 20,
-                y: (e.clientY / window.innerHeight - 0.5) * 20,
-            });
+            if (orbsRef.current) {
+                const x = (e.clientX / window.innerWidth - 0.5) * 20;
+                const y = (e.clientY / window.innerHeight - 0.5) * 20;
+                orbsRef.current.style.setProperty('--mouse-x', `${x}px`);
+                orbsRef.current.style.setProperty('--mouse-y', `${y}px`);
+            }
         };
-        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mousemove', handleMouseMove, { passive: true });
         return () => window.removeEventListener('mousemove', handleMouseMove);
     }, []);
 
@@ -52,29 +54,32 @@ export default function About() {
             <Navbar lenis={lenis} textEnter={textEnter} textLeave={textLeave} />
 
             {/* Floating Orbs Background */}
-            <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+            <div ref={orbsRef} className="fixed inset-0 z-0 pointer-events-none overflow-hidden" style={{ '--mouse-x': '0px', '--mouse-y': '0px' }}>
                 <div
-                    className="absolute w-96 h-96 rounded-full bg-purple-500/10 blur-[100px]"
+                    className="absolute w-96 h-96 rounded-full bg-purple-500/10 blur-[60px]"
                     style={{
                         top: '10%',
                         left: '60%',
-                        transform: `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px)`
+                        transform: 'translate(calc(var(--mouse-x) * 0.5), calc(var(--mouse-y) * 0.5))',
+                        willChange: 'transform'
                     }}
                 />
                 <div
-                    className="absolute w-64 h-64 rounded-full bg-pink-500/10 blur-[80px]"
+                    className="absolute w-64 h-64 rounded-full bg-pink-500/10 blur-[50px]"
                     style={{
                         top: '50%',
                         left: '20%',
-                        transform: `translate(${mousePosition.x * -0.3}px, ${mousePosition.y * -0.3}px)`
+                        transform: 'translate(calc(var(--mouse-x) * -0.3), calc(var(--mouse-y) * -0.3))',
+                        willChange: 'transform'
                     }}
                 />
                 <div
-                    className="absolute w-48 h-48 rounded-full bg-blue-500/10 blur-[60px]"
+                    className="absolute w-48 h-48 rounded-full bg-blue-500/10 blur-[40px]"
                     style={{
                         top: '70%',
                         right: '10%',
-                        transform: `translate(${mousePosition.x * 0.4}px, ${mousePosition.y * 0.4}px)`
+                        transform: 'translate(calc(var(--mouse-x) * 0.4), calc(var(--mouse-y) * 0.4))',
+                        willChange: 'transform'
                     }}
                 />
             </div>

@@ -66,7 +66,7 @@ function AppContent() {
   const [typingSpeed, setTypingSpeed] = useState(150);
 
   const heroRef = useRef(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const orbsRef = useRef(null);
 
   // 1. USE STATE FOR LENIS
   const [lenis, setLenis] = useState(null);
@@ -169,15 +169,17 @@ function AppContent() {
     return () => clearTimeout(timer);
   }, [text, isDeleting, loopNum, typingSpeed]);
 
-  // Parallax mouse effect for gradient orbs
+  // Parallax mouse effect for gradient orbs (optimized with direct DOM manipulation)
   useEffect(() => {
     const handleMouseMove = (e) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      });
+      if (orbsRef.current) {
+        const x = (e.clientX / window.innerWidth - 0.5) * 20;
+        const y = (e.clientY / window.innerHeight - 0.5) * 20;
+        orbsRef.current.style.setProperty('--mouse-x', `${x}px`);
+        orbsRef.current.style.setProperty('--mouse-y', `${y}px`);
+      }
     };
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
@@ -257,29 +259,32 @@ function AppContent() {
         }}></div>
 
         {/* Floating Gradient Orbs */}
-        <div className="fixed inset-0 z-[5] pointer-events-none overflow-hidden">
+        <div ref={orbsRef} className="fixed inset-0 z-[5] pointer-events-none overflow-hidden" style={{ '--mouse-x': '0px', '--mouse-y': '0px' }}>
           <div
-            className="absolute w-[500px] h-[500px] rounded-full bg-purple-500/[0.08] blur-[120px]"
+            className="absolute w-[500px] h-[500px] rounded-full bg-purple-500/[0.08] blur-[80px]"
             style={{
               top: '5%',
               right: '10%',
-              transform: `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px)`
+              transform: 'translate(calc(var(--mouse-x) * 0.5), calc(var(--mouse-y) * 0.5))',
+              willChange: 'transform'
             }}
           />
           <div
-            className="absolute w-[400px] h-[400px] rounded-full bg-pink-500/[0.07] blur-[100px]"
+            className="absolute w-[400px] h-[400px] rounded-full bg-pink-500/[0.07] blur-[60px]"
             style={{
               top: '40%',
               left: '5%',
-              transform: `translate(${mousePosition.x * -0.3}px, ${mousePosition.y * -0.3}px)`
+              transform: 'translate(calc(var(--mouse-x) * -0.3), calc(var(--mouse-y) * -0.3))',
+              willChange: 'transform'
             }}
           />
           <div
-            className="absolute w-[300px] h-[300px] rounded-full bg-blue-500/[0.06] blur-[80px]"
+            className="absolute w-[300px] h-[300px] rounded-full bg-blue-500/[0.06] blur-[50px]"
             style={{
               bottom: '20%',
               right: '20%',
-              transform: `translate(${mousePosition.x * 0.4}px, ${mousePosition.y * 0.4}px)`
+              transform: 'translate(calc(var(--mouse-x) * 0.4), calc(var(--mouse-y) * 0.4))',
+              willChange: 'transform'
             }}
           />
         </div>
