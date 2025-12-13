@@ -53,8 +53,8 @@ export default function App() {
 function AppContent() {
   const [cursorVariant, setCursorVariant] = useState("default");
 
-  const [loading, setLoading] = useState(true);
-  const [showLoader, setShowLoader] = useState(true);
+  const [loading, setLoading] = useState(() => !sessionStorage.getItem("introShown"));
+  const [showLoader, setShowLoader] = useState(() => !sessionStorage.getItem("introShown"));
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [showReel, setShowReel] = useState(false);
   const [showPlayButton, setShowPlayButton] = useState(false);
@@ -112,6 +112,13 @@ function AppContent() {
         heroRef.current.style.transform = `translate3d(0, ${translateY}px, 0)`;
       }
 
+      // --- NEW: ORB FADE IN (Matches background gradient) ---
+      if (orbsRef.current) {
+        // Fade in orbs starting from when user scrolls past hero
+        const orbOpacity = Math.min(scrollY / windowHeight, 1);
+        orbsRef.current.style.opacity = orbOpacity;
+      }
+
       // --- B. PLAY BUTTON TOGGLE (Smart State) ---
       const playThreshold = windowHeight * 0.4;
       const shouldShowPlay = scrollY > playThreshold;
@@ -134,6 +141,8 @@ function AppContent() {
 
   // Loader with progress counter
   useEffect(() => {
+    if (!loading) return;
+
     const duration = 2000; // 2 seconds
     const startTime = Date.now();
 
@@ -145,12 +154,15 @@ function AppContent() {
       if (progress < 100) {
         requestAnimationFrame(updateProgress);
       } else {
-        setTimeout(() => setLoading(false), 200);
+        setTimeout(() => {
+          setLoading(false);
+          sessionStorage.setItem("introShown", "true");
+        }, 200);
       }
     };
 
     requestAnimationFrame(updateProgress);
-  }, []);
+  }, [loading]);
 
   // Typewriter
   useEffect(() => {
@@ -260,8 +272,20 @@ function AppContent() {
 
         {/* Floating Gradient Orbs */}
         <div ref={orbsRef} className="fixed inset-0 z-[5] pointer-events-none overflow-hidden" style={{ '--mouse-x': '0px', '--mouse-y': '0px' }}>
+          {/* Orb 1: Big soft orb - top left */}
           <div
-            className="absolute w-[500px] h-[500px] rounded-full bg-purple-500/[0.08] blur-[80px]"
+            className="absolute w-[800px] h-[800px] rounded-full bg-purple-400/[0.10] blur-[200px] animate-float-slow"
+            style={{
+              top: '-10%',
+              left: '-10%',
+              transform: 'translate(calc(var(--mouse-x) * 0.2), calc(var(--mouse-y) * 0.2))',
+              willChange: 'transform'
+            }}
+          />
+
+          {/* Orb 2: Top right */}
+          <div
+            className="absolute w-[600px] h-[600px] rounded-full bg-purple-500/[0.12] blur-[160px] animate-float-slow"
             style={{
               top: '5%',
               right: '10%',
@@ -269,8 +293,10 @@ function AppContent() {
               willChange: 'transform'
             }}
           />
+
+          {/* Orb 3: Middle left */}
           <div
-            className="absolute w-[400px] h-[400px] rounded-full bg-pink-500/[0.07] blur-[60px]"
+            className="absolute w-[500px] h-[500px] rounded-full bg-pink-500/[0.12] blur-[140px] animate-float-medium"
             style={{
               top: '40%',
               left: '5%',
@@ -278,8 +304,10 @@ function AppContent() {
               willChange: 'transform'
             }}
           />
+
+          {/* Orb 4: Bottom right */}
           <div
-            className="absolute w-[300px] h-[300px] rounded-full bg-blue-500/[0.06] blur-[50px]"
+            className="absolute w-[400px] h-[400px] rounded-full bg-blue-500/[0.12] blur-[120px] animate-float-fast"
             style={{
               bottom: '20%',
               right: '20%',
@@ -379,29 +407,39 @@ function AppContent() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
               {PROJECTS.map((project, index) => (
                 <FadeIn key={index} delay={index * 100}>
-                  <a href={project.link} className="group flex flex-col gap-6 cursor-none block">
-                    <div
-                      className="relative aspect-[16/10] bg-zinc-900 rounded-2xl overflow-hidden transition-colors duration-500"
-                      onMouseEnter={(e) => {
-                        const video = e.currentTarget.querySelector('video');
-                        if (video) {
-                          video.currentTime = 0;
-                          const playPromise = video.play();
-                          if (playPromise !== undefined) {
-                            playPromise.catch((error) => {
-                              console.log("Video play interrupted/failed:", error);
-                            });
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex flex-col gap-6 block"
+                    onMouseEnter={(e) => {
+                      textEnter();
+                      const video = e.currentTarget.querySelector('video');
+                      if (video) {
+                        video.currentTime = 0;
+                        const playPromise = video.play();
+                        if (playPromise !== undefined) {
+                          playPromise.catch((error) => {
+                            console.log("Video play interrupted/failed:", error);
+                          });
+                        }
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      textLeave();
+                      const container = e.currentTarget;
+                      const video = container.querySelector('video');
+                      if (video) {
+                        setTimeout(() => {
+                          if (!container.matches(':hover')) {
+                            video.pause();
+                            video.currentTime = 0;
                           }
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        const video = e.currentTarget.querySelector('video');
-                        if (video) {
-                          video.pause();
-                          video.currentTime = 0;
-                        }
-                      }}
-                    >
+                        }, 500);
+                      }
+                    }}
+                  >
+                    <div className="relative aspect-[16/10] bg-zinc-900 rounded-2xl overflow-hidden transition-colors duration-500">
                       <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0" />
                       <video
                         src={project.video}
@@ -432,7 +470,7 @@ function AppContent() {
             <div className="flex flex-col gap-4 md:gap-6">
               {SPOTLIGHT_MOMENTS.map((moment, index) => (
                 <FadeIn key={index} delay={index * 150}>
-                  <a href={moment.link} target="_blank" rel="noopener noreferrer" className="group relative flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8 p-4 md:p-6 rounded-xl md:rounded-2xl bg-white/5 hover:bg-white/10 transition-all duration-500 cursor-none" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                  <a href={moment.link} target="_blank" rel="noopener noreferrer" className="group relative flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8 p-4 md:p-6 rounded-xl md:rounded-2xl bg-white/5 hover:bg-white/10 transition-all duration-500" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                     {/* Landscape Thumbnail */}
                     <div className="relative w-full md:w-48 h-48 md:h-28 flex-shrink-0 rounded-lg md:rounded-xl overflow-hidden transition-colors bg-zinc-900">
                       <img src={moment.image} alt={moment.title} className="w-full h-full object-cover" />
@@ -462,7 +500,7 @@ function AppContent() {
         <section className="pt-8 md:pt-16 pb-16 md:pb-32 px-4 md:px-6 relative z-20" id="about">
           <div className="max-w-6xl mx-auto">
             <FadeIn>
-              <div className="relative p-6 md:p-20 rounded-2xl md:rounded-3xl bg-white/5 border border-white/5 text-center mb-12 md:mb-24 cursor-none" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+              <div className="relative p-6 md:p-20 rounded-2xl md:rounded-3xl bg-white/5 border border-white/5 text-center mb-12 md:mb-24" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                 <div className="hidden md:block absolute top-10 left-10 text-purple-500/20"><Star size={64} fill="currentColor" /></div>
                 <blockquote className="italic text-xl md:text-5xl leading-snug md:leading-tight mb-6 md:mb-10 text-zinc-100" style={{ fontFamily: "'PT Serif', serif" }}>"Eashan is, without a doubt, one of the best creatives I've ever worked with—ever. He has vision most creatives don't, and a heart even fewer bring to the table."</blockquote>
                 <div className="flex flex-col items-center">

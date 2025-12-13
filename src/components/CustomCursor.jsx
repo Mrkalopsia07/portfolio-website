@@ -122,7 +122,7 @@ export default function CustomCursor({ cursorVariant }) {
             <div
                 ref={cursorDotRef}
                 className={`fixed top-0 left-0 pointer-events-none z-[9999] w-1.5 h-1.5 rounded-full bg-white hidden md:block
-          ${!isVisible ? 'opacity-0' : (cursorVariant === 'default' || cursorVariant === 'text' ? 'opacity-100' : 'opacity-0')}
+          ${!isVisible ? 'opacity-0' : (cursorVariant === 'default' ? 'opacity-100' : 'opacity-0')}
         `}
                 style={{ transition: 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }}
             />

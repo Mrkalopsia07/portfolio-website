@@ -102,7 +102,7 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
             {/* Desktop & Mobile Preview */}
             <section className="w-full flex justify-center py-6 md:py-12">
                 <div
-                    className={`relative w-full max-w-[85%] md:max-w-7xl mx-auto aspect-[4/5] md:aspect-[21/9] rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl ${!showReel || !isVideoPlaying ? 'cursor-none' : ''}`}
+                    className={`relative w-full max-w-[85%] md:max-w-7xl mx-auto aspect-[4/5] md:aspect-[21/9] rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl z-20 ${!showReel || !isVideoPlaying ? 'cursor-none' : ''}`}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                     onClick={handleVideoClick}

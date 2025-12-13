@@ -15,6 +15,9 @@ export default {
         'fade-in': 'fadeInUp 0.8s ease-out forwards',
         'ticker': 'ticker 50s linear infinite',
         'float': 'float 6s ease-in-out infinite',
+        'float-slow': 'float 8s ease-in-out infinite',
+        'float-medium': 'float 6s ease-in-out infinite',
+        'float-fast': 'float 4s ease-in-out infinite',
         'ripple': 'ripple 2s cubic-bezier(0, 0.2, 0.8, 1) infinite',
       },
       keyframes: {
