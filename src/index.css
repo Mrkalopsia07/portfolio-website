@@ -33,3 +33,47 @@ html.lenis body {
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
 }
+
+/* Fancy 3D Rotating Loader */
+.loader-orb {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(165deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgb(220, 220, 220) 40%,
+      rgb(170, 170, 170) 98%,
+      rgb(10, 10, 10) 100%);
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-orb::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  border-bottom: 0 solid #ffffff05;
+  box-shadow: 0 -10px 20px 20px #ffffff40 inset,
+    0 -5px 15px 10px #ffffff50 inset, 0 -2px 5px #ffffff80 inset,
+    0 -3px 2px #ffffffbb inset, 0 2px 0px #ffffff, 0 2px 3px #ffffff,
+    0 5px 5px #ffffff90, 0 10px 15px #ffffff60, 0 10px 20px 20px #ffffff40;
+  filter: blur(3px);
+  animation: rotate-loader 2s linear infinite;
+  transition: opacity 0.5s ease-out;
+}
+
+/* Settled state - animation pauses, glow fades */
+.loader-orb.settled::before {
+  animation-play-state: paused;
+  opacity: 0.4;
+}
+
+@keyframes rotate-loader {
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -151,9 +151,9 @@ function AppContent() {
 
     const updateProgress = () => {
       const elapsed = Date.now() - startTime;
-      // Apply ease-out curve: starts fast, slows down toward 100%
+      // Gentle ease-out curve: starts visible, slows naturally
       const linearProgress = Math.min(elapsed / duration, 1);
-      const easedProgress = 1 - Math.pow(1 - linearProgress, 3); // Cubic ease-out
+      const easedProgress = 1 - Math.pow(1 - linearProgress, 2); // Quadratic ease-out
       const progress = easedProgress * 100;
       setLoadingProgress(Math.floor(progress));
 
@@ -230,7 +230,8 @@ function AppContent() {
             className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden pointer-events-none"
             style={{
               opacity: fadingOut ? 0 : 1,
-              transition: 'opacity 1s ease-out'
+              transition: 'opacity 1s ease-out',
+              transform: 'scaleX(-1)'
             }}
           >
             <UnicornScene
@@ -249,73 +250,40 @@ function AppContent() {
               transition: 'opacity 1s ease-out'
             }}
           >
-            {/* Circular Progress Ring */}
+            {/* Fancy 3D Rotating Loader */}
             <div className="relative mb-8">
-              <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 100 100">
-                {/* Dark background fill for contrast */}
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="44"
-                  fill="rgba(0,0,0,0.4)"
-                />
-                {/* Background ring */}
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  fill="none"
-                  stroke="rgba(255,255,255,0.1)"
-                  strokeWidth="2"
-                />
-                {/* Progress ring */}
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  fill="none"
-                  stroke="rgba(255,255,255,0.6)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeDasharray={`${2 * Math.PI * 45}`}
-                  strokeDashoffset={`${2 * Math.PI * 45 * (1 - loadingProgress / 100)}`}
-                  style={{
-                    transition: 'stroke-dashoffset 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    willChange: 'stroke-dashoffset'
-                  }}
-                />
-              </svg>
-
-              {/* Counter / Welcome inside ring */}
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className={`loader-orb ${showWelcome ? 'settled' : ''}`}>
                 {/* Counter */}
                 <div
                   style={{
                     opacity: showWelcome ? 0 : 1,
                     transform: showWelcome ? 'scale(0.8)' : 'scale(1)',
                     transition: 'all 0.5s ease-out',
-                    filter: 'drop-shadow(0 0 8px rgba(0,0,0,0.8))'
+                    position: 'absolute'
                   }}
                   className={showWelcome ? 'hidden' : 'block'}
                 >
-                  <span className="text-xl font-light tracking-wider text-white font-sans">
+                  <span
+                    className="text-xs font-medium text-black/80"
+                    style={{ fontVariantNumeric: 'tabular-nums' }}
+                  >
                     {loadingProgress}
                   </span>
                 </div>
 
-                {/* Welcome */}
+                {/* Checkmark on complete */}
                 <div
                   style={{
                     opacity: showWelcome ? 1 : 0,
-                    transform: showWelcome ? 'scale(1)' : 'scale(1.2)',
-                    transition: 'all 0.5s ease-out',
-                    filter: 'drop-shadow(0 0 8px rgba(0,0,0,0.8))'
+                    transform: showWelcome ? 'scale(1)' : 'scale(0.5)',
+                    transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                    position: 'absolute'
                   }}
                   className={showWelcome ? 'block' : 'hidden'}
                 >
-                  <span className="text-xs tracking-[0.15em] uppercase text-white font-sans font-light">
-                    Welcome
-                  </span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-black/80">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
                 </div>
               </div>
             </div>
