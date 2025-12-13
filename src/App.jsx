@@ -9,6 +9,7 @@ import BackgroundScene from './components/BackgroundScene';
 import FadeIn from './components/FadeIn';
 import Navbar from './components/Navbar';
 import { ROLES, PROJECTS, SPOTLIGHT_MOMENTS } from './constants';
+import UnicornScene from "unicornstudio-react";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -56,6 +57,8 @@ function AppContent() {
   const [loading, setLoading] = useState(() => !sessionStorage.getItem("introShown"));
   const [showLoader, setShowLoader] = useState(() => !sessionStorage.getItem("introShown"));
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const [fadingOut, setFadingOut] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
   const [showReel, setShowReel] = useState(false);
   const [showPlayButton, setShowPlayButton] = useState(false);
 
@@ -148,16 +151,23 @@ function AppContent() {
 
     const updateProgress = () => {
       const elapsed = Date.now() - startTime;
-      const progress = Math.min((elapsed / duration) * 100, 100);
+      // Apply ease-out curve: starts fast, slows down toward 100%
+      const linearProgress = Math.min(elapsed / duration, 1);
+      const easedProgress = 1 - Math.pow(1 - linearProgress, 3); // Cubic ease-out
+      const progress = easedProgress * 100;
       setLoadingProgress(Math.floor(progress));
 
       if (progress < 100) {
         requestAnimationFrame(updateProgress);
       } else {
+        // Show "Welcome" first
+        setShowWelcome(true);
+        // After a brief pause, trigger exit
         setTimeout(() => {
+          setFadingOut(true);
           setLoading(false);
           sessionStorage.setItem("introShown", "true");
-        }, 200);
+        }, 800);
       }
     };
 
@@ -208,43 +218,116 @@ function AppContent() {
           className="fixed inset-0 z-[10000] bg-black flex flex-col items-center justify-center px-8"
           style={{
             transform: loading ? 'translateY(0)' : 'translateY(-100%)',
-            transition: 'transform 1.2s cubic-bezier(0.76, 0, 0.24, 1)'
+            transition: 'transform 1s cubic-bezier(0.76, 0, 0.24, 1)'
           }}
-          onTransitionEnd={() => {
-            if (!loading) setShowLoader(false);
+          onTransitionEnd={(e) => {
+            // Only trigger on transform (slide-up), not on inner opacity transitions
+            if (e.propertyName === 'transform' && !loading) setShowLoader(false);
           }}
         >
-          {/* Cosmic animation - twinkling stars */}
-          <div className="relative w-12 h-12 mb-8">
-            {/* Central star */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-1.5 h-1.5 rounded-full bg-white animate-[pulse_2s_ease-in-out_infinite]" />
-            </div>
-            {/* Orbiting particles */}
-            <div className="absolute inset-0 animate-[spin_8s_linear_infinite]">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-purple-400/80" />
-            </div>
-            <div className="absolute inset-0 animate-[spin_12s_linear_infinite_reverse]">
-              <div className="absolute bottom-1 right-1 w-0.5 h-0.5 rounded-full bg-pink-400/60" />
-            </div>
-            <div className="absolute inset-0 animate-[spin_6s_linear_infinite]">
-              <div className="absolute top-2 right-0 w-0.5 h-0.5 rounded-full bg-blue-400/70" />
-            </div>
+          {/* Cosmic animation - Unicorn Studio Galaxy Background */}
+          <div
+            className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden pointer-events-none"
+            style={{
+              opacity: fadingOut ? 0 : 1,
+              transition: 'opacity 1s ease-out'
+            }}
+          >
+            <UnicornScene
+              jsonFilePath="/galaxy.json"
+              scale={1}
+              dpi={1.5}
+              className="w-full h-full object-cover"
+            />
           </div>
 
-          {/* Progress counter - between animation and quote */}
-          <div className="mb-8 font-mono text-white/50 text-xs tracking-[0.3em] text-center">
-            <span className="tabular-nums">{loadingProgress}</span>
-            <span className="text-white/30">%</span>
-          </div>
+          {/* Content Overlay */}
+          <div
+            className="relative z-10 flex flex-col items-center mt-24"
+            style={{
+              opacity: fadingOut ? 0 : 1,
+              transition: 'opacity 1s ease-out'
+            }}
+          >
+            {/* Circular Progress Ring */}
+            <div className="relative mb-8">
+              <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 100 100">
+                {/* Dark background fill for contrast */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="44"
+                  fill="rgba(0,0,0,0.4)"
+                />
+                {/* Background ring */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="45"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.1)"
+                  strokeWidth="2"
+                />
+                {/* Progress ring */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="45"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.6)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeDasharray={`${2 * Math.PI * 45}`}
+                  strokeDashoffset={`${2 * Math.PI * 45 * (1 - loadingProgress / 100)}`}
+                  style={{
+                    transition: 'stroke-dashoffset 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    willChange: 'stroke-dashoffset'
+                  }}
+                />
+              </svg>
 
-          {/* Quote */}
-          <blockquote className="text-center max-w-md">
-            <p className="italic text-white/80 text-sm md:text-base leading-relaxed mb-3" style={{ fontFamily: "'PT Serif', serif" }}>
-              "Somewhere, something incredible is waiting to be known."
-            </p>
-            <cite className="text-white/40 text-xs tracking-widest uppercase not-italic">Carl Sagan</cite>
-          </blockquote>
+              {/* Counter / Welcome inside ring */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                {/* Counter */}
+                <div
+                  style={{
+                    opacity: showWelcome ? 0 : 1,
+                    transform: showWelcome ? 'scale(0.8)' : 'scale(1)',
+                    transition: 'all 0.5s ease-out',
+                    filter: 'drop-shadow(0 0 8px rgba(0,0,0,0.8))'
+                  }}
+                  className={showWelcome ? 'hidden' : 'block'}
+                >
+                  <span className="text-xl font-light tracking-wider text-white font-sans">
+                    {loadingProgress}
+                  </span>
+                </div>
+
+                {/* Welcome */}
+                <div
+                  style={{
+                    opacity: showWelcome ? 1 : 0,
+                    transform: showWelcome ? 'scale(1)' : 'scale(1.2)',
+                    transition: 'all 0.5s ease-out',
+                    filter: 'drop-shadow(0 0 8px rgba(0,0,0,0.8))'
+                  }}
+                  className={showWelcome ? 'block' : 'hidden'}
+                >
+                  <span className="text-xs tracking-[0.15em] uppercase text-white font-sans font-light">
+                    Welcome
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Quote */}
+            <blockquote className="text-center max-w-md">
+              <p className="italic text-white/80 text-sm md:text-base leading-relaxed mb-3" style={{ fontFamily: "'PT Serif', serif" }}>
+                "Somewhere, something incredible is waiting to be known."
+              </p>
+              <cite className="text-white/40 text-xs tracking-widest uppercase not-italic">Carl Sagan</cite>
+            </blockquote>
+          </div>
         </div>
       )}
 

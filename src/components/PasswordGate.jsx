@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Lock, ArrowRight } from 'lucide-react';
 
-const CORRECT_PASSWORD = 'anupamisgay';
+const CORRECT_PASSWORD = '0000';
 
 export default function PasswordGate({ onAuthenticated }) {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
     const [isShaking, setIsShaking] = useState(false);
+
+    React.useEffect(() => {
+        sessionStorage.removeItem("introShown");
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
