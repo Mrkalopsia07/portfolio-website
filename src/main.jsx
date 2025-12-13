@@ -7,8 +7,17 @@ import NotFound from './components/NotFound.jsx'
 import Resume from './pages/Resume.jsx'
 import About from './pages/About.jsx'
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+import { useState } from 'react'
+import PasswordGate from './components/PasswordGate.jsx'
+
+function Main() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  if (!isAuthenticated) {
+    return <PasswordGate onAuthenticated={() => setIsAuthenticated(true)} />
+  }
+
+  return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
@@ -18,5 +27,11 @@ createRoot(document.getElementById('root')).render(
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
+  )
+}
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <Main />
   </StrictMode>,
 )

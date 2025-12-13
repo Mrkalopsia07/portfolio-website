@@ -11,7 +11,6 @@ export default function PasswordGate({ onAuthenticated }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (password === CORRECT_PASSWORD) {
-            sessionStorage.setItem('kalopsia_authenticated', 'true');
             onAuthenticated();
         } else {
             setError(true);
@@ -24,7 +23,7 @@ export default function PasswordGate({ onAuthenticated }) {
         <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-6">
             {/* Subtle gradient background */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-black pointer-events-none"></div>
-            
+
             <div className="relative z-10 flex flex-col items-center">
                 {/* Lock Icon */}
                 <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-8">
@@ -53,7 +52,7 @@ export default function PasswordGate({ onAuthenticated }) {
                             autoFocus
                         />
                     </div>
-                    
+
                     {error && (
                         <p className="text-red-400 text-sm text-center mb-4">
                             Incorrect password. Please try again.

@@ -54,30 +54,47 @@ export default function Resume() {
             <Navbar lenis={lenis} textEnter={textEnter} textLeave={textLeave} />
 
             {/* Floating Orbs Background */}
-            <div ref={orbsRef} className="fixed inset-0 z-0 pointer-events-none overflow-hidden" style={{ '--mouse-x': '0px', '--mouse-y': '0px' }}>
+            {/* Floating Gradient Orbs */}
+            <div ref={orbsRef} className="fixed inset-0 z-[5] pointer-events-none overflow-hidden" style={{ '--mouse-x': '0px', '--mouse-y': '0px' }}>
+                {/* Orb 1: Big soft orb - top left */}
                 <div
-                    className="absolute w-96 h-96 rounded-full bg-purple-500/10 blur-[60px] animate-float-slow"
+                    className="absolute w-[800px] h-[800px] rounded-full bg-purple-400/[0.10] blur-[200px] animate-float-slow"
                     style={{
-                        top: '10%',
-                        left: '60%',
+                        top: '-10%',
+                        left: '-10%',
+                        transform: 'translate(calc(var(--mouse-x) * 0.2), calc(var(--mouse-y) * 0.2))',
+                        willChange: 'transform'
+                    }}
+                />
+
+                {/* Orb 2: Top right */}
+                <div
+                    className="absolute w-[600px] h-[600px] rounded-full bg-purple-500/[0.12] blur-[160px] animate-float-slow"
+                    style={{
+                        top: '5%',
+                        right: '10%',
                         transform: 'translate(calc(var(--mouse-x) * 0.5), calc(var(--mouse-y) * 0.5))',
                         willChange: 'transform'
                     }}
                 />
+
+                {/* Orb 3: Middle left */}
                 <div
-                    className="absolute w-64 h-64 rounded-full bg-pink-500/10 blur-[50px] animate-float-medium"
+                    className="absolute w-[500px] h-[500px] rounded-full bg-pink-500/[0.12] blur-[140px] animate-float-medium"
                     style={{
-                        top: '50%',
-                        left: '20%',
+                        top: '40%',
+                        left: '5%',
                         transform: 'translate(calc(var(--mouse-x) * -0.3), calc(var(--mouse-y) * -0.3))',
                         willChange: 'transform'
                     }}
                 />
+
+                {/* Orb 4: Bottom right */}
                 <div
-                    className="absolute w-48 h-48 rounded-full bg-blue-500/10 blur-[40px] animate-float-fast"
+                    className="absolute w-[400px] h-[400px] rounded-full bg-blue-500/[0.12] blur-[120px] animate-float-fast"
                     style={{
-                        top: '70%',
-                        right: '10%',
+                        bottom: '20%',
+                        right: '20%',
                         transform: 'translate(calc(var(--mouse-x) * 0.4), calc(var(--mouse-y) * 0.4))',
                         willChange: 'transform'
                     }}
@@ -85,29 +102,7 @@ export default function Resume() {
             </div>
 
             {/* Floating animation styles */}
-            <style>{`
-                @keyframes floatSlow {
-                    0%, 100% { transform: translate(calc(var(--mouse-x, 0px) * 0.5), calc(var(--mouse-y, 0px) * 0.5)); }
-                    25% { transform: translate(calc(var(--mouse-x, 0px) * 0.5 + 80px), calc(var(--mouse-y, 0px) * 0.5 - 60px)); }
-                    50% { transform: translate(calc(var(--mouse-x, 0px) * 0.5 - 40px), calc(var(--mouse-y, 0px) * 0.5 + 90px)); }
-                    75% { transform: translate(calc(var(--mouse-x, 0px) * 0.5 - 70px), calc(var(--mouse-y, 0px) * 0.5 - 30px)); }
-                }
-                @keyframes floatMedium {
-                    0%, 100% { transform: translate(calc(var(--mouse-x, 0px) * -0.3), calc(var(--mouse-y, 0px) * -0.3)); }
-                    25% { transform: translate(calc(var(--mouse-x, 0px) * -0.3 - 60px), calc(var(--mouse-y, 0px) * -0.3 + 50px)); }
-                    50% { transform: translate(calc(var(--mouse-x, 0px) * -0.3 + 70px), calc(var(--mouse-y, 0px) * -0.3 + 80px)); }
-                    75% { transform: translate(calc(var(--mouse-x, 0px) * -0.3 + 40px), calc(var(--mouse-y, 0px) * -0.3 - 70px)); }
-                }
-                @keyframes floatFast {
-                    0%, 100% { transform: translate(calc(var(--mouse-x, 0px) * 0.4), calc(var(--mouse-y, 0px) * 0.4)); }
-                    25% { transform: translate(calc(var(--mouse-x, 0px) * 0.4 + 50px), calc(var(--mouse-y, 0px) * 0.4 + 75px)); }
-                    50% { transform: translate(calc(var(--mouse-x, 0px) * 0.4 - 65px), calc(var(--mouse-y, 0px) * 0.4 - 55px)); }
-                    75% { transform: translate(calc(var(--mouse-x, 0px) * 0.4 - 80px), calc(var(--mouse-y, 0px) * 0.4 + 40px)); }
-                }
-                .animate-float-slow { animation: floatSlow 25s ease-in-out infinite; }
-                .animate-float-medium { animation: floatMedium 30s ease-in-out infinite; }
-                .animate-float-fast { animation: floatFast 22s ease-in-out infinite; }
-            `}</style>
+
 
             <main className="relative z-10 pt-32 pb-20 px-6 md:px-12 max-w-5xl mx-auto" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                 <FadeIn>
