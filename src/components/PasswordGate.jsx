@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Lock, ArrowRight } from 'lucide-react';
 
-const CORRECT_PASSWORD = 'kalopsia2025';
+const CORRECT_PASSWORD = 'anupamisgay';
 
 export default function PasswordGate({ onAuthenticated }) {
     const [password, setPassword] = useState('');
