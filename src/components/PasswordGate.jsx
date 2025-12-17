@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Lock, ArrowRight } from 'lucide-react';
 
-const CORRECT_PASSWORD = '0000';
+const CORRECT_PASSWORD = import.meta.env.VITE_SITE_PASSWORD || '';
 
 export default function PasswordGate({ onAuthenticated }) {
     const [password, setPassword] = useState('');

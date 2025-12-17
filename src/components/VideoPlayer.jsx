@@ -65,18 +65,27 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
 
                 // Play and attempt fullscreen
                 video.play().then(() => {
-                    if (video.requestFullscreen) {
-                        video.requestFullscreen();
-                    } else if (video.webkitRequestFullscreen) {
-                        video.webkitRequestFullscreen(); // iOS Safari / older WebKit
-                    } else if (video.mozRequestFullScreen) {
-                        video.mozRequestFullScreen(); // Firefox
-                    } else if (video.msRequestFullscreen) {
-                        video.msRequestFullscreen(); // IE/Edge
-                    } else if (video.webkitEnterFullscreen) {
-                        video.webkitEnterFullscreen(); // iOS native player
-                    }
-                }).catch(err => console.error("Video play failed:", err));
+                    const requestFullscreen = async () => {
+                        try {
+                            if (video.requestFullscreen) {
+                                await video.requestFullscreen();
+                            } else if (video.webkitRequestFullscreen) {
+                                await video.webkitRequestFullscreen(); // iOS Safari / older WebKit
+                            } else if (video.mozRequestFullScreen) {
+                                await video.mozRequestFullScreen(); // Firefox
+                            } else if (video.msRequestFullscreen) {
+                                await video.msRequestFullscreen(); // IE/Edge
+                            } else if (video.webkitEnterFullscreen) {
+                                video.webkitEnterFullscreen(); // iOS native player
+                            }
+                        } catch (err) {
+                            // Fullscreen may fail due to user gesture requirements or browser restrictions
+                        }
+                    };
+                    requestFullscreen();
+                }).catch(() => {
+                    // Video play may fail due to autoplay restrictions
+                });
             }
             return;
         }
@@ -85,11 +94,11 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
             setShowReel(true);
             setCursorVariant('default');
         } else {
-            if (videoRef.current.paused) {
+            if (videoRef.current?.paused) {
                 videoRef.current.play();
                 setIsVideoPlaying(true);
                 setCursorVariant('default');
-            } else {
+            } else if (videoRef.current) {
                 videoRef.current.pause();
                 setIsVideoPlaying(false);
                 setCursorVariant('video');
@@ -147,7 +156,7 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
                                         if (!showReel) {
                                             setShowReel(true);
                                         } else {
-                                            if (videoRef.current.paused) { videoRef.current.play(); setIsVideoPlaying(true); } else { videoRef.current.pause(); setIsVideoPlaying(false); }
+                                            if (videoRef.current?.paused) { videoRef.current.play(); setIsVideoPlaying(true); } else if (videoRef.current) { videoRef.current.pause(); setIsVideoPlaying(false); }
                                         }
                                     }}
                                     className="p-1.5 hover:bg-black/5 rounded-full transition-colors flex-shrink-0"
