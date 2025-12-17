@@ -1,7 +1,7 @@
 export const ROLES = ["Art Director", "Motion Designer", "3D Animator"];
 
 export const PROJECTS = [
-    { title: "Wilder World", category: "Motion Graphics", image: "/assets/projects/wilder-world.jpg", video: "/assets/projects/wilder-world.mp4", link: "/404" },
+    { title: "Wilder World", category: "Motion Graphics", image: "/assets/projects/wilder-world.jpg", video: "/assets/projects/wilder-world.mp4", link: "/wilder-world" },
     { title: "Kalopsia", category: "3D Animation", image: "/assets/projects/kalopsia.jpg", video: "/assets/projects/kalopsia.mp4", link: "https://www.behance.net/gallery/58254853/Mr-Kalopsia-Art-Collection" },
     { title: "Aura AI", category: "Motion Graphics", image: "/assets/projects/aura-ai.jpg", video: "/assets/projects/aura-ai.mp4", link: "/404" },
     { title: "Zero Tech", category: "Motion Graphics", image: "/assets/projects/zero-tech.jpg", video: "/assets/projects/zero-tech.mp4", link: "/404" },

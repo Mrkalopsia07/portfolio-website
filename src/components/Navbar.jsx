@@ -48,7 +48,7 @@ export default function Navbar({ lenis, textEnter, textLeave }) {
                     </a>
 
                     <div className="hidden md:flex items-center pl-3">
-                        {['About', 'Resume'].map((item) => {
+                        {['Resume'].map((item) => {
                             const isResume = item === 'Resume';
                             const isAbout = item === 'About';
                             const href = isResume ? '/resume' : isAbout ? '/about' : (isHome ? `#${item.toLowerCase()}` : `/#${item.toLowerCase()}`);
@@ -92,7 +92,7 @@ export default function Navbar({ lenis, textEnter, textLeave }) {
                 <button className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center rounded-full border border-white/20 hover:bg-white/10 transition-colors duration-300" onClick={() => setMobileMenuOpen(false)}><X size={24} /></button>
 
                 <div className="h-full flex flex-col items-center justify-center gap-8">
-                    {['About', 'Resume'].map((item, index) => {
+                    {['Resume'].map((item, index) => {
                         const isResume = item === 'Resume';
                         const isAbout = item === 'About';
                         const href = isResume ? '/resume' : isAbout ? '/about' : (isHome ? `#${item.toLowerCase()}` : `/#${item.toLowerCase()}`);

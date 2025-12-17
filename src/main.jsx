@@ -10,6 +10,8 @@ import About from './pages/About.jsx'
 import { useState } from 'react'
 import PasswordGate from './components/PasswordGate.jsx'
 
+import WilderWorld from './pages/WilderWorld.jsx'
+
 function Main() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
@@ -23,6 +25,7 @@ function Main() {
         <Route path="/" element={<App />} />
         <Route path="/about" element={<About />} />
         <Route path="/resume" element={<Resume />} />
+        <Route path="/wilder-world" element={<WilderWorld />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
