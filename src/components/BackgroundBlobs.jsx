@@ -81,8 +81,18 @@ export default function BackgroundBlobs() {
             stateRef.current.interactionStrength = stateRef.current.isAttracting ? 80 : 120;
         };
 
-        // Animation loop
-        const animate = () => {
+        // Animation loop - throttled to reduce CPU usage
+        let lastTime = 0;
+        const targetFPS = 30; // Reduce from 60fps to 30fps for background effect
+        const frameInterval = 1000 / targetFPS;
+
+        const animate = (currentTime) => {
+            animationFrameRef.current = requestAnimationFrame(animate);
+
+            const elapsed = currentTime - lastTime;
+            if (elapsed < frameInterval) return;
+            lastTime = currentTime - (elapsed % frameInterval);
+
             const mouseLerp = 0.03;
             mouseRef.current.smoothX += (mouseRef.current.x - mouseRef.current.smoothX) * mouseLerp;
             mouseRef.current.smoothY += (mouseRef.current.y - mouseRef.current.smoothY) * mouseLerp;
@@ -133,8 +143,6 @@ export default function BackgroundBlobs() {
                     }
                 });
             }
-
-            animationFrameRef.current = requestAnimationFrame(animate);
         };
 
         document.addEventListener('mousemove', handleMouseMove);
@@ -142,7 +150,7 @@ export default function BackgroundBlobs() {
         document.addEventListener('touchmove', handleTouchMove, { passive: true });
         document.addEventListener('touchstart', handleTouchStart);
 
-        animate();
+        animationFrameRef.current = requestAnimationFrame(animate);
 
         return () => {
             document.removeEventListener('mousemove', handleMouseMove);

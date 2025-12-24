@@ -143,10 +143,19 @@ export default function NeuralNoise() {
       gl.uniform1f(uniforms.u_ratio, canvas.width / canvas.height);
     };
 
-    // Render loop
+    // Render loop - throttled for performance
     let animationFrameId;
-    const render = () => {
-      const currentTime = performance.now();
+    let lastRenderTime = 0;
+    const targetFPS = 30;
+    const frameInterval = 1000 / targetFPS;
+
+    const render = (currentTime) => {
+      animationFrameId = requestAnimationFrame(render);
+
+      const elapsed = currentTime - lastRenderTime;
+      if (elapsed < frameInterval) return;
+      lastRenderTime = currentTime - (elapsed % frameInterval);
+
       const pointer = pointerRef.current;
 
       pointer.x += (pointer.tX - pointer.x) * 0.5;
@@ -160,7 +169,6 @@ export default function NeuralNoise() {
       gl.uniform1f(uniforms.u_scroll_progress, scrollProgress);
 
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      animationFrameId = requestAnimationFrame(render);
     };
 
     // Mouse move handler
@@ -180,7 +188,7 @@ export default function NeuralNoise() {
     window.addEventListener('touchmove', handleTouchMove);
 
     resizeCanvas();
-    render();
+    animationFrameId = requestAnimationFrame(render);
 
     // Cleanup
     return () => {

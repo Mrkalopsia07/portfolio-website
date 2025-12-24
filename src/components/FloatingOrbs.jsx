@@ -4,16 +4,48 @@ export default function FloatingOrbs() {
     const orbsRef = useRef(null);
 
     useEffect(() => {
-        const handleMouseMove = (e) => {
+        let targetX = 0, targetY = 0;
+        let currentX = 0, currentY = 0;
+        let animationFrameId = null;
+        let isAnimating = false;
+
+        const animate = () => {
+            const dx = targetX - currentX;
+            const dy = targetY - currentY;
+
+            // Stop animating when close enough
+            if (Math.abs(dx) < 0.01 && Math.abs(dy) < 0.01) {
+                isAnimating = false;
+                return;
+            }
+
+            // Smooth interpolation
+            currentX += dx * 0.05;
+            currentY += dy * 0.05;
+
             if (orbsRef.current) {
-                const x = (e.clientX / window.innerWidth - 0.5) * 20;
-                const y = (e.clientY / window.innerHeight - 0.5) * 20;
-                orbsRef.current.style.setProperty('--mouse-x', `${x}px`);
-                orbsRef.current.style.setProperty('--mouse-y', `${y}px`);
+                orbsRef.current.style.setProperty('--mouse-x', `${currentX}px`);
+                orbsRef.current.style.setProperty('--mouse-y', `${currentY}px`);
+            }
+
+            animationFrameId = requestAnimationFrame(animate);
+        };
+
+        const handleMouseMove = (e) => {
+            targetX = (e.clientX / window.innerWidth - 0.5) * 20;
+            targetY = (e.clientY / window.innerHeight - 0.5) * 20;
+
+            if (!isAnimating) {
+                isAnimating = true;
+                animationFrameId = requestAnimationFrame(animate);
             }
         };
+
         window.addEventListener('mousemove', handleMouseMove, { passive: true });
-        return () => window.removeEventListener('mousemove', handleMouseMove);
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+        };
     }, []);
 
     return (

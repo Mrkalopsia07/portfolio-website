@@ -27,6 +27,26 @@ export default function CustomCursor({ cursorVariant }) {
         window.addEventListener('resize', handleResize);
 
         let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+        let animationFrameId = null;
+        let isAnimating = false;
+
+        const animateCursor = () => {
+            const dx = mouseX - cursorX;
+            const dy = mouseY - cursorY;
+
+            // Only continue animating if cursor is still catching up
+            if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+                cursorX += dx * 0.15;
+                cursorY += dy * 0.15;
+
+                if (cursor) {
+                    cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+                }
+                animationFrameId = requestAnimationFrame(animateCursor);
+            } else {
+                isAnimating = false;
+            }
+        };
 
         const moveCursor = (e) => {
             if (isMobileRef.current) return;
@@ -39,42 +59,24 @@ export default function CustomCursor({ cursorVariant }) {
 
             mouseX = e.clientX;
             mouseY = e.clientY;
+
             if (cursorDot) {
                 cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
             }
+
+            // Start animation loop only if not already running
+            if (!isAnimating) {
+                isAnimating = true;
+                animationFrameId = requestAnimationFrame(animateCursor);
+            }
         };
 
-        const animateCursor = () => {
-            if (isMobileRef.current) {
-                // Hide on mobile
-                if (cursor) cursor.style.opacity = '0';
-                if (cursorDot) cursorDot.style.opacity = '0';
-                requestAnimationFrame(animateCursor);
-                return;
-            }
-
-            // On desktop, we let React state/classes handle opacity mostly,
-            // but we need to clear manual opacity overrides from the mobile check above
-            if (cursor && cursor.style.opacity === '0') cursor.style.opacity = '';
-            if (cursorDot && cursorDot.style.opacity === '0') cursorDot.style.opacity = '';
-
-            cursorX += (mouseX - cursorX) * 0.15;
-            cursorY += (mouseY - cursorY) * 0.15;
-
-            if (cursor) {
-                // Only update position, offset is handled by inner div CSS
-                cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
-            }
-            requestAnimationFrame(animateCursor);
-        };
-
-        window.addEventListener('mousemove', moveCursor);
-        const animationFrame = requestAnimationFrame(animateCursor);
+        window.addEventListener('mousemove', moveCursor, { passive: true });
 
         return () => {
             window.removeEventListener('mousemove', moveCursor);
             window.removeEventListener('resize', handleResize);
-            cancelAnimationFrame(animationFrame);
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
         };
     }, []);
 
