@@ -61,6 +61,7 @@ function AppContent() {
   const [showWelcome, setShowWelcome] = useState(false);
   const [showReel, setShowReel] = useState(false);
   const [showPlayButton, setShowPlayButton] = useState(false);
+  const [isGalaxyLoaded, setIsGalaxyLoaded] = useState(false);
 
 
   const [text, setText] = useState('');
@@ -147,7 +148,7 @@ function AppContent() {
 
   // Loader with progress counter
   useEffect(() => {
-    if (!loading) return;
+    if (!loading || !isGalaxyLoaded) return;
 
     const duration = 2000; // 2 seconds
     const startTime = Date.now();
@@ -277,7 +278,7 @@ function AppContent() {
           <div
             className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden pointer-events-none"
             style={{
-              opacity: fadingOut ? 0 : 1,
+              opacity: fadingOut ? 0 : (isGalaxyLoaded ? 1 : 0),
               transition: 'opacity 1s ease-out',
               transform: 'scaleX(-1)'
             }}
@@ -287,6 +288,7 @@ function AppContent() {
               scale={1}
               dpi={1.5}
               className="w-full h-full object-cover"
+              onLoad={() => setIsGalaxyLoaded(true)}
             />
           </div>
 
