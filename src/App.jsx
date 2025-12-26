@@ -144,6 +144,17 @@ function AppContent() {
     };
   }, [lenis]);
 
+  // Fallback: If galaxy doesn't load in 2.5s, proceed anyway
+  useEffect(() => {
+    if (loading && !isGalaxyLoaded) {
+      const timer = setTimeout(() => {
+        console.warn("Galaxy load timed out, forcing progress...");
+        setIsGalaxyLoaded(true);
+      }, 2500);
+      return () => clearTimeout(timer);
+    }
+  }, [loading, isGalaxyLoaded]);
+
   // --- SNAP BACK LOGIC REMOVED ---
 
   // Loader with progress counter
