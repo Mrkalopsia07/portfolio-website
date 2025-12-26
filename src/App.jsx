@@ -187,7 +187,7 @@ function AppContent() {
     };
 
     requestAnimationFrame(updateProgress);
-  }, [loading]);
+  }, [loading, isGalaxyLoaded]);
 
   // Fallback: ensure loader unmounts even if onTransitionEnd doesn't fire
   useEffect(() => {
