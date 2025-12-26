@@ -170,19 +170,23 @@ function AppContent() {
           setFadingOut(true);
           setLoading(false);
           sessionStorage.setItem("introShown", "true");
-          // Fallback: force unmount loader after transition duration (1s) + buffer
-          // This ensures UnicornScene WebGL is destroyed even if onTransitionEnd doesn't fire
-          setTimeout(() => {
-            setShowLoader(false);
-            // Force resize event to fix BackgroundScene WebGL resolution
-            window.dispatchEvent(new Event('resize'));
-          }, 1200);
         }, 800);
       }
     };
 
     requestAnimationFrame(updateProgress);
   }, [loading]);
+
+  // Fallback: ensure loader unmounts even if onTransitionEnd doesn't fire
+  useEffect(() => {
+    if (!loading && showLoader) {
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+        window.dispatchEvent(new Event('resize'));
+      }, 1500); // 1s transition + 500ms buffer
+      return () => clearTimeout(timer);
+    }
+  }, [loading, showLoader]);
 
   // Typewriter
   useEffect(() => {
@@ -262,7 +266,11 @@ function AppContent() {
           }}
           onTransitionEnd={(e) => {
             // Only trigger on transform (slide-up), not on inner opacity transitions
-            if (e.propertyName === 'transform' && !loading) setShowLoader(false);
+            if (e.propertyName === 'transform' && !loading) {
+              setShowLoader(false);
+              // Trigger resize after loader unmounts to fix BackgroundScene WebGL
+              setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+            }
           }}
         >
           {/* Cosmic animation - Unicorn Studio Galaxy Background */}
