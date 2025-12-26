@@ -6,19 +6,9 @@ import App from './App.jsx'
 import NotFound from './components/NotFound.jsx'
 import Resume from './pages/Resume.jsx'
 import About from './pages/About.jsx'
-
-import { useState } from 'react'
-import PasswordGate from './components/PasswordGate.jsx'
-
 import WilderWorld from './pages/WilderWorld.jsx'
 
 function Main() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-  if (!isAuthenticated) {
-    return <PasswordGate onAuthenticated={() => setIsAuthenticated(true)} />
-  }
-
   return (
     <BrowserRouter>
       <Routes>
