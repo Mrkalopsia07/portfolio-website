@@ -20,6 +20,14 @@ export default function UnicornEmbed({ width = "100%", height = "100%" }) {
     // Only mount once after initial render
     useEffect(() => {
         setMounted(true);
+
+        // Force a resize event after mount to fix WebGL resolution issues
+        // This mimics what happens when you open DevTools or resize the window
+        const timer = setTimeout(() => {
+            window.dispatchEvent(new Event('resize'));
+        }, 100);
+
+        return () => clearTimeout(timer);
     }, []);
 
     return (
