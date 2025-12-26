@@ -170,6 +170,11 @@ function AppContent() {
           setFadingOut(true);
           setLoading(false);
           sessionStorage.setItem("introShown", "true");
+          // Fallback: force unmount loader after transition duration (1s) + buffer
+          // This ensures UnicornScene WebGL is destroyed even if onTransitionEnd doesn't fire
+          setTimeout(() => {
+            setShowLoader(false);
+          }, 1200);
         }, 800);
       }
     };
