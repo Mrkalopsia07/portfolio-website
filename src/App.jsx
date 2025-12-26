@@ -75,22 +75,17 @@ function AppContent() {
   const [lenis, setLenis] = useState(null);
   const snapTimeout = useRef(null);
 
-  // Smooth scroll with Lenis
+  // Smooth scroll with Lenis - optimized to only run when needed
   useEffect(() => {
     const lenisInstance = new Lenis({
       duration: 1.8,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       smoothTouch: false,
+      autoRaf: true, // Let Lenis manage its own RAF loop efficiently
     });
 
     setLenis(lenisInstance);
-
-    function raf(time) {
-      lenisInstance.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
 
     return () => {
       lenisInstance.destroy();
@@ -98,12 +93,15 @@ function AppContent() {
     };
   }, []);
 
-  // 2. MASTER SCROLL LISTENER (Hero + Navbar + PlayButton)
+  // 2. MASTER SCROLL LISTENER (Hero + Navbar + PlayButton) - throttled for performance
   useEffect(() => {
     if (!lenis) return;
 
-    const onScroll = (e) => {
-      const scrollY = e.scroll || window.scrollY;
+    let ticking = false;
+    let lastScrollY = 0;
+
+    const updateScroll = () => {
+      const scrollY = lastScrollY;
       const windowHeight = window.innerHeight;
 
       // --- A. HERO ANIMATION (Direct DOM - High Perf) ---
@@ -117,7 +115,6 @@ function AppContent() {
 
       // --- NEW: ORB FADE IN (Matches background gradient) ---
       if (orbsRef.current) {
-        // Fade in orbs starting from when user scrolls past hero
         const orbOpacity = Math.min(scrollY / windowHeight, 1);
         orbsRef.current.style.opacity = orbOpacity;
       }
@@ -127,9 +124,15 @@ function AppContent() {
       const shouldShowPlay = scrollY > playThreshold;
       setShowPlayButton(prev => (prev !== shouldShowPlay ? shouldShowPlay : prev));
 
-      // --- C. NAVBAR TOGGLE (Smart State) ---
-      // Navbar logic is now handled inside the Navbar component
+      ticking = false;
+    };
 
+    const onScroll = (e) => {
+      lastScrollY = e.scroll || window.scrollY;
+      if (!ticking) {
+        requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
     };
 
     lenis.on('scroll', onScroll);
