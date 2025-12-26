@@ -25,7 +25,10 @@ function Main() {
         <Route path="/" element={<App />} />
         <Route path="/about" element={<About />} />
         <Route path="/resume" element={<Resume />} />
-        <Route path="/wilder-world" element={<WilderWorld />} />
+        {/* Hidden URL for Wilder World - use /hidden/wilder-world to access */}
+        <Route path="/hidden/wilder-world" element={<WilderWorld />} />
+        {/* Public URL shows 404 */}
+        <Route path="/wilder-world" element={<NotFound />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
