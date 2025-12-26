@@ -174,6 +174,8 @@ function AppContent() {
           // This ensures UnicornScene WebGL is destroyed even if onTransitionEnd doesn't fire
           setTimeout(() => {
             setShowLoader(false);
+            // Force resize event to fix BackgroundScene WebGL resolution
+            window.dispatchEvent(new Event('resize'));
           }, 1200);
         }, 800);
       }
