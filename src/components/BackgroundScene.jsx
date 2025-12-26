@@ -15,23 +15,41 @@ const StableUnicornScene = memo(function StableUnicornScene() {
 }, () => true); // Always return true to never re-render
 
 export default function UnicornEmbed({ width = "100%", height = "100%" }) {
+    const containerRef = useRef(null);
     const [mounted, setMounted] = useState(false);
 
     // Only mount once after initial render
     useEffect(() => {
         setMounted(true);
-
-        // Force a resize event after mount to fix WebGL resolution issues
-        // This mimics what happens when you open DevTools or resize the window
-        const timer = setTimeout(() => {
-            window.dispatchEvent(new Event('resize'));
-        }, 100);
-
-        return () => clearTimeout(timer);
     }, []);
 
+    // Force WebGL to recalculate by briefly changing container size
+    useEffect(() => {
+        if (!mounted || !containerRef.current) return;
+
+        const timer = setTimeout(() => {
+            const container = containerRef.current;
+            if (container) {
+                // Briefly change the container size to force WebGL recalculation
+                const originalHeight = container.style.height;
+                container.style.height = 'calc(100% - 1px)';
+
+                // Force reflow
+                container.offsetHeight;
+
+                // Restore and dispatch resize
+                requestAnimationFrame(() => {
+                    container.style.height = originalHeight || '100%';
+                    window.dispatchEvent(new Event('resize'));
+                });
+            }
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [mounted]);
+
     return (
-        <div style={{ width, height }}>
+        <div ref={containerRef} style={{ width, height }}>
             {mounted && <StableUnicornScene />}
         </div>
     );
