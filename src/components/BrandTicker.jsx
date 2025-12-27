@@ -20,11 +20,17 @@ export default function BrandTicker({ textEnter, textLeave }) {
                                     <img
                                         src={`/assets/logos/${brand.toLowerCase().replace(/ /g, '-')}.svg`}
                                         alt={brand}
-                                        className="h-full w-auto object-contain"
+                                        className="h-full w-auto object-contain brand-logo"
+                                        loading="eager"
+                                        decoding="async"
                                         onError={(e) => {
                                             e.target.style.display = 'none';
                                             e.target.nextSibling.style.display = 'block';
                                         }}
+                                        onLoad={(e) => {
+                                            e.target.style.opacity = '1';
+                                        }}
+                                        style={{ opacity: 0, transition: 'opacity 0.3s' }}
                                     />
                                     <span className="hidden font-serif italic text-lg md:text-3xl text-zinc-300 whitespace-nowrap">
                                         {brand.charAt(0).toUpperCase() + brand.slice(1)}
@@ -43,6 +49,14 @@ export default function BrandTicker({ textEnter, textLeave }) {
                 .animate-ticker {
                     animation: ticker 30s linear infinite;
                     will-change: transform;
+                }
+                .brand-logo {
+                    image-rendering: -webkit-optimize-contrast;
+                    image-rendering: crisp-edges;
+                }
+                /* Force SVG images to render with proper filtering */
+                .brand-logo[src$=".svg"] {
+                    filter: brightness(1);
                 }
             `}</style>
         </div>

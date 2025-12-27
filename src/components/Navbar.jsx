@@ -42,9 +42,31 @@ export default function Navbar({ lenis, textEnter, textLeave }) {
         <>
             <nav className={`fixed top-0 left-0 w-full z-30 px-4 md:px-6 py-4 md:py-6 transition-transform duration-300 flex justify-center ${showNavbar ? 'translate-y-0' : '-translate-y-full'}`}>
                 <div className="flex items-center gap-2 p-2 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full">
-                    <a href="/" className="w-10 h-10 relative group bg-transparent" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                        <div className="absolute -inset-2 bg-purple-500 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                        <img src={profileImg} alt="Mr. Kalopsia" className="w-full h-full object-cover rounded-full relative z-10" />
+                    <a
+                        href="/"
+                        className="w-10 h-10 relative group bg-transparent overflow-hidden rounded-full"
+                        onMouseEnter={textEnter}
+                        onMouseLeave={textLeave}
+                        onMouseMove={(e) => {
+                            const rect = e.currentTarget.getBoundingClientRect();
+                            const x = ((e.clientX - rect.left) / rect.width) * 100;
+                            const y = ((e.clientY - rect.top) / rect.height) * 100;
+                            e.currentTarget.style.setProperty('--mouse-x', `${x}%`);
+                            e.currentTarget.style.setProperty('--mouse-y', `${y}%`);
+                        }}
+                        style={{ '--mouse-x': '50%', '--mouse-y': '50%' }}
+                    >
+                        <img
+                            src={profileImg}
+                            alt="Mr. Kalopsia"
+                            className="w-full h-full object-cover rounded-full relative z-10"
+                        />
+                        <div
+                            className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20"
+                            style={{
+                                background: `radial-gradient(circle 50px at var(--mouse-x) var(--mouse-y), rgba(168, 85, 247, 0.8) 0%, rgba(147, 51, 234, 0.4) 40%, transparent 70%)`,
+                            }}
+                        />
                     </a>
 
                     <div className="hidden md:flex items-center pl-3">
