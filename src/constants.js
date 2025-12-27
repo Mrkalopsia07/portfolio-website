@@ -1,9 +1,9 @@
 export const ROLES = ["Art Director", "Motion Designer", "3D Animator"];
 
 export const PROJECTS = [
-    { title: "Wilder World", category: "Motion Graphics", image: "/assets/projects/wilder-world.jpg", video: "/assets/projects/wilder-world.mp4", link: "/wilder-world" },
+    { title: "Wilder World", category: "Motion Graphics", image: "/assets/projects/wilder-world.jpg", video: "/assets/projects/wilder-world.mp4", link: "https://www.behance.net/gallery/240549387/Wilder-World-Metropolis" },
     { title: "Kalopsia", category: "3D Animation", image: "/assets/projects/kalopsia.jpg", video: "/assets/projects/kalopsia.mp4", link: "https://www.behance.net/gallery/58254853/Mr-Kalopsia-Art-Collection" },
-    { title: "Aura AI", category: "Motion Graphics", image: "/assets/projects/aura-ai.jpg", video: "/assets/projects/aura-ai.mp4", link: "/404" },
+    { title: "Aura AI", category: "Motion Graphics", image: "/assets/projects/aura-ai.jpg", video: "/assets/projects/aura-ai.mp4", link: "https://www.behance.net/gallery/241022233/Aura-AI-Explainer-Video" },
     { title: "Zero Tech", category: "Motion Graphics", image: "/assets/projects/zero-tech.jpg", video: "/assets/projects/zero-tech.mp4", link: "/404" },
     { title: "The Time Traveller's Mind", category: "One minute short film", image: "/assets/projects/time-traveller.jpg", video: "/assets/projects/time-traveller.mp4", link: "https://www.behance.net/gallery/181354191/The-Time-Travellers-Mind-One-Minute-Short-Film" },
     { title: "Numbers Game", category: "Branding", image: "/assets/projects/numbers-game.jpg", video: "/assets/projects/numbers-game.mp4", link: "https://www.behance.net/gallery/181256079/Numbers-Game" }
