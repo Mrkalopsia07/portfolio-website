@@ -459,24 +459,37 @@ function AppContent() {
                 }
                 setTimeout(() => setShowReel(true), 800);
               }}
-              className="flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-white text-black text-sm font-semibold hover:bg-purple-200 transition-all duration-300 group"
+              className="relative flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-white text-black text-sm font-semibold transition-all duration-300 group overflow-hidden"
               onMouseEnter={textEnter}
               onMouseLeave={textLeave}
             >
-              <Play size={14} className="fill-current" />
-              Play Showreel
+              {/* Purple overlay - more prominent */}
+              <span className="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></span>
+
+              {/* Glow effect */}
+              <span className="absolute inset-0 bg-purple-400 blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 scale-150"></span>
+
+              <span className="relative flex items-center gap-2.5 transition-colors duration-300 group-hover:text-white">
+                <Play size={14} className="transition-all duration-300 group-hover:scale-110 group-hover:rotate-90 fill-black group-hover:fill-white stroke-black group-hover:stroke-white" />
+                Play Showreel
+              </span>
             </button>
             <a
               href="#work"
-              className="flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-transparent text-white/70 border border-white/15 text-sm font-semibold hover:text-white hover:border-white/40 hover:bg-white/15 transition-all duration-300 group relative overflow-hidden"
+              className="relative flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-transparent text-white/70 border border-white/15 text-sm font-semibold transition-all duration-300 group overflow-hidden"
               onMouseEnter={textEnter}
               onMouseLeave={textLeave}
             >
-              <span className="absolute inset-0 bg-white/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-150"></span>
-              <span className="relative flex items-center gap-2.5">
+              {/* Purple overlay - more prominent */}
+              <span className="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></span>
+
+              {/* Glow effect */}
+              <span className="absolute inset-0 bg-purple-400 blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 scale-150"></span>
+
+              <span className="relative flex items-center gap-2.5 transition-colors duration-300 group-hover:text-white">
                 View Work
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="w-3.5 h-3.5 opacity-50 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-1">
-                  <path d="M12 5v14M19 12l-7 7-7-7" />
+                <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 transition-all duration-300 group-hover:translate-y-1 group-hover:scale-110 stroke-white/70 group-hover:stroke-white">
+                  <path d="M12 5v14m0 0l-5-5m5 5l5-5" />
                 </svg>
               </span>
             </a>
@@ -634,12 +647,20 @@ function AppContent() {
               <h2 className="font-serif italic text-4xl md:text-8xl mb-8 md:mb-12 opacity-90 leading-tight">Ready to build<br />something iconic?</h2>
               <a
                 href="mailto:em@mrkalopsia.com"
-                className="flex items-center gap-3 px-6 md:px-8 py-3.5 md:py-4 rounded-full bg-white text-black text-base md:text-lg font-semibold hover:bg-purple-200 transition-all duration-300 group inline-flex"
+                className="relative flex items-center gap-3 px-6 md:px-8 py-3.5 md:py-4 rounded-full bg-white text-black text-base md:text-lg font-semibold transition-all duration-300 group inline-flex overflow-hidden"
                 onMouseEnter={textEnter}
                 onMouseLeave={textLeave}
               >
-                <Mail size={20} className="md:w-6 md:h-6" />
-                <span>Say Hello</span>
+                {/* Purple overlay - more prominent */}
+                <span className="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></span>
+
+                {/* Glow effect */}
+                <span className="absolute inset-0 bg-purple-400 blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 scale-150"></span>
+
+                <span className="relative flex items-center gap-3 transition-colors duration-300 group-hover:text-white">
+                  <Mail size={20} className="md:w-6 md:h-6 transition-all duration-300 group-hover:scale-110 group-hover:-rotate-12 stroke-black group-hover:stroke-white" />
+                  <span>Say Hello</span>
+                </span>
               </a>
             </FadeIn>
           </div>
@@ -650,7 +671,18 @@ function AppContent() {
                 <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8">
                   <a href="https://instagram.com/mr.kalopsia/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-xs md:text-sm font-bold uppercase tracking-wider" onMouseEnter={textEnter} onMouseLeave={textLeave}><Instagram size={16} className="md:w-[18px] md:h-[18px]" /> Instagram</a>
                   <a href="https://www.linkedin.com/in/eashan-misra/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-xs md:text-sm font-bold uppercase tracking-wider" onMouseEnter={textEnter} onMouseLeave={textLeave}><Linkedin size={16} className="md:w-[18px] md:h-[18px]" /> LinkedIn</a>
-                  <a href="/Resume - Eashan Misra.docx" download className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors text-xs md:text-sm font-bold uppercase tracking-wider border border-purple-500/30 px-3 md:px-4 py-1.5 md:py-2 rounded-full hover:bg-purple-500/10" onMouseEnter={textEnter} onMouseLeave={textLeave}><Download size={16} className="md:w-[18px] md:h-[18px]" /> Resume</a>
+                  <a href="/Resume - Eashan Misra.docx" download className="relative flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors text-xs md:text-sm font-bold uppercase tracking-wider border border-purple-500/30 px-3 md:px-4 py-1.5 md:py-2 rounded-full hover:bg-purple-500/10 group overflow-hidden" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                    {/* Purple overlay */}
+                    <span className="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></span>
+
+                    {/* Glow effect */}
+                    <span className="absolute inset-0 bg-purple-400 blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 scale-150"></span>
+
+                    <span className="relative flex items-center gap-2 transition-colors duration-300 group-hover:text-white">
+                      <Download size={16} className="md:w-[18px] md:h-[18px] transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1" />
+                      <span>Resume</span>
+                    </span>
+                  </a>
                 </div>
               </div>
             </div>

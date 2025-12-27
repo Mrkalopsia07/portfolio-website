@@ -65,12 +65,20 @@ export default function Resume() {
                         <a
                             href="/Resume - Eashan Misra.docx"
                             download
-                            className="group flex items-center gap-3 px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-purple-200 transition-all duration-300 whitespace-nowrap"
+                            className="relative group flex items-center gap-3 px-6 py-3 rounded-full bg-white text-black font-semibold transition-all duration-300 whitespace-nowrap overflow-hidden"
                             onMouseEnter={textEnter}
                             onMouseLeave={textLeave}
                         >
-                            <Download size={18} />
-                            <span>Download Resume</span>
+                            {/* Purple overlay */}
+                            <span className="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></span>
+
+                            {/* Glow effect */}
+                            <span className="absolute inset-0 bg-purple-400 blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 scale-150"></span>
+
+                            <span className="relative flex items-center gap-3 transition-colors duration-300 group-hover:text-white">
+                                <Download size={18} className="transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1 stroke-black group-hover:stroke-white" />
+                                <span>Download Resume</span>
+                            </span>
                         </a>
                     </div>
                 </FadeIn>
