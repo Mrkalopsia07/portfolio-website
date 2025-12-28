@@ -666,7 +666,7 @@ function AppContent() {
           </div>
           <div className="mt-12 md:mt-24 w-full bg-black">
             <div className="max-w-7xl mx-auto px-4 md:px-6">
-              <div className="flex flex-col items-center md:flex-row md:justify-between border-t border-white/10 pt-6 md:pt-8 pb-12 md:pb-32 gap-6 md:gap-8">
+              <div className="flex flex-col items-center md:flex-row md:justify-between border-t border-white/10 pt-6 md:pt-8 pb-[calc(3rem+2px)] md:pb-[calc(8rem+2px)] gap-6 md:gap-8">
                 <p className="text-zinc-500 text-xs md:text-sm uppercase tracking-widest order-last md:order-first">© 2025 Mr. Kalopsia. Eashan Misra.</p>
                 <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8">
                   <a href="https://instagram.com/mr.kalopsia/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-xs md:text-sm font-bold uppercase tracking-wider" onMouseEnter={textEnter} onMouseLeave={textLeave}><Instagram size={16} className="md:w-[18px] md:h-[18px]" /> Instagram</a>
