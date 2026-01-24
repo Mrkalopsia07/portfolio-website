@@ -5,12 +5,14 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
     const videoRef = useRef(null);
     const loopRef = useRef(null);
     const mobileVideoRef = useRef(null);
+    const hideControlsTimeout = useRef(null);
     const [isVideoPlaying, setIsVideoPlaying] = useState(true);
     const [videoProgress, setVideoProgress] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [isMuted, setIsMuted] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [showControls, setShowControls] = useState(true);
 
     // Check if mobile
     useEffect(() => {
@@ -19,6 +21,32 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
         window.addEventListener('resize', checkMobile);
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
+
+    // Auto-hide controls after 2 seconds when video is playing
+    useEffect(() => {
+        if (showReel && isVideoPlaying && !isMobile) {
+            // Clear any existing timeout
+            if (hideControlsTimeout.current) {
+                clearTimeout(hideControlsTimeout.current);
+            }
+            // Set new timeout to hide controls after 2 seconds
+            hideControlsTimeout.current = setTimeout(() => {
+                setShowControls(false);
+            }, 2000);
+        } else {
+            // Show controls when video is paused or not in showReel mode
+            setShowControls(true);
+            if (hideControlsTimeout.current) {
+                clearTimeout(hideControlsTimeout.current);
+            }
+        }
+
+        return () => {
+            if (hideControlsTimeout.current) {
+                clearTimeout(hideControlsTimeout.current);
+            }
+        };
+    }, [showReel, isVideoPlaying, isMobile]);
 
     // Auto-play when showReel becomes true (desktop only)
     useEffect(() => {
@@ -48,10 +76,25 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
         if (!showReel || !isVideoPlaying) {
             setCursorVariant('video');
         }
+        // Show controls on hover
+        setShowControls(true);
+        // Reset the hide timer
+        if (hideControlsTimeout.current) {
+            clearTimeout(hideControlsTimeout.current);
+        }
+        if (showReel && isVideoPlaying && !isMobile) {
+            hideControlsTimeout.current = setTimeout(() => {
+                setShowControls(false);
+            }, 2000);
+        }
     };
 
     const handleMouseLeave = () => {
         setCursorVariant('default');
+        // Hide controls when cursor leaves (if video is playing)
+        if (showReel && isVideoPlaying && !isMobile) {
+            setShowControls(false);
+        }
     };
 
     const handleVideoClick = () => {
@@ -148,7 +191,7 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
 
                     {/* Desktop Controls */}
                     {!isMobile && (
-                        <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-10 transition-opacity duration-500 ${showReel ? 'opacity-100' : 'opacity-100'}`} onMouseEnter={(e) => { e.stopPropagation(); setCursorVariant('default'); }} onMouseLeave={(e) => { e.stopPropagation(); if (!showReel || !isVideoPlaying) setCursorVariant('video'); }}>
+                        <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-10 transition-opacity duration-500 ${showControls ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onMouseEnter={(e) => { e.stopPropagation(); setCursorVariant('default'); setShowControls(true); if (hideControlsTimeout.current) clearTimeout(hideControlsTimeout.current); }} onMouseLeave={(e) => { e.stopPropagation(); if (!showReel || !isVideoPlaying) setCursorVariant('video'); if (showReel && isVideoPlaying) { hideControlsTimeout.current = setTimeout(() => setShowControls(false), 2000); } }}>
                             <div className="bg-white/95 backdrop-blur-md rounded-full px-5 py-3 shadow-2xl flex items-center gap-4">
                                 <button
                                     onClick={(e) => {

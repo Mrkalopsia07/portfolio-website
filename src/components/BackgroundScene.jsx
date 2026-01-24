@@ -28,6 +28,7 @@ export default function BackgroundScene({ width = "100%", height = "100%" }) {
                     height="100%"
                     scale={1}
                     dpi={1}
+                    interactivity={false}
                     onLoad={handleLoad}
                 />
             )}

@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Lenis from 'lenis';
 import Navbar from '../components/Navbar';
 import CustomCursor from '../components/CustomCursor';
 import FadeIn from '../components/FadeIn';
-import FloatingOrbs from '../components/FloatingOrbs';
-import { ArrowLeft, Sparkles, Palette, Film, Layers, Globe, Star, Heart, Coffee, Rocket, Award } from 'lucide-react';
+import BackgroundScene from '../components/BackgroundScene';
+import { ArrowLeft, ChevronDown, Mail } from 'lucide-react';
 
 export default function About() {
     const [cursorVariant, setCursorVariant] = useState("default");
     const [lenis, setLenis] = useState(null);
+    const orbsRef = useRef(null);
 
     useEffect(() => {
         const lenisInstance = new Lenis({
@@ -16,7 +17,7 @@ export default function About() {
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smoothWheel: true,
             smoothTouch: false,
-            autoRaf: true, // Let Lenis manage its own RAF loop efficiently
+            autoRaf: true,
         });
         setLenis(lenisInstance);
 
@@ -26,331 +27,505 @@ export default function About() {
         };
     }, []);
 
+    // Parallax mouse effect for gradient orbs - exact copy from App.jsx
+    useEffect(() => {
+        let targetX = 0, targetY = 0;
+        let currentX = 0, currentY = 0;
+        let animationFrameId = null;
+        let isAnimating = false;
+
+        const animate = () => {
+            const dx = targetX - currentX;
+            const dy = targetY - currentY;
+
+            if (Math.abs(dx) < 0.01 && Math.abs(dy) < 0.01) {
+                isAnimating = false;
+                return;
+            }
+
+            currentX += dx * 0.05;
+            currentY += dy * 0.05;
+
+            if (orbsRef.current) {
+                orbsRef.current.style.setProperty('--mouse-x', `${currentX}px`);
+                orbsRef.current.style.setProperty('--mouse-y', `${currentY}px`);
+            }
+
+            animationFrameId = requestAnimationFrame(animate);
+        };
+
+        const handleMouseMove = (e) => {
+            targetX = (e.clientX / window.innerWidth - 0.5) * 20;
+            targetY = (e.clientY / window.innerHeight - 0.5) * 20;
+
+            if (!isAnimating) {
+                isAnimating = true;
+                animationFrameId = requestAnimationFrame(animate);
+            }
+        };
+
+        window.addEventListener('mousemove', handleMouseMove, { passive: true });
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+        };
+    }, []);
+
     const textEnter = () => setCursorVariant("text");
     const textLeave = () => setCursorVariant("default");
 
     return (
-        <div className="text-white min-h-screen font-sans selection:bg-purple-500 selection:text-white md:cursor-none cursor-auto bg-black overflow-x-hidden">
+        <div className="text-white min-h-screen font-sans selection:bg-purple-500 selection:text-white md:cursor-none cursor-auto bg-black overflow-x-hidden relative">
             <CustomCursor cursorVariant={cursorVariant} />
             <Navbar lenis={lenis} textEnter={textEnter} textLeave={textLeave} />
 
-            <FloatingOrbs />
+            {/* Background Scene - same as home page */}
+            <div className="fixed inset-0 z-0 pointer-events-none">
+                <BackgroundScene />
+            </div>
 
-            <main className="relative z-10">
+            <main className="relative z-20">
+                {/* Gradient Overlay - exact copy from App.jsx */}
+                <div className="absolute inset-0 z-0 pointer-events-none hidden md:block" style={{
+                    background: 'linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 10%, rgba(0,0,0,0.8) 15%, #000 20%, #000 85%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0.3) 95%, transparent 100%)'
+                }}></div>
+                <div className="absolute inset-0 z-0 pointer-events-none md:hidden" style={{
+                    background: 'linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.8) 12%, #000 15%, #000 100%)'
+                }}></div>
+
+                {/* Floating Gradient Orbs - exact copy from App.jsx */}
+                <div ref={orbsRef} className="fixed inset-0 z-[5] pointer-events-none overflow-hidden" style={{ '--mouse-x': '0px', '--mouse-y': '0px' }}>
+                    {/* Orb 1: Big soft orb - top left */}
+                    <div
+                        className="absolute w-[800px] h-[800px] rounded-full bg-purple-400/[0.10] blur-[200px] animate-float-slow"
+                        style={{
+                            top: '-10%',
+                            left: '-10%',
+                            transform: 'translate(calc(var(--mouse-x) * 0.2), calc(var(--mouse-y) * 0.2))',
+                        }}
+                    />
+
+                    {/* Orb 2: Top right */}
+                    <div
+                        className="absolute w-[600px] h-[600px] rounded-full bg-purple-500/[0.12] blur-[160px] animate-float-slow"
+                        style={{
+                            top: '5%',
+                            right: '10%',
+                            transform: 'translate(calc(var(--mouse-x) * 0.5), calc(var(--mouse-y) * 0.5))',
+                        }}
+                    />
+
+                    {/* Orb 3: Middle left */}
+                    <div
+                        className="absolute w-[500px] h-[500px] rounded-full bg-pink-500/[0.12] blur-[140px] animate-float-medium"
+                        style={{
+                            top: '40%',
+                            left: '5%',
+                            transform: 'translate(calc(var(--mouse-x) * -0.3), calc(var(--mouse-y) * -0.3))',
+                        }}
+                    />
+
+                    {/* Orb 4: Bottom right */}
+                    <div
+                        className="absolute w-[400px] h-[400px] rounded-full bg-blue-500/[0.12] blur-[120px] animate-float-fast"
+                        style={{
+                            bottom: '20%',
+                            right: '20%',
+                            transform: 'translate(calc(var(--mouse-x) * 0.4), calc(var(--mouse-y) * 0.4))',
+                        }}
+                    />
+                </div>
+
                 {/* Hero Section */}
-                <section className="min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-20 relative">
-                    {/* Floating Stars */}
-                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                        {[...Array(6)].map((_, i) => (
-                            <div
-                                key={i}
-                                className="absolute animate-pulse"
-                                style={{
-                                    top: `${15 + i * 15}%`,
-                                    left: `${10 + i * 15}%`,
-                                    animationDelay: `${i * 0.5}s`,
-                                    opacity: 0.3
-                                }}
-                            >
-                                <Star size={8 + i * 2} className="text-purple-400" fill="currentColor" />
-                            </div>
-                        ))}
-                    </div>
-
+                <section className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 pt-28 pb-16 overflow-hidden">
                     <FadeIn>
-                        <div className="text-center max-w-4xl mx-auto">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-500/20 bg-purple-500/5 text-purple-300 text-xs tracking-widest uppercase mb-8">
-                                <Sparkles size={14} />
-                                The Story
+                        <div className="text-center max-w-4xl mx-auto relative z-10">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/60 backdrop-blur-xl text-white text-[11px] tracking-[0.05em] uppercase font-medium mb-8">
+                                About Me
                             </div>
-                            <h1 className="font-serif italic text-5xl md:text-8xl mb-8 leading-tight">
-                                Meet <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">Kalopsia</span>
+
+                            {/* Title - exact match with home page */}
+                            <h1 className="font-serif italic text-5xl md:text-[5.5rem] leading-none mb-5 w-full text-center tracking-[-0.02em]">
+                                <span className="block text-white/70 text-[16px] font-light tracking-wide mb-3 not-italic" style={{ fontFamily: 'inherit' }}>
+                                    Eashan Misra is
+                                </span>
+                                Mr. Kalopsia
                             </h1>
-                            <p className="text-xl md:text-2xl text-zinc-400 leading-relaxed max-w-2xl mx-auto" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                                <span className="text-white font-medium">ka·lop·si·a</span> — <em>the delusion of things being more beautiful than they are.</em>
+
+                            {/* Subtitle - exact match with home page: text-[16px] */}
+                            <p className="text-white/70 max-w-[480px] text-[16px] leading-relaxed mb-10 font-light mx-auto" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                A multi-disciplinary motion designer and 3D artist who's spent the last <span className="text-white font-normal">8+ years</span> turning creative curiosity into career-defining work.
                             </p>
+
+                            {/* Stats - matching home page colors */}
+                            <div className="flex flex-wrap justify-center gap-8 md:gap-16 text-center">
+                                {[
+                                    { value: "160K+", label: "Global Followers" },
+                                    { value: "8+", label: "Years Experience" },
+                                    { value: "Adobe", label: "Featured Artist" }
+                                ].map((stat, i) => (
+                                    <div key={i} className="px-4">
+                                        <div className="text-2xl md:text-4xl font-bold text-white mb-1">{stat.value}</div>
+                                        <div className="text-xs text-zinc-400 uppercase tracking-wider">{stat.label}</div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </FadeIn>
 
                     {/* Scroll indicator */}
-                    <div className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce opacity-40">
-                        <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 stroke-white">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
+                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce opacity-40">
+                        <ChevronDown size={24} />
                     </div>
                 </section>
 
-                {/* The Story Section */}
-                <section className="py-20 md:py-32 px-6">
+                {/* Introduction - text-[16px] to match */}
+                <section className="py-16 md:py-24 px-6 relative z-10">
                     <div className="max-w-4xl mx-auto">
                         <FadeIn>
+                            <p className="text-[16px] md:text-lg text-white/70 leading-relaxed mb-8 font-light" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                My portfolio includes collaborations with <span className="text-white font-normal">Logan Paul, Gillette, Western Digital, Wilder World</span>, and recognition from <span className="text-white font-normal">Adobe, ViewSonic, and Ann Druyan</span> (co-creator of Cosmos). I've built a global audience, had my work exhibited across <span className="text-white font-normal">Paris</span>, and helped drive campaigns that generated <span className="text-white font-normal">millions of views</span>.
+                            </p>
+                            <p className="text-xl md:text-2xl font-serif italic text-white" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                But none of this was the plan.
+                            </p>
+                        </FadeIn>
+                    </div>
+                </section>
+
+                {/* The Accidental Beginning */}
+                <section className="py-16 md:py-24 px-6 relative z-10">
+                    <div className="max-w-6xl mx-auto">
+                        <FadeIn>
                             <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
-                                {/* Artistic Element */}
-                                <div className="relative aspect-square flex items-center justify-center order-2 md:order-1">
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                        <div className="w-48 h-48 md:w-64 md:h-64 rounded-full border border-purple-500/20 animate-[spin_20s_linear_infinite]" />
-                                        <div className="absolute w-40 h-40 md:w-52 md:h-52 rounded-full border border-pink-500/20 animate-[spin_15s_linear_infinite_reverse]" />
-                                        <div className="absolute w-32 h-32 md:w-40 md:h-40 rounded-full border border-blue-500/20 animate-[spin_10s_linear_infinite]" />
-                                        <div className="absolute w-4 h-4 rounded-full bg-purple-500 animate-pulse" />
+                                {/* Adobe Feature Image - no shadow/stroke */}
+                                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-black order-2 md:order-1">
+                                    <img
+                                        src="/assets/about/adobe-feature.jpg"
+                                        alt="Adobe Feature - Mr. Kalopsia"
+                                        className="w-full h-full object-cover"
+                                        onError={(e) => {
+                                            e.target.style.display = 'none';
+                                            e.target.nextSibling.style.display = 'flex';
+                                        }}
+                                    />
+                                    <div className="absolute inset-0 flex-col items-center justify-center text-zinc-600 hidden">
+                                        <span className="text-sm text-zinc-500">adobe-feature.jpg</span>
                                     </div>
-                                    <span className="font-serif italic text-7xl md:text-9xl text-white/5 select-none">EM</span>
                                 </div>
 
                                 {/* Story Text */}
-                                <div className="space-y-6 order-1 md:order-2" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                                    <h2 className="font-serif italic text-3xl md:text-5xl mb-6 flex items-center gap-4">
-                                        <span className="w-8 h-[1px] bg-purple-500/50"></span>
-                                        The Man Behind
-                                    </h2>
-                                    <p className="text-zinc-400 text-lg leading-relaxed">
-                                        I'm <span className="text-white font-medium">Eashan Misra</span>, a multi-disciplinary design lead from India, crafting visual stories that transcend the ordinary. For over 8 years, I've been on a mission to make the digital world a little more beautiful, a little more meaningful.
-                                    </p>
-                                    <p className="text-zinc-400 text-lg leading-relaxed">
-                                        Under the alias <span className="text-purple-400 font-medium">Mr. Kalopsia</span>, I create cosmic dreamscapes and cinematic experiences—from the depths of space to the edges of imagination. My work has been featured by <span className="text-white">Adobe</span>, exhibited in <span className="text-white">Paris</span>, and recognized by <span className="text-white">Ann Druyan</span>, co-creator of Cosmos.
-                                    </p>
-                                    <p className="text-zinc-400 text-lg leading-relaxed">
-                                        I believe great design isn't just seen—it's <em>felt</em>.
-                                    </p>
-                                </div>
-                            </div>
-                        </FadeIn>
-                    </div>
-                </section>
-
-                {/* What I Do Section */}
-                <section className="py-20 md:py-32 px-6 bg-gradient-to-b from-transparent via-purple-500/5 to-transparent">
-                    <div className="max-w-5xl mx-auto">
-                        <FadeIn>
-                            <div className="text-center mb-16">
-                                <h2 className="font-serif italic text-4xl md:text-6xl mb-4">What I Do</h2>
-                                <p className="text-zinc-400 text-lg">Crafting experiences across multiple dimensions</p>
-                            </div>
-                        </FadeIn>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <FadeIn delay={100}>
-                                <ServiceCard
-                                    icon={<Film size={32} />}
-                                    title="Motion Design"
-                                    description="Bringing static visuals to life with cinematic motion graphics, explainer videos, and dynamic brand content."
-                                    textEnter={textEnter}
-                                    textLeave={textLeave}
-                                />
-                            </FadeIn>
-                            <FadeIn delay={200}>
-                                <ServiceCard
-                                    icon={<Layers size={32} />}
-                                    title="3D Animation"
-                                    description="Creating immersive 3D worlds and characters using Cinema 4D, Blender, and Unreal Engine 5."
-                                    textEnter={textEnter}
-                                    textLeave={textLeave}
-                                />
-                            </FadeIn>
-                            <FadeIn delay={300}>
-                                <ServiceCard
-                                    icon={<Palette size={32} />}
-                                    title="Art Direction"
-                                    description="Defining visual strategies and creative visions for brands, campaigns, and digital products."
-                                    textEnter={textEnter}
-                                    textLeave={textLeave}
-                                />
-                            </FadeIn>
-                            <FadeIn delay={400}>
-                                <ServiceCard
-                                    icon={<Globe size={32} />}
-                                    title="Visual Storytelling"
-                                    description="Transforming complex ideas into compelling visual narratives that resonate and inspire."
-                                    textEnter={textEnter}
-                                    textLeave={textLeave}
-                                />
-                            </FadeIn>
-                        </div>
-                    </div>
-                </section>
-
-                {/* The Journey Timeline */}
-                <section className="py-20 md:py-32 px-6">
-                    <div className="max-w-4xl mx-auto">
-                        <FadeIn>
-                            <div className="text-center mb-16">
-                                <h2 className="font-serif italic text-4xl md:text-6xl mb-4">The Journey</h2>
-                                <p className="text-zinc-400 text-lg">Key milestones along the way</p>
-                            </div>
-                        </FadeIn>
-
-                        <div className="relative">
-                            {/* Timeline line */}
-                            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-purple-500/50 via-pink-500/50 to-purple-500/50 transform md:-translate-x-1/2" />
-
-                            {JOURNEY_MILESTONES.map((milestone, index) => (
-                                <FadeIn key={index} delay={index * 150}>
-                                    <TimelineItem
-                                        {...milestone}
-                                        isLeft={index % 2 === 0}
-                                        textEnter={textEnter}
-                                        textLeave={textLeave}
-                                    />
-                                </FadeIn>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* Fun Facts */}
-                <section className="py-20 md:py-32 px-6 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent">
-                    <div className="max-w-4xl mx-auto">
-                        <FadeIn>
-                            <div className="text-center mb-16">
-                                <h2 className="font-serif italic text-4xl md:text-6xl mb-4">Beyond The Pixels</h2>
-                                <p className="text-zinc-400 text-lg">A few things that fuel the creativity</p>
-                            </div>
-                        </FadeIn>
-
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                            {FUN_FACTS.map((fact, index) => (
-                                <FadeIn key={index} delay={index * 100}>
-                                    <div
-                                        className="p-6 rounded-2xl bg-white/5 border border-white/5 text-center hover:bg-white/10 hover:border-purple-500/20 transition-all duration-500 group"
-                                        onMouseEnter={textEnter}
-                                        onMouseLeave={textLeave}
-                                    >
-                                        <div className="text-purple-400 mb-4 flex justify-center group-hover:scale-110 transition-transform duration-300">
-                                            {fact.icon}
-                                        </div>
-                                        <h4 className="text-white font-medium mb-1">{fact.title}</h4>
-                                        <p className="text-zinc-500 text-sm">{fact.subtitle}</p>
+                                <div className="space-y-6 order-1 md:order-2 text-left" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-black/60 backdrop-blur-xl text-white text-[11px] tracking-[0.05em] uppercase font-medium">
+                                        The Accidental Beginning
                                     </div>
-                                </FadeIn>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* CTA Section */}
-                <section className="py-20 md:py-32 px-6">
-                    <div className="max-w-3xl mx-auto text-center">
-                        <FadeIn>
-                            <div className="p-10 md:p-16 rounded-3xl bg-gradient-to-br from-purple-500/10 via-transparent to-pink-500/10 border border-white/5 relative overflow-hidden">
-                                <div className="absolute top-4 right-4 text-purple-500/20">
-                                    <Star size={48} fill="currentColor" />
+                                    <h2 className="font-serif italic text-3xl md:text-5xl leading-tight text-white">
+                                        I wanted to be an astronaut.
+                                    </h2>
+                                    <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                        When that wasn't in the cards, I found another way to explore the cosmos: through art. I taught myself Photoshop and started creating space-themed digital art under the name "Kalopsia," posting every single day on Instagram.
+                                    </p>
+                                    <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                        Not because I thought it would become a career, social media wasn't what it is today, but because <span className="text-white font-normal">I loved creating, and I wanted to share that with the world</span>.
+                                    </p>
+                                    <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                        Then something unexpected happened. <span className="text-white font-normal">Adobe featured my work</span> on their blog for International Day of Human Space Flight. Photoshop followed me as one of the first Indian artists on their official account. <span className="text-white font-normal">Ann Druyan herself</span> sent me a personal email saying my tribute to Carl Sagan moved her unlike any space art she'd encountered.
+                                    </p>
                                 </div>
-                                <h2 className="font-serif italic text-3xl md:text-5xl mb-6" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                                    Let's create something <span className="text-purple-400">extraordinary</span>
-                                </h2>
-                                <p className="text-zinc-400 text-lg mb-10 max-w-xl mx-auto" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                                    Whether it's a cosmic journey or a brand story, I'm always excited to bring bold ideas to life.
-                                </p>
-                                <a
-                                    href="mailto:em@mrkalopsia.com"
-                                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black text-lg font-semibold hover:bg-purple-200 transition-all duration-300"
-                                    onMouseEnter={textEnter}
-                                    onMouseLeave={textLeave}
-                                >
-                                    Say Hello
-                                </a>
                             </div>
                         </FadeIn>
                     </div>
                 </section>
 
-                {/* Footer */}
-                <FadeIn>
-                    <div className="py-12 border-t border-white/10 max-w-4xl mx-auto px-6">
-                        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                            <a href="/" className="flex items-center gap-2 text-zinc-500 hover:text-white transition-colors group" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                                <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Portfolio
+                {/* The Defining Moment */}
+                <section className="py-16 md:py-24 px-6 relative z-10">
+                    <div className="max-w-4xl mx-auto">
+                        <FadeIn>
+                            <div className="text-left mb-12">
+                                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-black/60 backdrop-blur-xl text-white text-[11px] tracking-[0.05em] uppercase font-medium mb-6">
+                                    The Defining Moment
+                                </div>
+                                <h2 className="font-serif italic text-3xl md:text-5xl leading-tight mb-8 text-white" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                    "Don't spread yourself too thin."
+                                </h2>
+                            </div>
+
+                            <div className="space-y-6 text-left max-w-3xl" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                    When I landed my first job at <span className="text-white font-normal">Inshorts</span> in 2017, I was one of 30 designers hired for a new product. My mentor, Utkarsh Mishra, saw potential in me and groomed my skills. But when I asked him about taking on freelance work alongside my daily art posts, he gave me honest advice.
+                                </p>
+                                <p className="text-xl md:text-2xl font-medium italic text-white py-4">
+                                    I didn't listen.
+                                </p>
+                                <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                    Instead, I made it a personal challenge. Could I give 100% to my job, 100% to Kalopsia, and 100% to freelance clients? For the next year and a half, I worked relentlessly. Late nights, early mornings, weekends that blurred together.
+                                </p>
+                            </div>
+                        </FadeIn>
+
+                        {/* The Result */}
+                        <FadeIn delay={200}>
+                            <div className="mt-8 md:mt-12">
+                                <p className="text-left text-[16px] md:text-lg text-white/70 mb-12 font-light" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                    The result? <span className="text-white font-normal">I hit the bullseye on all three fronts.</span>
+                                </p>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                                    <div className="p-6 rounded-2xl bg-white/5 border border-white/5 text-left">
+                                        <div className="text-xl md:text-2xl font-serif italic text-white mb-2">Lead Designer</div>
+                                        <p className="text-zinc-400 text-sm">Promoted to manage a 30-person team</p>
+                                    </div>
+                                    <div className="p-6 rounded-2xl bg-white/5 border border-white/5 text-left">
+                                        <div className="text-xl md:text-2xl font-serif italic text-white mb-2">100K Followers</div>
+                                        <p className="text-zinc-400 text-sm">Kalopsia grew exponentially</p>
+                                    </div>
+                                    <div className="p-6 rounded-2xl bg-white/5 border border-white/5 text-left">
+                                        <div className="text-xl md:text-2xl font-serif italic text-white mb-2">Major Clients</div>
+                                        <p className="text-zinc-400 text-sm">Logan Paul, Gillette & more</p>
+                                    </div>
+                                </div>
+                                <p className="text-left text-[16px] text-white/70 max-w-2xl font-light" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                    That experience taught me something fundamental about who I am: <span className="text-white font-normal">I don't just dream, I execute</span>. And I don't stop until I've mastered what I set out to learn.
+                                </p>
+                            </div>
+                        </FadeIn>
+                    </div>
+                </section>
+
+                {/* Evolution Through Experimentation */}
+                <section className="py-16 md:py-24 px-6 relative z-10">
+                    <div className="max-w-6xl mx-auto">
+                        <FadeIn>
+                            <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+                                {/* Image - no shadow/stroke */}
+                                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-black order-2 md:order-1">
+                                    <img
+                                        src="/assets/about/evolution.jpg"
+                                        alt="Evolution Through Experimentation"
+                                        className="w-full h-full object-cover"
+                                        onError={(e) => {
+                                            e.target.style.display = 'none';
+                                            e.target.nextSibling.style.display = 'flex';
+                                        }}
+                                    />
+                                    <div className="absolute inset-0 flex-col items-center justify-center text-zinc-600 hidden">
+                                        <span className="text-sm text-zinc-500">evolution.jpg</span>
+                                    </div>
+                                </div>
+
+                                {/* Story Text */}
+                                <div className="space-y-6 order-1 md:order-2 text-left" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-black/60 backdrop-blur-xl text-white text-[11px] tracking-[0.05em] uppercase font-medium">
+                                        Evolution Through Experimentation
+                                    </div>
+                                    <h2 className="font-serif italic text-3xl md:text-5xl leading-tight text-white">
+                                        I get bored once I've mastered a tool.
+                                    </h2>
+                                    <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                        What started as Photoshop art evolved into motion graphics, 3D animation, and immersive environments. I taught myself <span className="text-white font-normal">After Effects, Cinema 4D, Unreal Engine 5, Blender</span>. Not to be a jack of all trades, but because I crave the challenge of the unknown.
+                                    </p>
+                                    <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                        Someone in the industry once told me to keep my techniques secret. I took a different path, inspired by Utkarsh's philosophy: <span className="text-white font-normal">teach what you know</span>. When people caught up to my level, I simply learned something new.
+                                    </p>
+                                    <div className="pt-4 border-t border-white/10">
+                                        <p className="text-white/70 text-[16px] italic font-light">
+                                            I don't see myself as just an artist. I'm a constant learner who likes breaking down visual problems and treating creativity like an ongoing exploration.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </FadeIn>
+                    </div>
+                </section>
+
+                {/* From Brand Partnerships to Career-Defining Roles */}
+                <section className="py-16 md:py-24 px-6 relative z-10">
+                    <div className="max-w-4xl mx-auto">
+                        <FadeIn>
+                            <div className="text-left mb-12">
+                                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-black/60 backdrop-blur-xl text-white text-[11px] tracking-[0.05em] uppercase font-medium mb-6">
+                                    Career Journey
+                                </div>
+                                <h2 className="font-serif italic text-3xl md:text-5xl leading-tight mb-8 text-white" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                    From Brand Partnerships to Career-Defining Roles
+                                </h2>
+                            </div>
+
+                            <div className="space-y-6 text-left" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                    My work with <span className="text-white font-normal">Shara Senderoff at Raised In Space</span> taught me how to dream big and stay humble. For nearly five years, I translated complex investment theses into visual identities, created promotional content for major media properties, and art-directed campaigns for high-profile music artists.
+                                </p>
+                                <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                    At <span className="text-white font-normal">Futureverse</span>, I designed strategic presentations that helped secure a <span className="text-white font-normal">$54M Series A</span> and built immersive Unreal Engine environments that defined their "Open Metaverse" vision.
+                                </p>
+                                <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                    At <span className="text-white font-normal">Wilder World</span>, I led explainer videos from script to final render, driving massive organic reach, including a launch campaign that hit <span className="text-white font-normal">580k+ views</span> on X (Twitter), making it one of their most watched videos.
+                                </p>
+                                <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                    Along the way, I sold out <span className="text-white font-normal">60 NFTs in under 3 minutes</span> during Crypto.com's launch and even caught the attention of Daryl Morey, President of the Philadelphia 76ers, who purchased my first NFT.
+                                </p>
+                            </div>
+                        </FadeIn>
+                    </div>
+
+                    {/* ViewSonic - Image Left, Text Right - Smaller Container */}
+                    <div className="max-w-4xl mx-auto mt-16">
+                        <FadeIn>
+                            <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-black w-full max-w-xs mx-auto md:mx-0">
+                                    <img
+                                        src="/assets/about/viewsonic.jpg"
+                                        alt="ViewSonic ColorPro Awards Judge"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                                <div className="space-y-4 text-left" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                    <h3 className="font-serif italic text-2xl md:text-3xl text-white">ViewSonic ColorPro Awards</h3>
+                                    <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                        I became a <span className="text-white font-normal">judge for ViewSonic's ColorPro Awards</span> in 2024 and 2025, evaluating creative work from artists around the world.
+                                    </p>
+                                </div>
+                            </div>
+                        </FadeIn>
+                    </div>
+
+                    {/* Paris - Text Left, Video Right - Smaller Container */}
+                    <div className="max-w-4xl mx-auto mt-16">
+                        <FadeIn>
+                            <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                                <div className="space-y-4 text-left order-2 md:order-1" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                    <h3 className="font-serif italic text-2xl md:text-3xl text-white">Paris Art Installations</h3>
+                                    <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                        My work was showcased in <span className="text-white font-normal">public installations across Paris</span>, bringing digital art to physical spaces through Artpoint.
+                                    </p>
+                                </div>
+                                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-black order-1 md:order-2 w-full max-w-xs mx-auto md:mx-0">
+                                    <video
+                                        src="/assets/about/paris.mp4"
+                                        autoPlay
+                                        loop
+                                        muted
+                                        playsInline
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            </div>
+                        </FadeIn>
+                    </div>
+                </section>
+
+                {/* The Kid Who Never Grew Up */}
+                <section className="py-16 md:py-24 px-6 relative z-10">
+                    <div className="max-w-6xl mx-auto">
+                        <FadeIn>
+                            <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+                                {/* Image - no shadow/stroke */}
+                                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-black order-2 md:order-1">
+                                    <img
+                                        src="/assets/about/paris.jpg"
+                                        alt="The Kid Who Never Grew Up"
+                                        className="w-full h-full object-cover"
+                                        onError={(e) => {
+                                            e.target.style.display = 'none';
+                                            e.target.nextSibling.style.display = 'flex';
+                                        }}
+                                    />
+                                    <div className="absolute inset-0 flex-col items-center justify-center text-zinc-600 hidden">
+                                        <span className="text-sm text-zinc-500">paris.jpg</span>
+                                    </div>
+                                </div>
+
+                                {/* Story Text - NO BOLD */}
+                                <div className="space-y-6 order-1 md:order-2 text-left" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-black/60 backdrop-blur-xl text-white text-[11px] tracking-[0.05em] uppercase font-medium">
+                                        The Journey Continues
+                                    </div>
+                                    <h2 className="font-serif italic text-3xl md:text-5xl leading-tight text-white">
+                                        The kid who never grew up.
+                                    </h2>
+                                    <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                        When we were kids, we all wanted to be astronauts. I like to consider myself as that kid who never grew up. I'm still exploring the universe, just through a different lens.
+                                    </p>
+                                    <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                        Space isn't just a theme in my work; it's a reminder of infinite possibility, of looking beyond what's in front of us, of curiosity that never stops asking "what if?"
+                                    </p>
+                                    <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                        Whether I'm designing a product explainer, building a 3D environment, or crafting a brand identity, I approach every project like an explorer charting unknown territory. With rigor, with wonder, and with the determination to create something I've never seen before.
+                                    </p>
+                                </div>
+                            </div>
+                        </FadeIn>
+                    </div>
+                </section>
+
+                {/* What I Bring to the Table */}
+                <section className="py-16 md:py-24 px-6 relative z-10">
+                    <div className="max-w-4xl mx-auto">
+                        <FadeIn>
+                            <div className="text-left mb-12">
+                                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-black/60 backdrop-blur-xl text-white text-[11px] tracking-[0.05em] uppercase font-medium mb-6">
+                                    Looking Ahead
+                                </div>
+                                <h2 className="font-serif italic text-3xl md:text-5xl leading-tight mb-8 text-white" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                    What I Bring to the Table
+                                </h2>
+                            </div>
+
+                            <div className="space-y-6 text-left" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                    <span className="text-white font-normal">At the end of the day, I'm still that kid who wanted to touch the stars.</span> I just found a different way to get there.
+                                </p>
+                                <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                    Every project is a chance to build something I've never seen before. To learn a tool I don't know yet. To solve a problem that keeps me up at night in the best way possible.
+                                </p>
+                                <p className="text-white/70 text-[16px] leading-relaxed font-light">
+                                    I'm not looking for just another job. I'm looking for work that makes me feel the way I did when I first opened Photoshop and realized I could create entire universes. Work that challenges me. Work that matters.
+                                </p>
+                                <p className="text-white font-medium text-[16px] leading-relaxed pt-4">
+                                    If that sounds like what you're building, let's talk.
+                                </p>
+                            </div>
+                        </FadeIn>
+                    </div>
+                </section>
+
+                {/* CTA Section - exact match with home page footer */}
+                <footer className="pt-16 md:pt-32 pb-0 relative z-20" id="contact">
+                    <div className="max-w-7xl mx-auto flex flex-col items-center text-center px-4 md:px-6">
+                        <FadeIn>
+                            <h2 className="font-serif italic text-4xl md:text-8xl mb-8 md:mb-12 opacity-90 leading-tight">Let's talk.</h2>
+                            <a
+                                href="mailto:em@mrkalopsia.com"
+                                className="relative flex items-center gap-3 px-6 md:px-8 py-3.5 md:py-4 rounded-full bg-white text-black text-base md:text-lg font-semibold transition-all duration-300 group inline-flex overflow-hidden"
+                                onMouseEnter={textEnter}
+                                onMouseLeave={textLeave}
+                            >
+                                {/* Purple overlay - more prominent */}
+                                <span className="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></span>
+
+                                {/* Glow effect */}
+                                <span className="absolute inset-0 bg-purple-400 blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 scale-150"></span>
+
+                                <span className="relative flex items-center gap-3 transition-colors duration-300 group-hover:text-white">
+                                    <Mail size={20} className="md:w-6 md:h-6 transition-all duration-300 group-hover:scale-110 group-hover:-rotate-12 stroke-black group-hover:stroke-white" />
+                                    <span>Say Hello</span>
+                                </span>
                             </a>
-                            <p className="text-zinc-600 text-sm">© 2025 Mr. Kalopsia. Eashan Misra.</p>
+                        </FadeIn>
+                    </div>
+
+                    {/* Footer */}
+                    <div className="mt-12 md:mt-24 w-full bg-black">
+                        <div className="max-w-7xl mx-auto px-4 md:px-6">
+                            <div className="flex flex-col items-center md:flex-row md:justify-between border-t border-white/10 pt-6 md:pt-8 pb-12 md:pb-32 gap-6 md:gap-8">
+                                <a href="/" className="flex items-center gap-2 text-zinc-500 hover:text-white transition-colors group" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Portfolio
+                                </a>
+                                <p className="text-zinc-600 text-sm">© 2025 Mr. Kalopsia. Eashan Misra.</p>
+                            </div>
                         </div>
                     </div>
-                </FadeIn>
+                </footer>
             </main>
         </div>
     );
 }
-
-// Service Card Component
-function ServiceCard({ icon, title, description, textEnter, textLeave }) {
-    return (
-        <div
-            className="p-8 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-purple-500/20 transition-all duration-500 group h-full"
-            onMouseEnter={textEnter}
-            onMouseLeave={textLeave}
-        >
-            <div className="text-purple-400 mb-6 group-hover:scale-110 transition-transform duration-300">
-                {icon}
-            </div>
-            <h3 className="text-2xl font-serif text-white mb-3 group-hover:text-purple-400 transition-colors">{title}</h3>
-            <p className="text-zinc-400 leading-relaxed">{description}</p>
-        </div>
-    );
-}
-
-// Timeline Item Component
-function TimelineItem({ year, title, description, isLeft, textEnter, textLeave }) {
-    return (
-        <div className={`relative flex items-center mb-12 ${isLeft ? 'md:flex-row-reverse' : ''}`}>
-            {/* Dot */}
-            <div className="absolute left-4 md:left-1/2 w-3 h-3 rounded-full bg-purple-500 border-2 border-black transform -translate-x-1/2 z-10" />
-
-            {/* Content */}
-            <div className={`ml-12 md:ml-0 md:w-[calc(50%-2rem)] ${isLeft ? 'md:ml-auto md:pl-12' : 'md:mr-auto md:pr-12 md:text-right'}`}>
-                <div
-                    className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-purple-500/20 transition-all duration-500"
-                    onMouseEnter={textEnter}
-                    onMouseLeave={textLeave}
-                >
-                    <span className="text-purple-400 text-sm font-mono">{year}</span>
-                    <h4 className="text-xl font-serif text-white mt-1 mb-2">{title}</h4>
-                    <p className="text-zinc-400 text-sm leading-relaxed">{description}</p>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-// Data
-const JOURNEY_MILESTONES = [
-    {
-        year: "2016",
-        title: "Mr. Kalopsia is Born",
-        description: "Started my journey as a digital artist, creating cosmic dreamscapes that would define my visual identity."
-    },
-    {
-        year: "2017",
-        title: "First Industry Role",
-        description: "Joined Inshorts as a designer, eventually leading a team of 30 creatives for India's top news app."
-    },
-    {
-        year: "2019",
-        title: "Adobe Feature",
-        description: "Featured by Adobe Blog for International Day of Human Space Flight, marking global recognition."
-    },
-    {
-        year: "2020",
-        title: "NFT Pioneer",
-        description: "\"Life Of A Spaceman\" NFT collection sold out in 2 minutes on Crypto.com."
-    },
-    {
-        year: "2023",
-        title: "Futureverse Era",
-        description: "Joined Futureverse as Senior Visual Designer, helping secure their $54M Series A."
-    },
-    {
-        year: "2024",
-        title: "Paris Exhibition",
-        description: "Work exhibited publicly across Paris through Artpoint, plus became ViewSonic ColorPro Awards Judge."
-    },
-    {
-        year: "2025",
-        title: "Wilder World",
-        description: "Currently shaping the visual future of Web3 as Senior Motion Designer at Wilder World."
-    }
-];
-
-const FUN_FACTS = [
-    { icon: <Rocket size={28} />, title: "Space Nerd", subtitle: "Cosmos is life" },
-    { icon: <Coffee size={28} />, title: "Night Owl", subtitle: "Best ideas at 2AM" },
-    { icon: <Heart size={28} />, title: "Dog Person", subtitle: "100% good boys" },
-    { icon: <Award size={28} />, title: "Film Buff", subtitle: "Nolan fan club" }
-];
