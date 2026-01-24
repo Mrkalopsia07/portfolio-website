@@ -63,7 +63,7 @@ export default function Resume() {
                         </div>
 
                         <a
-                            href="/Resume - Eashan Misra.docx"
+                            href="/Resume - Eashan Misra.pdf"
                             download
                             className="relative group flex items-center gap-3 px-6 py-3 rounded-full bg-white text-black font-semibold transition-all duration-300 whitespace-nowrap overflow-hidden"
                             onMouseEnter={textEnter}
@@ -100,11 +100,11 @@ export default function Resume() {
                                 <Job
                                     role="Senior Motion Designer"
                                     company="Wilder World"
-                                    period="March 2025 - Present | Remote"
+                                    period="March 2025 - Present | Remote - USA"
                                     points={[
-                                        "Spearheaded the end-to-end production of high-impact explainer videos for core products (Wilder World, Zero Tech, Aura AI), handling the entire lifecycle from scriptwriting and storyboarding to final Unreal Engine/After Effects execution.",
-                                        "Drove massive organic brand visibility through high-quality motion assets, highlighted by a product launch campaign that garnered over 580k+ views on X (Twitter), significantly outperforming company benchmarks.",
-                                        "Translated complex Web3/AI technical specifications into clear, compelling motion graphics narratives, directly supporting go-to-market strategies for the Zero Tech ecosystem."
+                                        <span key="1">Spearheaded the end-to-end production of high-impact explainer videos for core products (<strong>Wilder World, Zero Tech, Aura AI</strong>), handling the entire lifecycle from scriptwriting and storyboarding to final <strong>Unreal Engine/After Effects</strong> execution.</span>,
+                                        <span key="2">Drove massive organic brand visibility through high-quality motion assets, highlighted by a product launch campaign that garnered over <strong>580k+ views on X (Twitter)</strong>, significantly outperforming company benchmarks.</span>,
+                                        <span key="3">Translated complex <strong>Web3/AI technical specifications</strong> into clear, compelling motion graphics narratives, directly supporting go-to-market strategies for the Zero Tech ecosystem.</span>
                                     ]}
                                     textEnter={textEnter}
                                     textLeave={textLeave}
@@ -114,11 +114,12 @@ export default function Resume() {
                                 <Job
                                     role="Founder & Art Director"
                                     company="Mr. Kalopsia"
-                                    period="March 2016 - Present"
+                                    period="March 2016 - Present | Remote"
                                     points={[
-                                        "Built an internationally recognized digital art brand specializing in 3D animation and immersive visual experiences. Grew audience to 160k+ followers on Instagram, becoming a reference point for space-themed emotional storytelling in the motion design community.",
-                                        "Partnered with major brands including Gillette, Logan Paul, Western Digital, eBay, ViewSonic, Huion, Bira 91, and Chichibu Whiskey — delivering commercial art campaigns, product visualizations, and promotional content.",
-                                        "Work has been featured by Adobe, exhibited publicly in Paris, and recognized by Ann Druyan (co-creator of Cosmos). This body of work directly led to full-time roles at Wilder World, Futureverse, and Raised In Space."
+                                        <span key="1">Built an internationally recognized digital art brand specializing in 3D animation and immersive visual experiences. Grew audience to <strong>160k+ followers</strong> on Instagram and other social media platforms.</span>,
+                                        <span key="2">Partnered with major brands including <strong>Gillette, Logan Paul, Western Digital, eBay, ViewSonic, Huion, Bira 91, Wilder World</strong>, and <strong>Chichibu Whiskey</strong>, and executed independent NFT releases like "Life Of A Spaceman" which <strong>sold out in 2 minutes</strong> (acquired by collectors including <strong>Daryl Morey</strong>).</span>,
+                                        <span key="3">Appointed as a <strong>ViewSonic ColorPro Award Judge</strong> for two consecutive years (2024–2025) and featured by <strong>Adobe</strong>; work has been exhibited internationally in <strong>Paris</strong>.</span>,
+                                        <span key="4">Body of work directly led to recruitment for senior roles at Wilder World, Futureverse, and Raised In Space.</span>
                                     ]}
                                     textEnter={textEnter}
                                     textLeave={textLeave}
@@ -128,11 +129,11 @@ export default function Resume() {
                                 <Job
                                     role="Senior Visual Designer"
                                     company="Futureverse"
-                                    period="April 2023 - December 2024 | Remote"
+                                    period="April 2023 - December 2024 | Remote - USA"
                                     points={[
-                                        "Designed strategic investor presentations and MVP visualizations that directly supported the company’s successful $54M Series A fundraising.",
-                                        "Developed immersive 3D environments using Unreal Engine 5, creating the core marketing assets used to demonstrate the \"Open Metaverse\" vision to the public.",
-                                        "Translated complex Web3 technical concepts into accessible visual narratives for high-stakes campaigns, working directly with the founding team to rapid-prototype new venture ideas."
+                                        <span key="1">Designed strategic investor presentations and MVP visualizations that directly supported the company’s successful <strong>$54M Series A fundraising</strong>.</span>,
+                                        <span key="2">Developed immersive 3D environments using <strong>Unreal Engine 5</strong>, creating the core marketing assets used to demonstrate the "<strong>Open Metaverse</strong>" vision to the public.</span>,
+                                        <span key="3">Translated complex <strong>Web3 technical concepts</strong> into accessible visual narratives for high-stakes campaigns, working directly with the founding team to rapid-prototype new venture ideas.</span>
                                     ]}
                                     textEnter={textEnter}
                                     textLeave={textLeave}
@@ -142,11 +143,11 @@ export default function Resume() {
                                 <Job
                                     role="Art Director"
                                     company="Raised In Space"
-                                    period="September 2019 - March 2023 | Remote"
+                                    period="September 2019 - March 2023 | Remote - USA"
                                     points={[
-                                        "Served as the primary creative partner to Founder Shara Senderoff, translating high-level investment theses into visual identities for a portfolio of music-tech startups.",
-                                        "Developed high-fidelity concept art and key visuals for media properties, including the sci-fi aesthetic for Cynthia Frelund's \"Numbers Game\" and promotional content featuring industry figures like Scooter Braun.",
-                                        "Managed and recruited freelance creative teams to execute complex campaigns, directing album art and promotional materials for artists like Johnny Yukon and Eddie Zuko."
+                                        <span key="1">Served as the primary creative partner to Founder <strong>Shara Senderoff</strong>, translating high-level investment theses into visual identities for a portfolio of music-tech startups.</span>,
+                                        <span key="2">Developed high-fidelity concept art and key visuals for media properties, including the sci-fi aesthetic for <strong>Cynthia Frelund's</strong> "Numbers Game" and promotional content featuring industry figures like <strong>Scooter Braun</strong>.</span>,
+                                        <span key="3">Managed and recruited <strong>freelance creative teams</strong> to execute complex campaigns, directing album art and promotional materials for artists like Johnny Yukon and Eddie Zuko.</span>
                                     ]}
                                     textEnter={textEnter}
                                     textLeave={textLeave}
@@ -156,11 +157,10 @@ export default function Resume() {
                                 <Job
                                     role="Co-Founder & Head of Design"
                                     company="Akapella"
-                                    period="September 2020 - March 2022 | Remote"
+                                    period="September 2020 - March 2022 | Remote - USA"
                                     points={[
-                                        "Architected the end-to-end User Interface (UI) and UX flows for the web app MVP, translating rough concepts into a production-ready design system.",
-                                        "Built the cross-functional product team from scratch, personally interviewing and hiring key Designers and Front-End Developers to align creative vision with technical feasibility.",
-                                        "Defined the comprehensive visual identity and brand strategy, ensuring a scalable design language for future product iterations."
+                                        <span key="1">Architected end-to-end UI/UX flows and comprehensive visual identity, establishing a scalable design system that translated rough concepts into a <strong>production-ready MVP</strong>.</span>,
+                                        <span key="2">Built the <strong>cross-functional product team</strong> from scratch, personally interviewing and hiring key Designers and Front-End Developers to align creative vision with technical feasibility.</span>
                                     ]}
                                     textEnter={textEnter}
                                     textLeave={textLeave}
@@ -172,9 +172,8 @@ export default function Resume() {
                                     company="Inshorts (Inpix)"
                                     period="August 2017 - September 2019 | Noida, India"
                                     points={[
-                                        "Rapidly promoted to Lead Designer, taking charge of a 30-person creative team to drive visual strategy for India’s top news app (60M+ downloads).",
-                                        "Established quality control workflows to produce 100+ daily editorial visuals, translating complex news stories into engaging, bite-sized infographics.",
-                                        "Served as the strategic bridge between the Editorial and Design departments, translating breaking news narratives into clear creative briefs to ensure visual accuracy."
+                                        <span key="1">Rapidly promoted to <strong>Lead Designer</strong>, taking charge of a 30-person creative team to drive visual strategy for India’s top news app (<strong>60M+ downloads</strong>).</span>,
+                                        <span key="2">Established quality control workflows to produce <strong>100+ daily editorial visuals</strong>.</span>
                                     ]}
                                     textEnter={textEnter}
                                     textLeave={textLeave}
@@ -192,40 +191,26 @@ export default function Resume() {
                             <div className="p-6 rounded-2xl bg-white/5 border border-white/5" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                                 <h3 className="text-xl font-serif italic mb-4 text-purple-300">Professional Summary</h3>
                                 <p className="text-zinc-400 text-sm leading-relaxed">
-                                    Multi-disciplinary Design Lead with 8+ years of experience in 3D animation, motion graphics, and graphic design. Founder of Mr. Kalopsia, a globally recognized digital art brand with 160k+ followers. Work has been featured by Adobe, exhibited in Paris, recognized by Ann Druyan, and led to serving as a ViewSonic ColorPro Awards Judge in 2024 and 2025.
+                                    Multi-disciplinary Design Lead with <strong>8+ years of experience</strong> in 3D animation, motion graphics, and graphic design. Founder of Mr. Kalopsia, a globally recognized digital art brand with <strong>160k+ followers</strong>. Work has been featured by <strong>Adobe</strong>, exhibited in <strong>Paris</strong>, recognized by <strong>Ann Druyan</strong>, and led to serving as a <strong>ViewSonic ColorPro Awards Judge</strong> in 2024 and 2025.
                                 </p>
                                 <p className="text-zinc-400 text-sm leading-relaxed mt-4">
-                                    Experience includes collaborations with Logan Paul, Gillette, Western Digital, and senior creative roles at Wilder World, Futureverse, and Raised In Space.
+                                    Experience includes collaborations with <strong>Logan Paul, Gillette, Western Digital, eBay</strong> and senior creative roles at Wilder World, Futureverse, and Raised In Space.
                                 </p>
                             </div>
                         </FadeIn>
 
-                        {/* Awards */}
+                        {/* Core Competencies */}
                         <section onMouseEnter={textEnter} onMouseLeave={textLeave}>
                             <FadeIn delay={200}>
-                                <h3 className="text-lg font-bold tracking-widest uppercase mb-6 text-white border-b border-white/10 pb-2">Awards & Recognition</h3>
-                                <ul className="space-y-4">
-                                    <ListItem title="ViewSonic ColorPro Award Judge" subtitle="(2024, 2025) Evaluated global generative art submissions." />
-                                    <ListItem title="&quot;Life Of A Spaceman&quot; NFT Launch" subtitle="(2020) sold out in 2 minutes on Crypto.com." />
-                                    <ListItem title="Notable Collectors" subtitle="Works acquired by high-profile figures including Daryl Morey." />
-                                    <ListItem title="Artpoint Paris Exhibition" subtitle="(2024) Work showcased across public installations in Greater Paris." />
-                                    <ListItem title="Ann Druyan Recognition" subtitle="(2021) Personal acclamation from the co-creator of Cosmos." />
-                                </ul>
-                            </FadeIn>
-                        </section>
-
-                        {/* Competencies */}
-                        <section onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                            <FadeIn delay={300}>
-                                <h3 className="text-lg font-bold tracking-widest uppercase mb-6 text-white border-b border-white/10 pb-2">Competencies</h3>
+                                <h3 className="text-lg font-bold tracking-widest uppercase mb-6 text-white border-b border-white/10 pb-2">Core Competencies</h3>
                                 <div className="flex flex-col gap-4">
                                     <div>
                                         <h4 className="text-white font-medium mb-1">Leadership & Strategy</h4>
-                                        <p className="text-zinc-500 text-sm">Creative Direction, Remote Team Leadership, Brand Development, Client Relations.</p>
+                                        <p className="text-zinc-500 text-sm">Creative Direction, Remote Team Leadership, Brand Development, Client Relations, Project Management.</p>
                                     </div>
                                     <div>
                                         <h4 className="text-white font-medium mb-1">Creative Execution</h4>
-                                        <p className="text-zinc-500 text-sm">3D Environment Design, Visual Storytelling, Advanced Motion Graphics.</p>
+                                        <p className="text-zinc-500 text-sm">3D Environment Design, Visual Storytelling, Advanced Motion Graphics, Concept Development.</p>
                                     </div>
                                 </div>
                             </FadeIn>
@@ -233,13 +218,13 @@ export default function Resume() {
 
                         {/* Skills */}
                         <section onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                            <FadeIn delay={400}>
+                            <FadeIn delay={300}>
                                 <h3 className="text-lg font-bold tracking-widest uppercase mb-6 text-white border-b border-white/10 pb-2">Technical Skills</h3>
                                 <div className="flex flex-col gap-4">
                                     <SkillGroup title="3D Animation" skills="Unreal Engine 5 (UE5), Cinema 4D (C4D), Blender (B3D)" />
                                     <SkillGroup title="Post-Production" skills="After Effects (AE), DaVinci Resolve, Premiere Pro (PR)" />
                                     <SkillGroup title="Design & Imaging" skills="Photoshop (PS), Illustrator (AI), Lightroom (LR)" />
-                                    <SkillGroup title="AI & Emerging Tech" skills="ComfyUI, Kling, Nano Banana Pro" />
+                                    <SkillGroup title="AI & Emerging Tech" skills="ComfyUI, Kling, Nano Banana Pro (Advanced AI pipelines)" />
                                 </div>
                             </FadeIn>
                         </section>
