@@ -3,7 +3,7 @@ import { Play, Pause, Volume2, VolumeX, X } from 'lucide-react';
 
 export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter, textLeave, setCursorVariant }) {
     const videoRef = useRef(null);
-    const loopRef = useRef(null);
+
     const mobileVideoRef = useRef(null);
     const hideControlsTimeout = useRef(null);
     const [isVideoPlaying, setIsVideoPlaying] = useState(true);
@@ -54,9 +54,7 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
             if (showReel && videoRef.current) {
                 videoRef.current.play();
                 setIsVideoPlaying(true);
-                if (loopRef.current) loopRef.current.pause();
-            } else if (!showReel && loopRef.current) {
-                loopRef.current.play();
+            } else if (!showReel) {
                 if (videoRef.current) {
                     videoRef.current.pause();
                     videoRef.current.currentTime = 0;
@@ -159,12 +157,11 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
                     onMouseLeave={handleMouseLeave}
                     onClick={handleVideoClick}
                 >
-                    {/* Loop Video (Background) - Always visible on mobile, conditional on desktop */}
-                    <video
-                        ref={loopRef}
-                        src="/assets/showreel/showreel-loop.mp4"
+                    {/* Thumbnail Image (Background) - Always visible on mobile, conditional on desktop */}
+                    <img
+                        src="/assets/showreel/thumbnail.jpg"
+                        alt="Showreel Thumbnail"
                         className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-500 ${!isMobile && showReel ? 'opacity-0' : 'opacity-100'}`}
-                        autoPlay loop muted playsInline
                     />
 
                     {/* Play Button Overlay for Mobile */}
