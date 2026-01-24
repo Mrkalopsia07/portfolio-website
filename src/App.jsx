@@ -221,6 +221,26 @@ function AppContent() {
 
 
 
+  // Showreel Deep Link Logic
+  useEffect(() => {
+    if (!loading && lenis) {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('showreel') === 'true') {
+        const scrollToReel = async () => {
+          // Small delay to ensure layout stability
+          await new Promise(r => setTimeout(r, 500));
+
+          setShowReel(true);
+          lenis.scrollTo('#showreel', {
+            offset: -window.innerHeight * 0.1, // Center it a bit
+            duration: 1.5
+          });
+        };
+        scrollToReel();
+      }
+    }
+  }, [loading, lenis]);
+
   const textEnter = React.useCallback(() => setCursorVariant("text"), []);
   const textLeave = React.useCallback(() => setCursorVariant("default"), []);
 
@@ -425,14 +445,17 @@ function AppContent() {
         {/* Video Player Section */}
         {/* Conditional h-screen prevents bottom gap when video is active */}
         {/* Video Player Section */}
-        <VideoPlayer
-          showReel={showReel}
-          setShowReel={setShowReel}
-          showPlay={showPlayButton || showReel}
-          textEnter={textEnter}
-          textLeave={textLeave}
-          setCursorVariant={setCursorVariant}
-        />
+        {/* Video Player Section */}
+        <div id="showreel">
+          <VideoPlayer
+            showReel={showReel}
+            setShowReel={setShowReel}
+            showPlay={showPlayButton || showReel}
+            textEnter={textEnter}
+            textLeave={textLeave}
+            setCursorVariant={setCursorVariant}
+          />
+        </div>
 
 
 
