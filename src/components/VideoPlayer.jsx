@@ -66,7 +66,7 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
     // Handle cursor state based on playing status
     useEffect(() => {
         if (showReel && isVideoPlaying) {
-            setCursorVariant('default');
+            setCursorVariant('video-playing');
         }
     }, [showReel, isVideoPlaying, setCursorVariant]);
 
@@ -133,12 +133,12 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
 
         if (!showReel) {
             setShowReel(true);
-            setCursorVariant('default');
+            setCursorVariant('video-playing');
         } else {
             if (videoRef.current?.paused) {
                 videoRef.current.play();
                 setIsVideoPlaying(true);
-                setCursorVariant('default');
+                setCursorVariant('video-playing');
             } else if (videoRef.current) {
                 videoRef.current.pause();
                 setIsVideoPlaying(false);
@@ -188,7 +188,7 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
 
                     {/* Desktop Controls */}
                     {!isMobile && (
-                        <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-10 transition-opacity duration-500 ${showControls ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onMouseEnter={(e) => { e.stopPropagation(); setCursorVariant('default'); setShowControls(true); if (hideControlsTimeout.current) clearTimeout(hideControlsTimeout.current); }} onMouseLeave={(e) => { e.stopPropagation(); if (!showReel || !isVideoPlaying) setCursorVariant('video'); if (showReel && isVideoPlaying) { hideControlsTimeout.current = setTimeout(() => setShowControls(false), 2000); } }}>
+                        <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-10 transition-opacity duration-500 ${showControls ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onMouseEnter={(e) => { e.stopPropagation(); setCursorVariant('video-playing'); setShowControls(true); if (hideControlsTimeout.current) clearTimeout(hideControlsTimeout.current); }} onMouseLeave={(e) => { e.stopPropagation(); if (!showReel || !isVideoPlaying) setCursorVariant('video'); if (showReel && isVideoPlaying) { hideControlsTimeout.current = setTimeout(() => setShowControls(false), 2000); } }}>
                             <div className="bg-white/95 backdrop-blur-md rounded-full px-5 py-3 shadow-2xl flex items-center gap-4">
                                 <button
                                     onClick={(e) => {

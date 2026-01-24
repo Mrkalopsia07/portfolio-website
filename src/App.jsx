@@ -475,43 +475,60 @@ function AppContent() {
                     className="group flex flex-col gap-6 block"
                     onMouseEnter={(e) => {
                       textEnter();
-                      const video = e.currentTarget.querySelector('video');
-                      if (video) {
-                        video.currentTime = 0;
-                        const playPromise = video.play();
-                        if (playPromise !== undefined) {
-                          playPromise.catch((error) => {
-                            console.log("Video play interrupted/failed:", error);
-                          });
+                      if (!project.isViewAll) {
+                        const video = e.currentTarget.querySelector('video');
+                        if (video) {
+                          video.currentTime = 0;
+                          const playPromise = video.play();
+                          if (playPromise !== undefined) {
+                            playPromise.catch((error) => {
+                              console.log("Video play interrupted/failed:", error);
+                            });
+                          }
                         }
                       }
                     }}
                     onMouseLeave={(e) => {
                       textLeave();
-                      const container = e.currentTarget;
-                      const video = container.querySelector('video');
-                      if (video) {
-                        setTimeout(() => {
-                          if (!container.matches(':hover')) {
-                            video.pause();
-                            video.currentTime = 0;
-                          }
-                        }, 500);
+                      if (!project.isViewAll) {
+                        const container = e.currentTarget;
+                        const video = container.querySelector('video');
+                        if (video) {
+                          setTimeout(() => {
+                            if (!container.matches(':hover')) {
+                              video.pause();
+                              video.currentTime = 0;
+                            }
+                          }, 500);
+                        }
                       }
                     }}
                   >
-                    <div className="relative aspect-[16/10] bg-zinc-900 rounded-2xl overflow-hidden transition-colors duration-500">
-                      <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0" />
-                      <video
-                        src={project.video}
-                        muted
-                        loop
-                        playsInline
-                        preload="auto"
-                        className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      />
+                    <div className={`relative aspect-[16/10] rounded-2xl overflow-hidden transition-all duration-500 ${project.isViewAll ? 'bg-gradient-to-br from-purple-500/10 to-purple-900/20 border border-purple-500/20 group-hover:border-purple-500/40' : 'bg-zinc-900'}`}>
+                      {project.isViewAll ? (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="flex items-center gap-3 text-purple-300 group-hover:text-purple-200 transition-colors">
+                            <span className="text-xl font-medium tracking-wide">View All Projects</span>
+                            <ArrowRight size={24} className="transform group-hover:translate-x-1 transition-transform" />
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0" />
+                          <video
+                            src={project.video}
+                            muted
+                            loop
+                            playsInline
+                            preload="auto"
+                            className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                          />
+                        </>
+                      )}
                     </div>
-                    <div className="flex flex-col px-2"><h3 className="text-2xl font-medium tracking-tight text-white mb-1 group-hover:text-purple-400 transition-colors duration-300" style={{ fontFamily: "'PT Serif', serif" }}>{project.title}</h3><p className="text-zinc-500 text-sm font-medium uppercase tracking-wide">{project.category}</p></div>
+                    {!project.isViewAll && (
+                      <div className="flex flex-col px-2"><h3 className="text-2xl font-medium tracking-tight text-white mb-1 group-hover:text-purple-400 transition-colors duration-300" style={{ fontFamily: "'PT Serif', serif" }}>{project.title}</h3><p className="text-zinc-500 text-sm font-medium uppercase tracking-wide">{project.category}</p></div>
+                    )}
                   </a>
                 </FadeIn>
               ))}

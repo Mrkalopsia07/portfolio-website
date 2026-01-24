@@ -94,6 +94,7 @@ export default function CustomCursor({ cursorVariant }) {
             ${cursorVariant === 'default' ? 'w-10 h-10 bg-white/10 border-white/40 backdrop-blur-sm' : ''}
             ${cursorVariant === 'text' ? 'w-14 h-14 border-white/60 bg-transparent' : ''}
             ${cursorVariant === 'video' ? 'w-40 h-12 border-transparent' : ''}
+            ${cursorVariant === 'video-playing' ? 'w-12 h-12 sm:w-14 sm:h-14 bg-white/5 border-white/30' : ''}
           `}
                     style={{
                         transform: cursorVariant === 'video' ? 'translate(-20px, -50%)' : 'translate(-50%, -50%)',
