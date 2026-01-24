@@ -62,7 +62,7 @@ function AppContent() {
   const [showWelcome, setShowWelcome] = useState(false);
   const [showReel, setShowReel] = useState(false);
   const [showPlayButton, setShowPlayButton] = useState(false);
-  const [isGalaxyLoaded, setIsGalaxyLoaded] = useState(false);
+  const [isGalaxyLoaded, setIsGalaxyLoaded] = useState(() => !!sessionStorage.getItem("introShown"));
 
 
   const [text, setText] = useState('');
@@ -346,9 +346,9 @@ function AppContent() {
       <Navbar lenis={lenis} textEnter={textEnter} textLeave={textLeave} />
 
 
-      {/* Background Scene */}
+      {/* Background Scene - Only mount after loader galaxy is ready to prevent WebGL contention */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <BackgroundScene />
+        {isGalaxyLoaded && <BackgroundScene />}
       </div>
 
       <main className="relative z-20">
