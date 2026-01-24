@@ -181,7 +181,7 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
                     {!isMobile && (
                         <video
                             ref={videoRef}
-                            src="/assets/showreel/showreel-full.mp4"
+                            src="https://pub-ee7b890ffb314380a9c49dfb6983df88.r2.dev/showreel-full.mp4"
                             className={`absolute inset-0 w-full h-full object-cover z-[1] transition-opacity duration-500 ${showReel ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                             onTimeUpdate={(e) => { setCurrentTime(e.target.currentTime); setVideoProgress((e.target.currentTime / e.target.duration) * 100); }}
                             onLoadedMetadata={(e) => setDuration(e.target.duration)}
@@ -230,7 +230,7 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
             {isMobile && (
                 <video
                     ref={mobileVideoRef}
-                    src="/assets/showreel/showreel-full.mp4"
+                    src="https://pub-ee7b890ffb314380a9c49dfb6983df88.r2.dev/showreel-full.mp4"
                     className="hidden" // Kept in DOM but invisible
                     // No playsinline here to encourage automatic Fullscreen on iOS
                     onEnded={() => {
