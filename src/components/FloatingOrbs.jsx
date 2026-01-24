@@ -1,7 +1,17 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, forwardRef } from 'react';
 
-export default function FloatingOrbs() {
-    const orbsRef = useRef(null);
+const FloatingOrbs = forwardRef(({ className, style }, ref) => {
+    const containerRef = useRef(null);
+
+    // Sync external ref
+    useEffect(() => {
+        if (!ref) return;
+        if (typeof ref === 'function') {
+            ref(containerRef.current);
+        } else {
+            ref.current = containerRef.current;
+        }
+    }, [ref]);
 
     useEffect(() => {
         let targetX = 0, targetY = 0;
@@ -13,7 +23,6 @@ export default function FloatingOrbs() {
             const dx = targetX - currentX;
             const dy = targetY - currentY;
 
-            // Stop animating when close enough
             if (Math.abs(dx) < 0.01 && Math.abs(dy) < 0.01) {
                 isAnimating = false;
                 return;
@@ -23,15 +32,16 @@ export default function FloatingOrbs() {
             currentX += dx * 0.05;
             currentY += dy * 0.05;
 
-            if (orbsRef.current) {
-                orbsRef.current.style.setProperty('--mouse-x', `${currentX}px`);
-                orbsRef.current.style.setProperty('--mouse-y', `${currentY}px`);
+            if (containerRef.current) {
+                containerRef.current.style.setProperty('--mouse-x', `${currentX}px`);
+                containerRef.current.style.setProperty('--mouse-y', `${currentY}px`);
             }
 
             animationFrameId = requestAnimationFrame(animate);
         };
 
         const handleMouseMove = (e) => {
+            // Normalized coordinates (-10 to 10 range)
             targetX = (e.clientX / window.innerWidth - 0.5) * 20;
             targetY = (e.clientY / window.innerHeight - 0.5) * 20;
 
@@ -49,48 +59,69 @@ export default function FloatingOrbs() {
     }, []);
 
     return (
-        <div ref={orbsRef} className="fixed inset-0 z-[5] pointer-events-none overflow-hidden" style={{ '--mouse-x': '0px', '--mouse-y': '0px' }}>
-            {/* Orb 1: Big soft orb - top left */}
-            <div
-                className="absolute w-[800px] h-[800px] rounded-full bg-purple-400/[0.10] blur-[200px] animate-float-slow"
-                style={{
-                    top: '-10%',
-                    left: '-10%',
-                    transform: 'translate(calc(var(--mouse-x) * 0.2), calc(var(--mouse-y) * 0.2))',
-                    willChange: 'transform'
-                }}
+        <div
+            ref={containerRef}
+            className={`fixed inset-0 z-[0] pointer-events-none overflow-hidden ${className || ''}`}
+            style={{ '--mouse-x': '0px', '--mouse-y': '0px', ...style }}
+        >
+            {/* Orb 1: Purple - Top Left */}
+            <Orb
+                position="top-[-20%] left-[-20%]"
+                size="w-[120vw] h-[120vw] md:w-[1500px] md:h-[1500px]"
+                gradient="radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, rgba(168, 85, 247, 0) 65%)"
+                parallaxFactor={0.2}
+                animationClass="animate-float-slow"
             />
 
-            {/* Orb 2: Top right */}
-            <div
-                className="absolute w-[600px] h-[600px] rounded-full bg-purple-500/[0.12] blur-[160px] animate-float-slow"
-                style={{
-                    top: '5%',
-                    right: '10%',
-                    transform: 'translate(calc(var(--mouse-x) * 0.5), calc(var(--mouse-y) * 0.5))',
-                    willChange: 'transform'
-                }}
+            {/* Orb 2: Violet - Top Right */}
+            <Orb
+                position="top-[-10%] right-[-20%]"
+                size="w-[100vw] h-[100vw] md:w-[1400px] md:h-[1400px]"
+                gradient="radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, rgba(139, 92, 246, 0) 65%)"
+                parallaxFactor={0.5}
+                animationClass="animate-float-slow"
+                delay="-2s"
             />
 
-            {/* Orb 3: Middle left */}
-            <div
-                className="absolute w-[500px] h-[500px] rounded-full bg-pink-500/[0.12] blur-[140px] animate-float-medium"
-                style={{
-                    top: '40%',
-                    left: '5%',
-                    transform: 'translate(calc(var(--mouse-x) * -0.3), calc(var(--mouse-y) * -0.3))',
-                    willChange: 'transform'
-                }}
+            {/* Orb 3: Pink - Middle Left */}
+            <Orb
+                position="top-[30%] left-[-20%]"
+                size="w-[90vw] h-[90vw] md:w-[1300px] md:h-[1300px]"
+                gradient="radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, rgba(236, 72, 153, 0) 65%)"
+                parallaxFactor={-0.3}
+                animationClass="animate-float-medium"
+                delay="-4s"
             />
 
-            {/* Orb 4: Bottom right */}
+            {/* Orb 4: Blue - Bottom Right */}
+            <Orb
+                position="bottom-[-20%] right-[-10%]"
+                size="w-[80vw] h-[80vw] md:w-[1200px] md:h-[1200px]"
+                gradient="radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0) 65%)"
+                parallaxFactor={0.4}
+                animationClass="animate-float-fast"
+                delay="-1s"
+            />
+        </div>
+    );
+});
+
+export default FloatingOrbs;
+
+function Orb({ position, size, gradient, parallaxFactor, animationClass, delay = '0s' }) {
+    return (
+        <div
+            className={`absolute ${position}`}
+            style={{
+                transform: `translate(calc(var(--mouse-x) * ${parallaxFactor}), calc(var(--mouse-y) * ${parallaxFactor}))`,
+                transition: 'transform 0.1s linear'
+            }}
+        >
             <div
-                className="absolute w-[400px] h-[400px] rounded-full bg-blue-500/[0.12] blur-[120px] animate-float-fast"
+                className={`${size} ${animationClass}`}
                 style={{
-                    bottom: '20%',
-                    right: '20%',
-                    transform: 'translate(calc(var(--mouse-x) * 0.4), calc(var(--mouse-y) * 0.4))',
-                    willChange: 'transform'
+                    background: gradient,
+                    animationDelay: delay
                 }}
             />
         </div>

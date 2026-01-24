@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
-import { Play, Mail, Instagram, Linkedin, Download, Cpu, Globe, MessageSquare, Star, Menu, X } from 'lucide-react';
+import { Play, Mail, Instagram, Linkedin, Download, Cpu, Globe, MessageSquare, Star, Menu, X, ArrowRight } from 'lucide-react';
 import CenterFillButton from './components/CenterFillButton';
 import CustomCursor from './components/CustomCursor';
 import VideoPlayer from './components/VideoPlayer';
 import BrandTicker from './components/BrandTicker';
 import BackgroundScene from './components/BackgroundScene';
+import FloatingOrbs from './components/FloatingOrbs';
 import FadeIn from './components/FadeIn';
 import Navbar from './components/Navbar';
 import { ROLES, PROJECTS, SPOTLIGHT_MOMENTS } from './constants';
@@ -217,49 +218,7 @@ function AppContent() {
     return () => clearTimeout(timer);
   }, [text, isDeleting, loopNum, typingSpeed]);
 
-  // Parallax mouse effect for gradient orbs (optimized - only animates when needed)
-  useEffect(() => {
-    let targetX = 0, targetY = 0;
-    let currentX = 0, currentY = 0;
-    let animationFrameId = null;
-    let isAnimating = false;
 
-    const animate = () => {
-      const dx = targetX - currentX;
-      const dy = targetY - currentY;
-
-      if (Math.abs(dx) < 0.01 && Math.abs(dy) < 0.01) {
-        isAnimating = false;
-        return;
-      }
-
-      currentX += dx * 0.05;
-      currentY += dy * 0.05;
-
-      if (orbsRef.current) {
-        orbsRef.current.style.setProperty('--mouse-x', `${currentX}px`);
-        orbsRef.current.style.setProperty('--mouse-y', `${currentY}px`);
-      }
-
-      animationFrameId = requestAnimationFrame(animate);
-    };
-
-    const handleMouseMove = (e) => {
-      targetX = (e.clientX / window.innerWidth - 0.5) * 20;
-      targetY = (e.clientY / window.innerHeight - 0.5) * 20;
-
-      if (!isAnimating) {
-        isAnimating = true;
-        animationFrameId = requestAnimationFrame(animate);
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
 
 
   const textEnter = React.useCallback(() => setCursorVariant("text"), []);
@@ -383,51 +342,7 @@ function AppContent() {
         }}></div>
 
         {/* Floating Gradient Orbs */}
-        <div ref={orbsRef} className="fixed inset-0 z-[5] pointer-events-none overflow-hidden" style={{ '--mouse-x': '0px', '--mouse-y': '0px' }}>
-          {/* Orb 1: Big soft orb - top left */}
-          <div
-            className="absolute w-[800px] h-[800px] rounded-full bg-purple-400/[0.10] blur-[200px] animate-float-slow"
-            style={{
-              top: '-10%',
-              left: '-10%',
-              transform: 'translate(calc(var(--mouse-x) * 0.2), calc(var(--mouse-y) * 0.2))',
-              willChange: 'transform'
-            }}
-          />
-
-          {/* Orb 2: Top right */}
-          <div
-            className="absolute w-[600px] h-[600px] rounded-full bg-purple-500/[0.12] blur-[160px] animate-float-slow"
-            style={{
-              top: '5%',
-              right: '10%',
-              transform: 'translate(calc(var(--mouse-x) * 0.5), calc(var(--mouse-y) * 0.5))',
-              willChange: 'transform'
-            }}
-          />
-
-          {/* Orb 3: Middle left */}
-          <div
-            className="absolute w-[500px] h-[500px] rounded-full bg-pink-500/[0.12] blur-[140px] animate-float-medium"
-            style={{
-              top: '40%',
-              left: '5%',
-              transform: 'translate(calc(var(--mouse-x) * -0.3), calc(var(--mouse-y) * -0.3))',
-              willChange: 'transform'
-            }}
-          />
-
-          {/* Orb 4: Bottom right */}
-          <div
-            className="absolute w-[400px] h-[400px] rounded-full bg-blue-500/[0.12] blur-[120px] animate-float-fast"
-            style={{
-              bottom: '20%',
-              right: '20%',
-              transform: 'translate(calc(var(--mouse-x) * 0.4), calc(var(--mouse-y) * 0.4))',
-              willChange: 'transform'
-            }}
-          />
-        </div>
+        <FloatingOrbs ref={orbsRef} />
         {/* HERO */}
         <section ref={heroRef} className="relative z-10 min-h-[100dvh] flex flex-col items-center justify-center px-6 text-center py-24">
 
@@ -475,7 +390,7 @@ function AppContent() {
               </span>
             </button>
             <a
-              href="#work"
+              href="/about"
               className="relative flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-transparent text-white/70 border border-white/15 text-sm font-semibold transition-all duration-300 group overflow-hidden"
               onMouseEnter={textEnter}
               onMouseLeave={textLeave}
@@ -487,10 +402,8 @@ function AppContent() {
               <span className="absolute inset-0 bg-purple-400 blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 scale-150"></span>
 
               <span className="relative flex items-center gap-2.5 transition-colors duration-300 group-hover:text-white">
-                View Work
-                <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 transition-all duration-300 group-hover:translate-y-1 group-hover:scale-110 stroke-white/70 group-hover:stroke-white">
-                  <path d="M12 5v14m0 0l-5-5m5 5l5-5" />
-                </svg>
+                About
+                <ArrowRight size={16} className="transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110 stroke-white/70 group-hover:stroke-white" />
               </span>
             </a>
           </div>
