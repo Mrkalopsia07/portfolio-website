@@ -47,7 +47,7 @@ export default function Resume() {
                                 <p className="text-sm text-zinc-400 mt-1">Multidisciplinary Design Lead</p>
                             </div>
                             <a
-                                href="/Resume - Eashan Misra.pdf"
+                                href="/resume.pdf"
                                 download
                                 className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-all duration-300 w-fit"
                                 onMouseEnter={textEnter}
