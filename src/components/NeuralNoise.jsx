@@ -53,7 +53,7 @@ export default function NeuralNoise() {
         vec2 res = vec2(0.);
         float scale = 8.;
 
-        for (int j = 0; j < 15; j++) {
+        for (int j = 0; j <2; j++) {
           uv = rotate(uv, 1.);
           sine_acc = rotate(sine_acc, 1.);
           vec2 layer = uv * scale + float(j) + sine_acc - t;

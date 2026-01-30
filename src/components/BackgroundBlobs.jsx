@@ -164,7 +164,7 @@ export default function BackgroundBlobs() {
     }, []);
 
     return (
-        <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none backdrop-blur-[40px]">
             <div
                 ref={mainRef}
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
@@ -193,10 +193,10 @@ export default function BackgroundBlobs() {
             <style>{`
         @keyframes filtered {
           0% {
-            filter: hue-rotate(0deg) blur(3vmin);
+            filter: hue-rotate(0deg) ;
           }
           100% {
-            filter: hue-rotate(360deg) blur(20vmin);
+            filter: hue-rotate(360deg) ;
           }
         }
       `}</style>
