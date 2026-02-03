@@ -1,3 +1,4 @@
+// [uploaded file: mrkalopsia07/portfolio-website/portfolio-website-dcd06201a526ad5f111f6220273abccb01376cc0/src/App.jsx]
 import React, { useEffect, useRef, useState, Suspense } from 'react';
 import Lenis from 'lenis';
 import { Play, Mail, Instagram, Linkedin, Download, Star, ArrowRight } from 'lucide-react';
@@ -36,8 +37,7 @@ export default function App() {
 function AppContent() {
   const [cursorVariant, setCursorVariant] = useState("default");
   
-  // PERFORMANCE: Track Hero visibility to unmount heavy background when scrolling down
-  const [isHeroVisible, setIsHeroVisible] = useState(true);
+  // NOTE: 'isHeroVisible' performance logic removed to keep background persistent (Feedback #1 & #2)
 
   // Initialize Loading State
   const [loading, setLoading] = useState(() => !sessionStorage.getItem("introShown"));
@@ -47,6 +47,7 @@ function AppContent() {
   const [canMountBackground, setCanMountBackground] = useState(false);
 
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const progressRef = useRef(0); // Track float value for smooth decay
   const [fadingOut, setFadingOut] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
   const [showReel, setShowReel] = useState(false);
@@ -88,11 +89,10 @@ function AppContent() {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
 
-      // Visibility Check: Unmount background if we scroll past hero (Optimization for i5 4th Gen)
+      // Hero Parallax Logic
+      // Note: We still calculate this for the Hero opacity, but we no longer unmount the background
       const shouldBeVisible = scrollY < windowHeight + 200;
-      if (shouldBeVisible !== isHeroVisible) setIsHeroVisible(shouldBeVisible);
 
-      // Hero Parallax
       if (heroRef.current && shouldBeVisible) {
         const progress = Math.min(scrollY, windowHeight);
         const opacity = 1 - Math.min(progress / 500, 1);
@@ -122,39 +122,50 @@ function AppContent() {
 
     lenis.on('scroll', onScroll);
     return () => lenis.off('scroll', onScroll);
-  }, [lenis, isHeroVisible, showPlayButton]);
+  }, [lenis, showPlayButton]);
 
-  // 3. REAL LOADER LOGIC (No Reload)
+  // 3. REAL LOADER LOGIC (Two-Gear System)
   useEffect(() => {
-    // If not loading or loader galaxy isn't ready, verify if we can mount main background
     if (!loading || !isGalaxyLoaded) {
       if (!loading && !canMountBackground) {
         // Wait 200ms after loader finishes before asking GPU to render Main Scene
-        // This prevents the "Texture Fadeaway" by not overloading the GPU
         setTimeout(() => setCanMountBackground(true), 200);
       }
       return;
     }
 
-    const duration = 2500;
-    const startTime = Date.now();
+    let animationFrameId;
 
     const updateProgress = () => {
-      const elapsed = Date.now() - startTime;
-      const linearProgress = Math.min(elapsed / duration, 1);
-      const easedProgress = 1 - Math.pow(1 - linearProgress, 2);
-      
-      let targetProgress = easedProgress * 100;
+      let current = progressRef.current;
+      const isComplete = document.readyState === 'complete';
 
-      // REAL LOAD CHECK: Pause at 99% if page isn't actually ready
-      if (document.readyState !== 'complete' && targetProgress > 99) {
-        targetProgress = 99;
+      if (isComplete) {
+        // If loaded, smoothly accelerate to 100%
+        current += (100 - current) * 0.1;
+        if (current > 99.5) current = 100;
+      } else {
+        // Gear 1: Fast (0% to 80%)
+        if (current < 80) {
+           current += (2 + Math.random()); // Add +2 to +3 per frame
+        } 
+        // Gear 2: Decay (80% to 99%)
+        else {
+           // 'Ease-Out' formula: simulates slowing down
+           current += (99 - current) * 0.05;
+        }
       }
 
-      setLoadingProgress(Math.floor(targetProgress));
+      // Hard clamp
+      if (current > 100) current = 100;
+      // Do not allow hitting 100 unless actually complete
+      if (!isComplete && current > 99) current = 99;
 
-      if (targetProgress < 100) {
-        requestAnimationFrame(updateProgress);
+      progressRef.current = current;
+      setLoadingProgress(Math.floor(current));
+
+      if (Math.floor(current) < 100) {
+        animationFrameId = requestAnimationFrame(updateProgress);
       } else {
         // Load Complete
         setShowWelcome(true);
@@ -164,8 +175,6 @@ function AppContent() {
           setLoading(false);
           sessionStorage.setItem("introShown", "true");
 
-          // CRITICAL: Force Layout Recalculation after loader vanishes
-          // This fixes the "logic breaks" issue without reloading
           setTimeout(() => {
             window.dispatchEvent(new Event('resize'));
             if (lenis) lenis.resize();
@@ -174,7 +183,9 @@ function AppContent() {
         }, 800);
       }
     };
-    requestAnimationFrame(updateProgress);
+
+    animationFrameId = requestAnimationFrame(updateProgress);
+    return () => cancelAnimationFrame(animationFrameId);
   }, [loading, isGalaxyLoaded, lenis]);
 
   // Fallback: If galaxy fails to load, force proceed
@@ -291,7 +302,8 @@ function AppContent() {
       {/* 2. BACKGROUND SCENE (Lazy + Warmup) */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <Suspense fallback={null}>
-          {canMountBackground && isHeroVisible && <BackgroundScene />}
+          {/* Changed: Always render if 'canMountBackground' is true. No more scroll-based unmounting. */}
+          {canMountBackground && <BackgroundScene />}
         </Suspense>
       </div>
 

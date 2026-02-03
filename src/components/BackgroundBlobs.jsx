@@ -164,10 +164,10 @@ export default function BackgroundBlobs() {
     }, []);
 
     return (
-        <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none backdrop-blur-[40px]">
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none backdrop-blur-[40px]">
             <div
                 ref={mainRef}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="absolute inset-0 z-0 opacity-40 transition-opacity duration-1000"
                 style={{ width: '90vmin', height: '90vmin' }}
             >
                 {[...Array(7)].map((_, i) => (
