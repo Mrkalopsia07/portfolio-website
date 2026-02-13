@@ -33,7 +33,7 @@ export default function About() {
     const textLeave = () => setCursorVariant("default");
 
     return (
-        <div className="text-white min-h-screen font-sans selection:bg-purple-500 selection:text-white md:cursor-none cursor-auto bg-black overflow-x-hidden relative">
+        <div className="text-white min-h-screen font-sans selection:bg-purple-500 selection:text-white md:cursor-none cursor-auto bg-charcoal overflow-x-hidden relative">
             <CustomCursor cursorVariant={cursorVariant} />
             <Navbar lenis={lenis} textEnter={textEnter} textLeave={textLeave} />
 
@@ -46,12 +46,12 @@ export default function About() {
                 {/* Gradient Overlay - clean black fade only, no purple */}
                 <div className="absolute inset-0 z-0 pointer-events-none hidden md:block" style={{
                     background: `
-                        linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 10%, rgba(0,0,0,0.8) 15%, #000 20%, #000 85%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0.3) 95%, transparent 100%)
+                        linear-gradient(to bottom, transparent 0%, transparent 3%, rgba(5,5,7,0.4) 6%, rgba(5,5,7,0.8) 9%, #050507 12%, #050507 85%, rgba(5,5,7,0.6) 90%, rgba(5,5,7,0.3) 95%, transparent 100%)
                     `
                 }}></div>
                 <div className="absolute inset-0 z-0 pointer-events-none md:hidden" style={{
                     background: `
-                        linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.8) 12%, #000 15%, #000 100%)
+                        linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(5,5,7,0.4) 8%, rgba(5,5,7,0.8) 12%, #050507 15%, #050507 100%)
                     `
                 }}></div>
 
@@ -67,7 +67,7 @@ export default function About() {
                             </h1>
 
                             {/* Subtitle */}
-                            <p className="text-white/70 max-w-[480px] text-[16px] leading-relaxed mb-10 font-['Work_Sans',sans-serif] font-light mx-auto" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                            <p className="text-white/70 max-w-[480px] text-[16px] leading-relaxed mb-10 font-['Work_Sans',sans-serif] font-normal mx-auto" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                                 Multi-disciplinary motion designer and 3D artist who's spent the last 8+ years turning creative curiosity into career-defining work.
                             </p>
 
@@ -97,7 +97,7 @@ export default function About() {
                     <div className="max-w-4xl mx-auto">
                         <FadeIn>
                             <p className="text-[16px] md:text-lg text-white/70 leading-relaxed mb-8 font-light" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                                My portfolio includes collaborations with <span className="text-white font-medium">Logan Paul, Gillette, Western Digital, Wilder World</span>, and recognition from <span className="text-white font-medium">Adobe, ViewSonic, and Ann Druyan</span> (co-creator of Cosmos). I've built a global audience, had my work exhibited across <span className="text-white font-medium">Paris</span>, and helped drive campaigns that generated <span className="text-white font-medium">millions of views</span>.
+                                My portfolio includes collaborations with <span className="text-white font-normal">Logan Paul, Gillette, Western Digital, Wilder World</span>, and recognition from <span className="text-white font-normal">Adobe, ViewSonic, and Ann Druyan</span> (co-creator of Cosmos). I've built a global audience, had my work exhibited across <span className="text-white font-normal">Paris</span>, and helped drive campaigns that generated <span className="text-white font-normal">millions of views</span>.
                             </p>
                             <p className="text-lg md:text-xl font-['Work_Sans',sans-serif] font-medium text-white" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                                 But none of this was the plan.
@@ -112,7 +112,7 @@ export default function About() {
                         <FadeIn>
                             <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
                                 {/* Adobe Feature Image - no shadow/stroke */}
-                                <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-black order-2 md:order-1">
+                                <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-charcoal order-2 md:order-1">
                                     <img
                                         src="/assets/about/adobe-feature.jpg"
                                         alt="Adobe Feature - Mr. Kalopsia"
@@ -140,10 +140,10 @@ export default function About() {
                                         When that wasn't in the cards, I found another way to explore the cosmos: through art. I taught myself Photoshop and started creating space-themed digital art under the name "Kalopsia," posting every single day on Instagram.
                                     </p>
                                     <p className="text-white/70 text-[16px] leading-relaxed font-light">
-                                        Not because I thought it would become a career, social media wasn't what it is today, but because <span className="text-white font-medium">I loved creating, and I wanted to share that with the world</span>.
+                                        Not because I thought it would become a career, social media wasn't what it is today, but because <span className="text-white font-normal">I loved creating, and I wanted to share that with the world</span>.
                                     </p>
                                     <p className="text-white/70 text-[16px] leading-relaxed font-light">
-                                        Then something unexpected happened. <span className="text-white font-medium">Adobe featured my work</span> on their blog for International Day of Human Space Flight. Photoshop followed me as one of the first Indian artists on their official account. <span className="text-white font-medium">Ann Druyan herself</span> sent me a personal email saying my tribute to Carl Sagan moved her unlike any space art she'd encountered.
+                                        Then something unexpected happened. <span className="text-white font-normal">Adobe featured my work</span> on their blog for International Day of Human Space Flight. Photoshop followed me as one of the first Indian artists on their official account. <span className="text-white font-normal">Ann Druyan herself</span> sent me a personal email saying my tribute to Carl Sagan moved her unlike any space art she'd encountered.
                                     </p>
                                 </div>
                             </div>
@@ -167,7 +167,7 @@ export default function About() {
 
                             <div className="space-y-6 text-left max-w-3xl" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                                 <p className="text-white/70 text-[16px] leading-relaxed font-light">
-                                    When I landed my first job at <span className="text-white font-medium">Inshorts</span> in 2017, I was one of 30 designers hired for a new product. My mentor, Utkarsh Mishra, saw potential in me and groomed my skills. But when I asked him about taking on freelance work alongside my daily art posts, he gave me honest advice.
+                                    When I landed my first job at <span className="text-white font-normal">Inshorts</span> in 2017, I was one of 30 designers hired for a new product. My mentor, Utkarsh Mishra, saw potential in me and groomed my skills. But when I asked him about taking on freelance work alongside my daily art posts, he gave me honest advice.
                                 </p>
                                 <p className="text-xl md:text-2xl font-serif italic text-white py-4">
                                     I didn't listen.
@@ -182,7 +182,7 @@ export default function About() {
                         <FadeIn delay={200}>
                             <div className="mt-8 md:mt-12">
                                 <p className="text-left text-[16px] md:text-lg text-white/70 mb-12 font-light" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                                    The result? <span className="text-white font-medium">I hit the bullseye on all three fronts.</span>
+                                    The result? <span className="text-white font-normal">I hit the bullseye on all three fronts.</span>
                                 </p>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
                                     <div className="group p-6 rounded-md bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-500 text-left cursor-default">
@@ -199,7 +199,7 @@ export default function About() {
                                     </div>
                                 </div>
                                 <p className="text-left text-[16px] text-white/70 max-w-2xl font-light" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                                    That experience taught me something fundamental about who I am: <span className="text-white font-medium">I don't just dream, I execute</span>. And I don't stop until I've mastered what I set out to learn.
+                                    That experience taught me something fundamental about who I am: <span className="text-white font-normal">I don't just dream, I execute</span>. And I don't stop until I've mastered what I set out to learn.
                                 </p>
                             </div>
                         </FadeIn>
@@ -212,7 +212,7 @@ export default function About() {
                         <FadeIn>
                             <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
                                 {/* Image - no shadow/stroke */}
-                                <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-black order-2 md:order-1">
+                                <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-charcoal order-2 md:order-1">
                                     <img
                                         src="/assets/about/evolution.jpg"
                                         alt="Evolution Through Experimentation"
@@ -237,10 +237,10 @@ export default function About() {
                                         I get bored once I've <span className="font-['Playfair_Display',serif] italic text-zinc-200">mastered</span> a tool.
                                     </h2>
                                     <p className="text-white/70 text-[16px] leading-relaxed font-light">
-                                        What started as Photoshop art evolved into motion graphics, 3D animation, and immersive environments. I taught myself <span className="text-white font-medium">After Effects, Cinema 4D, Unreal Engine 5, Blender</span>. Not to be a jack of all trades, but because I crave the challenge of the unknown.
+                                        What started as Photoshop art evolved into motion graphics, 3D animation, and immersive environments. I taught myself <span className="text-white font-normal">After Effects, Cinema 4D, Unreal Engine 5, Blender</span>. Not to be a jack of all trades, but because I crave the challenge of the unknown.
                                     </p>
                                     <p className="text-white/70 text-[16px] leading-relaxed font-light">
-                                        Someone in the industry once told me to keep my techniques secret. I took a different path, inspired by Utkarsh's philosophy: <span className="text-white font-medium">teach what you know</span>. When people caught up to my level, I simply learned something new.
+                                        Someone in the industry once told me to keep my techniques secret. I took a different path, inspired by Utkarsh's philosophy: <span className="text-white font-normal">teach what you know</span>. When people caught up to my level, I simply learned something new.
                                     </p>
                                     <div className="pt-4 border-t border-white/10">
                                         <p className="text-white/70 text-[16px] italic font-light">
@@ -269,16 +269,16 @@ export default function About() {
 
                             <div className="space-y-6 text-left" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                                 <p className="text-white/70 text-[16px] leading-relaxed font-light">
-                                    My work with <span className="text-white font-medium">Shara Senderoff at Raised In Space</span> taught me how to dream big and stay humble. For nearly five years, I translated complex investment theses into visual identities, created promotional content for major media properties, and art-directed campaigns for high-profile music artists.
+                                    My work with <span className="text-white font-normal">Shara Senderoff at Raised In Space</span> taught me how to dream big and stay humble. For nearly five years, I translated complex investment theses into visual identities, created promotional content for major media properties, and art-directed campaigns for high-profile music artists.
                                 </p>
                                 <p className="text-white/70 text-[16px] leading-relaxed font-light">
-                                    At <span className="text-white font-medium">Futureverse</span>, I designed strategic presentations that helped secure a <span className="text-white font-medium">$54M Series A</span> and built immersive Unreal Engine environments that defined their "Open Metaverse" vision.
+                                    At <span className="text-white font-normal">Futureverse</span>, I designed strategic presentations that helped secure a <span className="text-white font-normal">$54M Series A</span> and built immersive Unreal Engine environments that defined their "Open Metaverse" vision.
                                 </p>
                                 <p className="text-white/70 text-[16px] leading-relaxed font-light">
-                                    At <span className="text-white font-medium">Wilder World</span>, I led explainer videos from script to final render, driving massive organic reach, including a launch campaign that hit <span className="text-white font-medium">580k+ views</span> on X (Twitter), making it one of their most watched videos.
+                                    At <span className="text-white font-normal">Wilder World</span>, I led explainer videos from script to final render, driving massive organic reach, including a launch campaign that hit <span className="text-white font-normal">580k+ views</span> on X (Twitter), making it one of their most watched videos.
                                 </p>
                                 <p className="text-white/70 text-[16px] leading-relaxed font-light">
-                                    Along the way, I sold out <span className="text-white font-medium">60 NFTs in under 3 minutes</span> during Crypto.com's launch and even caught the attention of Daryl Morey, President of the Philadelphia 76ers, who purchased my first NFT.
+                                    Along the way, I sold out <span className="text-white font-normal">60 NFTs in under 3 minutes</span> during Crypto.com's launch and even caught the attention of Daryl Morey, President of the Philadelphia 76ers, who purchased my first NFT.
                                 </p>
                             </div>
                         </FadeIn>
@@ -288,7 +288,7 @@ export default function About() {
                     <div className="max-w-4xl mx-auto mt-16">
                         <FadeIn>
                             <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-                                <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-black w-full max-w-xs mx-auto md:mx-0">
+                                <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-charcoal w-full max-w-xs mx-auto md:mx-0">
                                     <img
                                         src="/assets/about/viewsonic.jpg"
                                         alt="ViewSonic ColorPro Awards Judge"
@@ -298,7 +298,7 @@ export default function About() {
                                 <div className="space-y-4 text-left" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                                     <h3 className="text-2xl md:text-3xl text-white font-['Work_Sans',sans-serif] font-light tracking-tight">ViewSonic <span className="font-['Playfair_Display',serif] italic text-zinc-200">ColorPro</span> Awards</h3>
                                     <p className="text-white/70 text-[16px] leading-relaxed font-light">
-                                        I became a <span className="text-white font-medium">judge for ViewSonic's ColorPro Awards</span> in 2024 and 2025, evaluating creative work from artists around the world.
+                                        I became a <span className="text-white font-normal">judge for ViewSonic's ColorPro Awards</span> in 2024 and 2025, evaluating creative work from artists around the world.
                                     </p>
                                 </div>
                             </div>
@@ -312,10 +312,10 @@ export default function About() {
                                 <div className="space-y-4 text-left order-2 md:order-1" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                                     <h3 className="text-2xl md:text-3xl text-white font-['Work_Sans',sans-serif] font-light tracking-tight">Paris Art <span className="font-['Playfair_Display',serif] italic text-zinc-200">Installations</span></h3>
                                     <p className="text-white/70 text-[16px] leading-relaxed font-light">
-                                        My work was showcased in <span className="text-white font-medium">public installations across Paris</span>, bringing digital art to physical spaces through Artpoint.
+                                        My work was showcased in <span className="text-white font-normal">public installations across Paris</span>, bringing digital art to physical spaces through Artpoint.
                                     </p>
                                 </div>
-                                <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-black order-1 md:order-2 w-full max-w-xs mx-auto md:mx-0">
+                                <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-charcoal order-1 md:order-2 w-full max-w-xs mx-auto md:mx-0">
                                     <video
                                         src="/assets/about/paris.mp4"
                                         autoPlay
@@ -336,7 +336,7 @@ export default function About() {
                         <FadeIn>
                             <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
                                 {/* Image - no shadow/stroke */}
-                                <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-black order-2 md:order-1">
+                                <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-charcoal order-2 md:order-1">
                                     <img
                                         src="/assets/about/paris.jpg"
                                         alt="The Kid Who Never Grew Up"
@@ -391,7 +391,7 @@ export default function About() {
 
                             <div className="space-y-6 text-left" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                                 <p className="text-white/70 text-[16px] leading-relaxed font-light">
-                                    <span className="text-white font-medium">At the end of the day, I'm still that kid who wanted to touch the stars.</span> I just found a different way to get there.
+                                    <span className="text-white font-normal">At the end of the day, I'm still that kid who wanted to touch the stars.</span> I just found a different way to get there.
                                 </p>
                                 <p className="text-white/70 text-[16px] leading-relaxed font-light">
                                     Every project is a chance to build something I've never seen before. To learn a tool I don't know yet. To solve a problem that keeps me up at night in the best way possible.
@@ -399,7 +399,7 @@ export default function About() {
                                 <p className="text-white/70 text-[16px] leading-relaxed font-light">
                                     I'm not looking for just another job. I'm looking for work that makes me feel the way I did when I first opened Photoshop and realized I could create entire universes. Work that challenges me. Work that matters.
                                 </p>
-                                <p className="text-white font-medium text-[16px] leading-relaxed pt-4">
+                                <p className="text-white font-normal text-[16px] leading-relaxed pt-4">
                                     If that sounds like what you're building, let's talk.
                                 </p>
                             </div>
@@ -414,7 +414,7 @@ export default function About() {
                             <CTASection />
                         </FadeIn>
                     </div>
-                    <div className="mt-12 md:mt-24 w-full bg-black border-t border-white/5 pt-12 md:pt-16 pb-12 md:pb-24">
+                    <div className="mt-12 md:mt-24 w-full bg-[#050507] border-t border-white/5 pt-12 md:pt-16 pb-12 md:pb-24">
                         <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row justify-between items-center gap-8">
 
                             {/* LEFT: Operational Status & Copyright */}

@@ -166,7 +166,7 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
 
                     {/* Play Button Overlay for Mobile */}
                     {isMobile && (
-                        <div className="absolute inset-0 z-[2] flex items-center justify-center bg-black/40">
+                        <div className="absolute inset-0 z-[2] flex items-center justify-center bg-black/60">
                             <div className="flex items-center gap-3 px-6 py-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
                                 <Play size={20} className="text-white fill-white" />
                                 <span className="text-white font-medium text-lg">Play Showreel</span>

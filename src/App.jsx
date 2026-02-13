@@ -22,7 +22,7 @@ class ErrorBoundary extends React.Component {
   static getDerivedStateFromError(error) { return { hasError: true, error }; }
   componentDidCatch(error, errorInfo) { console.error("Error:", error, errorInfo); }
   render() {
-    if (this.state.hasError) return <div className="bg-black text-white p-8">Something went wrong.</div>;
+    if (this.state.hasError) return <div className="bg-charcoal text-white p-8">Something went wrong.</div>;
     return this.props.children;
   }
 }
@@ -264,7 +264,7 @@ function AppContent() {
       {/* 1. LOADER */}
       {showLoader && (
         <div
-          className="fixed inset-0 z-[10000] bg-black flex flex-col items-center justify-center px-8"
+          className="fixed inset-0 z-[10000] bg-charcoal flex flex-col items-center justify-center px-8"
           style={{
             transform: loading ? 'translateY(0)' : 'translateY(-100%)',
             transition: 'transform 1s cubic-bezier(0.76, 0, 0.24, 1)'
@@ -325,12 +325,12 @@ function AppContent() {
       <main className="relative z-20">
         <div className="absolute inset-0 z-0 pointer-events-none hidden md:block" style={{
           background: `
-            linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 10%, rgba(0,0,0,0.8) 15%, #000 20%, #000 85%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0.3) 95%, transparent 100%)
+            linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(5,5,7,0.1) 8%, rgba(5,5,7,0.3) 11%, rgba(5,5,7,0.6) 14%, rgba(5,5,7,0.85) 16%, #050507 18%, #050507 70%, rgba(5,5,7,0.9) 75%, rgba(5,5,7,0.7) 82%, rgba(5,5,7,0.4) 90%, rgba(5,5,7,0.1) 96%, transparent 100%)
           `
         }}></div>
         <div className="absolute inset-0 z-0 pointer-events-none md:hidden" style={{
           background: `
-            linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.8) 12%, #000 15%, #000 100%)
+            linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(5,5,7,0.4) 8%, rgba(5,5,7,0.8) 12%, #050507 15%, #050507 100%)
           `
         }}></div>
 
@@ -462,7 +462,7 @@ function AppContent() {
                           }
                         }}
                       >
-                        <div className="relative aspect-[16/10] rounded-sm overflow-hidden transition-all duration-500 bg-zinc-900 mb-4">
+                        <div className="relative aspect-[16/10] rounded-sm overflow-hidden transition-all duration-500 bg-charcoal mb-4">
                           <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0" />
                           <video
                             src={project.video}
@@ -515,14 +515,14 @@ function AppContent() {
                     href={moment.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative w-full bg-zinc-900/40 border border-white/5 hover:border-white/10 transition-colors duration-500 rounded-sm overflow-hidden flex flex-col md:flex-row items-start md:items-center gap-6 p-4 md:p-6 cursor-pointer"
+                    className="group relative w-full bg-charcoal/40 border border-white/5 hover:border-white/10 transition-colors duration-500 rounded-sm overflow-hidden flex flex-col md:flex-row items-start md:items-center gap-6 p-4 md:p-6 cursor-pointer"
                     onMouseEnter={textEnter}
                     onMouseLeave={textLeave}
                   >
                     {/* Image Section - No Zoom Animation */}
-                    <div className="relative overflow-hidden shrink-0 rounded-sm w-full h-48 md:w-48 md:h-28 bg-zinc-900">
+                    <div className="relative overflow-hidden shrink-0 rounded-sm w-full h-48 md:w-48 md:h-28 bg-charcoal">
                       {/* Dark overlay that vanishes on hover */}
-                      <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10" />
+                      <div className="absolute inset-0 bg-charcoal/10 group-hover:bg-transparent transition-colors duration-500 z-10" />
                       <img
                         src={moment.image}
                         alt={moment.title}
@@ -572,7 +572,7 @@ function AppContent() {
         <section className="py-12 md:py-24 px-4 md:px-6 relative z-20" id="about">
           <div className="max-w-6xl mx-auto">
             <FadeIn>
-              <div className="relative bg-zinc-900/20 border border-white/5 rounded-md p-8 md:p-16 overflow-hidden" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+              <div className="relative bg-[#050507] border border-white/5 rounded-md p-8 md:p-16 overflow-hidden" onMouseEnter={textEnter} onMouseLeave={textLeave}>
 
                 {/* Decorative Background Quote Mark */}
                 <div className="absolute top-8 left-8 text-zinc-500/20 font-serif text-[120px] leading-none -z-10 select-none pointer-events-none">
@@ -621,7 +621,7 @@ function AppContent() {
               <CTASection />
             </FadeIn>
           </div>
-          <div className="mt-12 md:mt-24 w-full bg-black border-t border-white/5 pt-12 md:pt-16 pb-12 md:pb-24">
+          <div className="mt-12 md:mt-24 w-full bg-[#050507] border-t border-white/5 pt-12 md:pt-16 pb-12 md:pb-24">
             <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row justify-between items-center gap-8">
 
               {/* LEFT: Operational Status & Copyright */}

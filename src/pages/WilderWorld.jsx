@@ -17,7 +17,7 @@ const WilderWorld = () => {
     }, []);
 
     return (
-        <div className="bg-black text-white min-h-screen font-sans selection:bg-purple-500 selection:text-white">
+        <div className="bg-charcoal text-white min-h-screen font-sans selection:bg-purple-500 selection:text-white">
             {/* Navigation */}
             <nav className="fixed top-0 left-0 right-0 z-50 p-6 mix-blend-difference">
                 <Link
@@ -32,7 +32,7 @@ const WilderWorld = () => {
             {/* 1. HERO */}
             <section className="relative h-screen w-full overflow-hidden flex items-center justify-center">
                 {/* Background Video Placeholder */}
-                <div className="absolute inset-0 z-0 bg-zinc-900">
+                <div className="absolute inset-0 z-0 bg-charcoal">
                     {/* Replace with actual video/GIF */}
                     <video
                         className="w-full h-full object-cover opacity-60"
@@ -44,7 +44,7 @@ const WilderWorld = () => {
                     >
                         <source src="/assets/projects/wilder-world.mp4" type="video/mp4" />
                     </video>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/20 to-transparent" />
                 </div>
 
                 <div className="relative z-10 text-center px-4 max-w-5xl mx-auto mt-20">
@@ -74,7 +74,7 @@ const WilderWorld = () => {
             {/* 2. THE CHALLENGE */}
             <section className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center">
-                    <div className="relative aspect-[4/5] md:aspect-square bg-zinc-900 rounded-lg overflow-hidden group">
+                    <div className="relative aspect-[4/5] md:aspect-square bg-charcoal rounded-lg overflow-hidden group">
                         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-blue-900/20" />
                         <div className="absolute inset-0 flex items-center justify-center">
                             <span className="text-zinc-600 font-serif italic text-4xl">Visual Placeholder: Glitch/Before</span>
@@ -99,7 +99,7 @@ const WilderWorld = () => {
             </section>
 
             {/* 3. VISUAL STRATEGY */}
-            <section className="py-24 bg-zinc-950">
+            <section className="py-24 bg-charcoal">
                 <div className="max-w-7xl mx-auto px-6 md:px-12">
                     <h2 className="text-4xl md:text-6xl font-serif italic mb-20 text-center">Visual Strategy</h2>
 
@@ -112,7 +112,7 @@ const WilderWorld = () => {
                                 { title: "Act 2: The Details", icon: Eye, desc: "Descend to street level, reveal intricate design" },
                                 { title: "Act 3: The Possibilities", icon: Users, desc: "Pull back to show endless exploration potential" }
                             ].map((item, i) => (
-                                <div key={i} className="bg-zinc-900/50 p-8 rounded-xl border border-white/5 hover:border-purple-500/30 transition-colors">
+                                <div key={i} className="bg-charcoal/50 p-8 rounded-xl border border-white/5 hover:border-purple-500/30 transition-colors">
                                     <item.icon size={32} className="text-purple-400 mb-6" />
                                     <h4 className="text-xl font-medium mb-3">{item.title}</h4>
                                     <p className="text-zinc-400">{item.desc}</p>
@@ -162,7 +162,7 @@ const WilderWorld = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {[1, 2, 3, 4, 5, 6].map((num) => (
                         <div key={num} className="space-y-4">
-                            <div className="aspect-video bg-zinc-900 rounded-lg border border-white/10 flex items-center justify-center">
+                            <div className="aspect-video bg-charcoal rounded-lg border border-white/10 flex items-center justify-center">
                                 <span className="text-zinc-600">Frame {num}</span>
                             </div>
                             <div className="flex justify-between items-start text-sm">
@@ -175,7 +175,7 @@ const WilderWorld = () => {
             </section>
 
             {/* 5. PROCESS */}
-            <section className="py-24 bg-zinc-950">
+            <section className="py-24 bg-charcoal">
                 <div className="max-w-7xl mx-auto px-6 md:px-12">
                     <h2 className="text-4xl md:text-6xl font-serif italic mb-20 text-center">Process</h2>
 
@@ -184,7 +184,7 @@ const WilderWorld = () => {
                         <div className="space-y-8">
                             <h3 className="text-2xl font-medium text-center">Environment Building</h3>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div className="aspect-video bg-zinc-900 rounded-lg flex items-center justify-center text-zinc-500">Blockout</div>
+                                <div className="aspect-video bg-charcoal rounded-lg flex items-center justify-center text-zinc-500">Blockout</div>
                                 <div className="aspect-video bg-zinc-800 rounded-lg flex items-center justify-center text-zinc-500">Assets</div>
                                 <div className="aspect-video bg-zinc-700 rounded-lg flex items-center justify-center text-zinc-500">Final Render</div>
                             </div>
@@ -196,7 +196,7 @@ const WilderWorld = () => {
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                 {["Morning", "Golden Hour", "Dusk", "Night"].map((time) => (
                                     <div key={time} className="space-y-2 text-center">
-                                        <div className="aspect-[4/5] bg-zinc-900 rounded-lg border border-white/10" />
+                                        <div className="aspect-[4/5] bg-charcoal rounded-lg border border-white/10" />
                                         <span className="text-sm text-zinc-400">{time}</span>
                                     </div>
                                 ))}
@@ -216,9 +216,9 @@ const WilderWorld = () => {
                         { title: "The Hero Moment", desc: "Final wide showcases Metropolis as a complete urban ecosystem." }
                     ].map((scene, i) => (
                         <div key={i} className="relative group">
-                            <div className="aspect-[21/9] w-full bg-zinc-900 overflow-hidden relative">
+                            <div className="aspect-[21/9] w-full bg-charcoal overflow-hidden relative">
                                 {/* Placeholder Image */}
-                                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/80" />
+                                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-charcoal/80" />
                                 <div className="absolute bottom-0 left-0 p-8 md:p-16 max-w-4xl">
                                     <h3 className="text-3xl md:text-5xl font-serif italic mb-4 text-white">{scene.title}</h3>
                                     <p className="text-lg md:text-xl text-zinc-300">{scene.desc}</p>
@@ -233,7 +233,7 @@ const WilderWorld = () => {
             <section className="py-24 px-6 md:px-12 max-w-6xl mx-auto text-center">
                 <h2 className="text-4xl md:text-6xl font-serif italic mb-12">The Impact</h2>
 
-                <div className="aspect-video w-full bg-zinc-900 rounded-2xl overflow-hidden mb-12 border border-white/10 shadow-2xl shadow-purple-900/20 relative group">
+                <div className="aspect-video w-full bg-charcoal rounded-2xl overflow-hidden mb-12 border border-white/10 shadow-2xl shadow-purple-900/20 relative group">
                     <div className="absolute inset-0 flex items-center justify-center">
                         <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform cursor-pointer">
                             <Play size={32} className="fill-white ml-2" />
@@ -260,7 +260,7 @@ const WilderWorld = () => {
             </section>
 
             {/* 8. TOOLS */}
-            <section className="py-24 bg-zinc-950 text-center border-t border-white/5">
+            <section className="py-24 bg-charcoal text-center border-t border-white/5">
                 <h3 className="text-sm font-bold tracking-widest uppercase text-zinc-500 mb-12">Tools Used</h3>
                 <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-70">
                     {["Unreal Engine 5", "After Effects", "Premiere Pro", "DaVinci Resolve"].map((tool) => (
@@ -270,7 +270,7 @@ const WilderWorld = () => {
             </section>
 
             {/* Next Project Footer */}
-            <section className="h-[50vh] flex items-center justify-center bg-zinc-900 relative overflow-hidden group">
+            <section className="h-[50vh] flex items-center justify-center bg-charcoal relative overflow-hidden group">
                 <div className="absolute inset-0 opacity-40 group-hover:opacity-60 transition-opacity bg-purple-900/20" />
                 <Link to="/" className="relative z-10 text-center">
                     <span className="block text-sm uppercase tracking-widest text-zinc-400 mb-4">Next Project</span>
@@ -279,7 +279,7 @@ const WilderWorld = () => {
             </section>
 
             {/* Footer */}
-            <div className="py-12 border-t border-white/10 max-w-7xl mx-auto px-6 bg-black z-10 relative">
+            <div className="py-12 border-t border-white/10 max-w-7xl mx-auto px-6 bg-charcoal z-10 relative">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6">
                     <Link to="/" className="flex items-center gap-2 text-zinc-500 hover:text-white transition-colors group">
                         <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Portfolio

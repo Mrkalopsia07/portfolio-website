@@ -30,7 +30,7 @@ export default function Resume() {
     const textLeave = () => setCursorVariant("default");
 
     return (
-        <div className="text-white min-h-screen font-sans selection:bg-purple-500 selection:text-white md:cursor-none cursor-auto relative bg-black">
+        <div className="text-white min-h-screen font-sans selection:bg-purple-500 selection:text-white md:cursor-none cursor-auto relative bg-charcoal">
             <CustomCursor cursorVariant={cursorVariant} />
             <Navbar lenis={lenis} textEnter={textEnter} textLeave={textLeave} />
 
@@ -251,7 +251,7 @@ export default function Resume() {
                             <CTASection />
                         </FadeIn>
                     </div>
-                    <div className="mt-12 md:mt-24 w-full bg-black border-t border-white/5 pt-12 md:pt-16 pb-12 md:pb-24">
+                    <div className="mt-12 md:mt-24 w-full bg-[#050507] border-t border-white/5 pt-12 md:pt-16 pb-12 md:pb-24">
                         <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row justify-between items-center gap-8">
 
                             {/* LEFT: Operational Status & Copyright */}
