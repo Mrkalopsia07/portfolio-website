@@ -306,21 +306,11 @@ function AppContent() {
       <main className="relative z-20">
         <div className="absolute inset-0 z-0 pointer-events-none hidden md:block" style={{
           background: `
-            linear-gradient(to bottom, transparent 0%, transparent 20%, rgba(168, 85, 247, 0.04) 25%, rgba(168, 85, 247, 0.04) 75%, transparent 80%, transparent 100%),
-            radial-gradient(circle at 10% 50%, rgba(168, 85, 247, 0.04) 0%, transparent 50%),
-            radial-gradient(circle at 90% 50%, rgba(139, 92, 246, 0.03) 0%, transparent 50%),
-            radial-gradient(circle at 30% 50%, rgba(236, 72, 153, 0.03) 0%, transparent 50%),
-            radial-gradient(circle at 70% 50%, rgba(59, 130, 246, 0.025) 0%, transparent 50%),
             linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 10%, rgba(0,0,0,0.8) 15%, #000 20%, #000 85%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0.3) 95%, transparent 100%)
           `
         }}></div>
         <div className="absolute inset-0 z-0 pointer-events-none md:hidden" style={{
           background: `
-            linear-gradient(to bottom, transparent 0%, transparent 15%, rgba(168, 85, 247, 0.04) 20%, rgba(168, 85, 247, 0.04) 85%, transparent 90%, transparent 100%),
-            radial-gradient(circle at 10% 50%, rgba(168, 85, 247, 0.04) 0%, transparent 50%),
-            radial-gradient(circle at 90% 50%, rgba(139, 92, 246, 0.03) 0%, transparent 50%),
-            radial-gradient(circle at 30% 50%, rgba(236, 72, 153, 0.03) 0%, transparent 50%),
-            radial-gradient(circle at 70% 50%, rgba(59, 130, 246, 0.025) 0%, transparent 50%),
             linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.8) 12%, #000 15%, #000 100%)
           `
         }}></div>
@@ -364,7 +354,7 @@ function AppContent() {
               <span className="relative">
                 Watch Reel
                 {/* Underline Animation */}
-                <span className="absolute -bottom-1 right-0 w-0 h-[1px] bg-white transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:w-full group-hover:left-0"></span>
+                <span className="absolute -bottom-1 right-0 w-0 h-[1px] bg-white opacity-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:w-full group-hover:left-0"></span>
               </span>
             </button>
 
@@ -377,7 +367,7 @@ function AppContent() {
             >
               About Me
               {/* Underline Animation */}
-              <span className="absolute bottom-1 right-0 w-0 h-[1px] bg-white transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:w-full group-hover:left-0"></span>
+              <span className="absolute bottom-1 right-0 w-0 h-[1px] bg-white opacity-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:w-full group-hover:left-0"></span>
             </a>
           </div>
 
@@ -631,21 +621,21 @@ function AppContent() {
               <nav className="flex items-center gap-4 md:gap-6 font-sans text-[10px] md:text-xs font-medium uppercase tracking-wider text-zinc-400">
                 <a href="https://instagram.com/mr.kalopsia/" target="_blank" rel="noopener noreferrer" className="group relative py-1 hover:text-white transition-colors duration-300" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                   Instagram
-                  <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-white opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:w-full"></span>
                 </a>
 
                 <span className="text-zinc-800 select-none">/</span>
 
                 <a href="https://www.linkedin.com/in/eashan-misra/" target="_blank" rel="noopener noreferrer" className="group relative py-1 hover:text-white transition-colors duration-300" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                   LinkedIn
-                  <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-white opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:w-full"></span>
                 </a>
 
                 <span className="text-zinc-800 select-none">/</span>
 
                 <a href="/Resume%20-%20Eashan%20Misra.docx" download className="group relative py-1 text-white hover:text-zinc-200 transition-colors duration-300" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                   Resume
-                  <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-white opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:w-full"></span>
                 </a>
               </nav>
             </div>

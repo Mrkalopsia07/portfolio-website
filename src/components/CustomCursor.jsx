@@ -93,22 +93,17 @@ export default function CustomCursor({ cursorVariant }) {
             ${!isVisible ? 'opacity-0' : ''}
             ${cursorVariant === 'default' ? 'w-10 h-10 bg-white/10 border-white/40 backdrop-blur-sm' : ''}
             ${cursorVariant === 'text' ? 'w-14 h-14 border-white/60 bg-transparent' : ''}
-            ${cursorVariant === 'video' ? 'w-40 h-12 border-transparent' : ''}
+            ${cursorVariant === 'video' ? 'w-40 h-12 bg-white border-transparent' : ''}
             ${cursorVariant === 'video-playing' ? 'w-12 h-12 sm:w-14 sm:h-14 bg-white/5 border-white/30' : ''}
           `}
                     style={{
                         transform: cursorVariant === 'video' ? 'translate(-20px, -50%)' : 'translate(-50%, -50%)',
-                        transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0.4s cubic-bezier(0.4, 0, 0.2, 1), height 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                        ...(cursorVariant === 'video' ? {
-                            background: 'linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7, #7c3aed)',
-                            backgroundSize: '300% 300%',
-                            animation: 'gradientShift 4s ease infinite'
-                        } : {})
+                        transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0.4s cubic-bezier(0.4, 0, 0.2, 1), height 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
                     }}
                 >
                     {/* Video cursor content */}
                     <div
-                        className="flex items-center gap-2.5 text-white px-3"
+                        className="flex items-center gap-2.5 text-black px-3"
                         style={{
                             opacity: cursorVariant === 'video' ? 1 : 0,
                             transform: cursorVariant === 'video' ? 'scale(1)' : 'scale(0.8)',
@@ -118,7 +113,7 @@ export default function CustomCursor({ cursorVariant }) {
                         }}
                     >
                         <Play size={14} className="fill-current" />
-                        <span className="text-xs font-bold uppercase tracking-wider whitespace-nowrap">Play Showreel</span>
+                        <span className="font-['Work_Sans',sans-serif] text-[10px] md:text-xs font-medium uppercase tracking-widest whitespace-nowrap">Play Showreel</span>
                     </div>
                 </div>
             </div>

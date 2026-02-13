@@ -165,7 +165,7 @@ const DesktopLink = ({ item, isActive, isHome, onScroll, textEnter, textLeave })
         >
             <span className="relative">
                 {item.label}
-                <span className={`absolute -bottom-1 right-0 h-[1px] bg-white transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:w-full group-hover:left-0 ${isActive ? 'w-full left-0' : 'w-0'}`}></span>
+                <span className={`absolute -bottom-1 right-0 h-[1px] bg-white transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:w-full group-hover:left-0 opacity-0 group-hover:opacity-100 transition-opacity ${isActive ? 'w-full left-0 opacity-100' : 'w-0'}`}></span>
             </span>
         </a>
     );

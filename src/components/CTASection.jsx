@@ -31,7 +31,7 @@ const EmailLink = ({ email }) => {
             </div>
 
             {/* Sliding Underline Animation */}
-            <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:w-full"></span>
+            <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-white opacity-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:w-full"></span>
 
             {/* Floating Label on Hover */}
             <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-['JetBrains_Mono',monospace] text-white opacity-0 group-hover:opacity-100 transition-all duration-500 uppercase tracking-widest whitespace-nowrap">
