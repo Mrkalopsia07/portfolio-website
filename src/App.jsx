@@ -12,6 +12,7 @@ import Navbar from './components/Navbar';
 import GlowingStackCard from './components/GlowingStackCard';
 import { ROLES, PROJECTS, SPOTLIGHT_MOMENTS } from './constants';
 import UnicornScene from "unicornstudio-react";
+import CTASection from './components/CTASection';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -591,15 +592,7 @@ function AppContent() {
         <footer className="pt-16 md:pt-32 pb-0 relative z-20" id="contact">
           <div className="max-w-7xl mx-auto flex flex-col items-center text-center px-4 md:px-6">
             <FadeIn>
-              <h2 className="font-serif italic text-4xl md:text-8xl mb-8 md:mb-12 opacity-90 leading-tight">Ready to build<br />something iconic?</h2>
-              <a href="mailto:em@mrkalopsia.com" className="relative flex items-center gap-3 px-6 md:px-8 py-3.5 md:py-4 rounded-full bg-white text-black text-base md:text-lg font-semibold transition-all duration-300 group inline-flex overflow-hidden" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                <span className="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></span>
-                <span className="absolute inset-0 bg-purple-400 blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 scale-150"></span>
-                <span className="relative flex items-center gap-3 transition-colors duration-300 group-hover:text-white">
-                  <Mail size={20} className="md:w-6 md:h-6 transition-all duration-300 group-hover:scale-110 group-hover:-rotate-12 stroke-black group-hover:stroke-white" />
-                  <span>Say Hello</span>
-                </span>
-              </a>
+              <CTASection />
             </FadeIn>
           </div>
           <div className="mt-12 md:mt-24 w-full bg-black border-t border-white/5 pt-12 md:pt-16 pb-12 md:pb-24">
