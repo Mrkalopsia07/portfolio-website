@@ -13,6 +13,7 @@ import GlowingStackCard from './components/GlowingStackCard';
 import { ROLES, PROJECTS, SPOTLIGHT_MOMENTS } from './constants';
 import UnicornScene from "unicornstudio-react";
 import CTASection from './components/CTASection';
+import Typewriter from './components/Typewriter';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -56,12 +57,8 @@ function AppContent() {
 
   const [isGalaxyLoaded, setIsGalaxyLoaded] = useState(() => !!sessionStorage.getItem("introShown"));
 
-  const [text, setText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [loopNum, setLoopNum] = useState(0);
-  const [typingSpeed, setTypingSpeed] = useState(150);
-
   const heroRef = useRef(null);
+  const showreelRef = useRef(null);
   const [lenis, setLenis] = useState(null);
 
   // 1. Initialize Lenis (Smooth Scroll)
@@ -80,17 +77,16 @@ function AppContent() {
     };
   }, []);
 
-  // 2. Master Scroll Listener
+  // 2. Optimized Scroll Listener (Parallax Only)
   useEffect(() => {
     if (!lenis) return;
     let ticking = false;
 
-    const updateScroll = (e) => {
+    const updateScroll = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
 
-      // Hero Parallax Logic
-      // Note: We still calculate this for the Hero opacity, but we no longer unmount the background
+      // Hero Parallax Logic - Direct DOM manipulation for performance
       const shouldBeVisible = scrollY < windowHeight + 200;
 
       if (heroRef.current && shouldBeVisible) {
@@ -100,25 +96,32 @@ function AppContent() {
         heroRef.current.style.opacity = opacity;
         heroRef.current.style.transform = `translate3d(0, ${translateY}px, 0)`;
       }
-
-
-      // Play Button Toggle
-      const shouldShowPlay = scrollY > windowHeight * 0.4;
-      if (shouldShowPlay !== showPlayButton) setShowPlayButton(shouldShowPlay);
-
       ticking = false;
     };
 
-    const onScroll = (e) => {
+    const onScroll = () => {
       if (!ticking) {
-        requestAnimationFrame(() => updateScroll(e));
+        requestAnimationFrame(updateScroll);
         ticking = true;
       }
     };
 
     lenis.on('scroll', onScroll);
     return () => lenis.off('scroll', onScroll);
-  }, [lenis, showPlayButton]);
+  }, [lenis]);
+
+  // 2.1 Intersection Observer for Play Button Toggle (Optimization)
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      setShowPlayButton(entry.isIntersecting);
+    }, {
+      rootMargin: '-20% 0px 0px 0px',
+      threshold: 0
+    });
+
+    if (showreelRef.current) observer.observe(showreelRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   // 3. REAL LOADER LOGIC (Two-Gear System)
   useEffect(() => {
@@ -211,34 +214,6 @@ function AppContent() {
     }
   }, [loading, showLoader]);
 
-  // Typewriter Effect
-  useEffect(() => {
-    let trailingTimer;
-    const handleTyping = () => {
-      const i = loopNum % ROLES.length;
-      const fullText = ROLES[i];
-
-      const nextText = isDeleting
-        ? fullText.substring(0, text.length - 1)
-        : fullText.substring(0, text.length + 1);
-
-      setText(nextText);
-      setTypingSpeed(isDeleting ? 20 : 80);
-
-      if (!isDeleting && nextText === fullText) {
-        trailingTimer = setTimeout(() => setIsDeleting(true), 800);
-      } else if (isDeleting && nextText === '') {
-        setIsDeleting(false);
-        setLoopNum(loopNum + 1);
-      }
-    };
-
-    const timer = setTimeout(handleTyping, typingSpeed);
-    return () => {
-      clearTimeout(timer);
-      if (trailingTimer) clearTimeout(trailingTimer);
-    };
-  }, [text, isDeleting, loopNum, typingSpeed]);
 
   // Showreel Deep Link
   useEffect(() => {
@@ -343,7 +318,7 @@ function AppContent() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-500 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
               </span>
-              <span>{text}<span className="animate-pulse text-white">|</span></span>
+              <Typewriter roles={ROLES} />
             </span>
           </div>
 
@@ -400,7 +375,7 @@ function AppContent() {
           <style>{`@keyframes gentleBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }`}</style>
         </section>
 
-        <div id="showreel">
+        <div id="showreel" ref={showreelRef}>
           <VideoPlayer showReel={showReel} setShowReel={setShowReel} showPlay={showPlayButton || showReel} textEnter={textEnter} textLeave={textLeave} setCursorVariant={setCursorVariant} />
         </div>
 
@@ -469,7 +444,7 @@ function AppContent() {
                             muted
                             loop
                             playsInline
-                            preload="none"
+                            preload="metadata"
                             className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                           />
                         </div>

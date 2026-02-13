@@ -87,7 +87,7 @@ const brands = [
     'eBay',
 ];
 
-export default function BrandTicker({ textEnter, textLeave }) {
+export default React.memo(function BrandTicker({ textEnter, textLeave }) {
     return (
         <Ticker speed={0.8}>
             <div className="flex items-center">
@@ -110,4 +110,4 @@ export default function BrandTicker({ textEnter, textLeave }) {
             </div>
         </Ticker>
     );
-}
+});

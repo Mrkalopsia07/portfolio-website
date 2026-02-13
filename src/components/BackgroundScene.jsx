@@ -1,7 +1,7 @@
 import React, { memo, useRef, useEffect, useState, useCallback } from 'react';
 import { UnicornScene } from 'unicornstudio-react';
 
-export default function BackgroundScene({ width = "100%", height = "100%" }) {
+export default React.memo(function BackgroundScene({ width = "100%", height = "100%" }) {
     const [mounted, setMounted] = useState(false);
     const [loaded, setLoaded] = useState(false);
 
@@ -57,4 +57,4 @@ export default function BackgroundScene({ width = "100%", height = "100%" }) {
             )}
         </div>
     );
-}
+});
