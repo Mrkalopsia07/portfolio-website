@@ -340,34 +340,44 @@ function AppContent() {
 
           <h1 className="font-serif italic text-5xl md:text-[5.5rem] leading-none mb-5 w-full text-center tracking-[-0.02em]">Mr. Kalopsia</h1>
 
-          <p className="text-white/70 max-w-[420px] text-[16px] leading-relaxed mb-10 font-light">
-            A Multi-disciplinary Design Lead solving problems across <span className="text-white font-normal">3D</span>, <span className="text-white font-normal">Motion</span>, and <span className="text-white font-normal">Video</span>.
+          <p className="text-white/70 max-w-[450px] text-[16px] leading-relaxed mb-10 font-['Work_Sans',sans-serif] font-normal text-center mx-auto">
+            Multi-disciplinary Design Lead solving problems across <span className="font-['Playfair_Display',serif] italic font-medium text-white lining-nums">3D</span>, <span className="font-['Playfair_Display',serif] italic font-medium text-white lining-nums">Motion</span>, and <span className="font-['Playfair_Display',serif] italic font-medium text-white lining-nums">Video</span>.
           </p>
 
-          <div className="flex items-center gap-4 mb-24">
+          <div className="flex items-center justify-center gap-12 mb-24">
+            {/* Primary: Watch Reel */}
             <button
               onClick={() => {
                 if (lenis) lenis.scrollTo(window.innerHeight, { duration: 1.5, easing: (t) => 1 - Math.pow(1 - t, 4) });
                 setTimeout(() => setShowReel(true), 800);
               }}
-              className="relative flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-white text-black text-sm font-semibold transition-all duration-300 group overflow-hidden"
               onMouseEnter={textEnter}
               onMouseLeave={textLeave}
+              className="group relative flex items-center gap-3 font-['Work_Sans',sans-serif] text-[10px] md:text-xs font-medium uppercase tracking-widest text-white py-2"
             >
-              <span className="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></span>
-              <span className="absolute inset-0 bg-purple-400 blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 scale-150"></span>
-              <span className="relative flex items-center gap-2.5 transition-colors duration-300 group-hover:text-white">
-                <Play size={14} className="transition-all duration-300 group-hover:scale-110 group-hover:rotate-90 fill-black group-hover:fill-white stroke-black group-hover:stroke-white" />
-                Play Showreel
+              {/* Play Icon Circle */}
+              <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]">
+                <Play
+                  className="w-3 h-3 fill-current transform translate-x-[1px] transition-transform duration-300 group-hover:scale-110"
+                />
+              </div>
+              <span className="relative">
+                Watch Reel
+                {/* Underline Animation */}
+                <span className="absolute -bottom-1 right-0 w-0 h-[1px] bg-white transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:w-full group-hover:left-0"></span>
               </span>
             </button>
-            <a href="/about" className="relative flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-transparent text-white/70 border border-white/15 text-sm font-semibold transition-all duration-300 group overflow-hidden" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-              <span className="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></span>
-              <span className="absolute inset-0 bg-purple-400 blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 scale-150"></span>
-              <span className="relative flex items-center gap-2.5 transition-colors duration-300 group-hover:text-white">
-                About
-                <ArrowRight size={16} className="transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110 stroke-white/70 group-hover:stroke-white" />
-              </span>
+
+            {/* Secondary: About Me */}
+            <a
+              href="/about"
+              onMouseEnter={textEnter}
+              onMouseLeave={textLeave}
+              className="group relative font-['Work_Sans',sans-serif] text-[10px] md:text-xs font-medium uppercase tracking-widest text-white transition-colors duration-300 py-2"
+            >
+              About Me
+              {/* Underline Animation */}
+              <span className="absolute bottom-1 right-0 w-0 h-[1px] bg-white transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:w-full group-hover:left-0"></span>
             </a>
           </div>
 

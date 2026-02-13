@@ -1,0 +1,14 @@
+1. Wait before we move on to this. I want to unify certain design elements. Can we work on the navigation bar first?
+2. Let’s make it a centered pill. Use black/60 with a high glass backdrop-blur. The profile image should be on the left of it, with a radial purple glow on hover (use mouse coordinates for the glow origin). The navigation links should be on the right. Give them weight precision animations (when you hover, they should have a 1px white underline that slides out from the center or left). Use White for typography and decrease the font weight to normal.
+3. Can we revert the pill menu for nav? I liked the original look better. However, let’s keep the precision underline and white typography. Also, let's revert the mobile menu to its original simple state.
+4. Let's redesign the hero section buttons. The play button should be a circular white button with a black play icon, and the "About Me" link should be a sharp white text link with a subtle arrow.
+5. I want to replace the current footer CTA with a more interactive section featuring a large mixed-typography headline and a functional "Click to Copy" email interaction.
+6. Revert the play button styles in CustomCursor.jsx and VideoPlayer.jsx. They feel too unified now; I prefer the original larger gradient pill design for the cursor and the original typography for the showreel overlay.
+7. Brighten the visibility of the "click to copy" text and icon in the CTA section. Zinc-500 is too dark, let's try Zinc-400 or Zinc-300.
+8. In the code that I gave you, Have you added some animation in that is prevelant in the entire page?
+9. Please remove this expo out animation everywhere.
+10. I asked you to completely remove the animation.
+11. The animation still seems to be there in the buttons?
+12. git pull. I do not want anything from the current session. Reset.
+13. git push.
+14. Create a new text doc and write all my prompts from this chat on it.

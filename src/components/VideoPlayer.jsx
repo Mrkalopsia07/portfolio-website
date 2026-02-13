@@ -159,7 +159,7 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
                 >
                     {/* Thumbnail Image (Background) - Always visible on mobile, conditional on desktop */}
                     <img
-                        src="/assets/showreel/thumbnail.jpg"
+                        src="/assets/showreel/thumbnail.jpg?v=2"
                         alt="Showreel Thumbnail"
                         className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-500 ${!isMobile && showReel ? 'opacity-0' : 'opacity-100'}`}
                     />
