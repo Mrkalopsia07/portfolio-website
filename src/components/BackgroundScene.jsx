@@ -11,25 +11,38 @@ export default function BackgroundScene({ width = "100%", height = "100%" }) {
     }, []);
 
     // CRITICAL FIX: The "Warmup" Handler
+    useEffect(() => {
+        let timer;
+        if (loaded === false && mounted) {
+            // We'll trigger the load logic here if needed, 
+            // but the original code used a callback from UnicornScene.
+            // Let's refactor handleLoad to store the timer in a ref.
+        }
+    }, [loaded, mounted]);
+
+    const warmupTimer = useRef(null);
+
     const handleLoad = useCallback(() => {
-        // Even when Unicorn says "loaded", older GPUs (Intel 4th Gen) are still
-        // uploading textures. We wait 800ms to let it render ~40 frames in secret.
-        // This ensures when we fade it in, it's 100% stable with no missing textures.
-        setTimeout(() => {
+        if (warmupTimer.current) clearTimeout(warmupTimer.current);
+        warmupTimer.current = setTimeout(() => {
             setLoaded(true);
-            
-            // Trigger layout recalculations to ensure it fits perfectly
             window.dispatchEvent(new Event('resize'));
-        }, 800); 
+        }, 800);
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            if (warmupTimer.current) clearTimeout(warmupTimer.current);
+        };
     }, []);
 
     return (
-        <div style={{ 
-            width, 
-            height, 
+        <div style={{
+            width,
+            height,
             // Keep opacity 0 until the "warmup" is complete
-            opacity: loaded ? 1 : 0, 
-            transition: 'opacity 1.5s ease-out' 
+            opacity: loaded ? 1 : 0,
+            transition: 'opacity 1.5s ease-out'
         }}>
             {mounted && (
                 <UnicornScene

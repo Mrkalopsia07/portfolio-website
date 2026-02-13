@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Copy, Check } from 'lucide-react';
 
 // --- HELPER COMPONENT: Email Link ---
 const EmailLink = ({ email }) => {
     const [copied, setCopied] = useState(false);
 
+    useEffect(() => {
+        let timer;
+        if (copied) {
+            timer = setTimeout(() => setCopied(false), 2000);
+        }
+        return () => clearTimeout(timer);
+    }, [copied]);
+
     const handleCopy = () => {
         navigator.clipboard.writeText(email);
         setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
     };
 
     return (

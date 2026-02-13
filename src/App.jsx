@@ -125,12 +125,14 @@ function AppContent() {
     if (!loading || !isGalaxyLoaded) {
       if (!loading && !canMountBackground) {
         // Wait 200ms after loader finishes before asking GPU to render Main Scene
-        setTimeout(() => setCanMountBackground(true), 200);
+        const timer = setTimeout(() => setCanMountBackground(true), 200);
+        return () => clearTimeout(timer);
       }
       return;
     }
 
     let animationFrameId;
+    const progressTimers = [];
 
     const updateProgress = () => {
       let current = progressRef.current;
@@ -166,22 +168,27 @@ function AppContent() {
         // Load Complete
         setShowWelcome(true);
 
-        setTimeout(() => {
+        const t1 = setTimeout(() => {
           setFadingOut(true);
           setLoading(false);
           sessionStorage.setItem("introShown", "true");
 
-          setTimeout(() => {
+          const t2 = setTimeout(() => {
             window.dispatchEvent(new Event('resize'));
             if (lenis) lenis.resize();
           }, 100);
+          progressTimers.push(t2);
 
         }, 800);
+        progressTimers.push(t1);
       }
     };
 
     animationFrameId = requestAnimationFrame(updateProgress);
-    return () => cancelAnimationFrame(animationFrameId);
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      progressTimers.forEach(clearTimeout);
+    };
   }, [loading, isGalaxyLoaded, lenis]);
 
   // Fallback: If galaxy fails to load, force proceed
@@ -206,19 +213,31 @@ function AppContent() {
 
   // Typewriter Effect
   useEffect(() => {
+    let trailingTimer;
     const handleTyping = () => {
       const i = loopNum % ROLES.length;
       const fullText = ROLES[i];
-      setText(isDeleting ? fullText.substring(0, text.length - 1) : fullText.substring(0, text.length + 1));
+
+      const nextText = isDeleting
+        ? fullText.substring(0, text.length - 1)
+        : fullText.substring(0, text.length + 1);
+
+      setText(nextText);
       setTypingSpeed(isDeleting ? 20 : 80);
-      if (!isDeleting && text === fullText) setTimeout(() => setIsDeleting(true), 800);
-      else if (isDeleting && text === '') {
+
+      if (!isDeleting && nextText === fullText) {
+        trailingTimer = setTimeout(() => setIsDeleting(true), 800);
+      } else if (isDeleting && nextText === '') {
         setIsDeleting(false);
         setLoopNum(loopNum + 1);
       }
     };
+
     const timer = setTimeout(handleTyping, typingSpeed);
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      if (trailingTimer) clearTimeout(trailingTimer);
+    };
   }, [text, isDeleting, loopNum, typingSpeed]);
 
   // Showreel Deep Link
@@ -414,25 +433,33 @@ function AppContent() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="group flex flex-col block"
-                        onMouseEnter={(e) => {
-                          textEnter();
-                          const video = e.currentTarget.querySelector('video');
-                          if (video) {
-                            video.currentTime = 0;
-                            video.play().catch(err => console.log("Video play interrupted:", err));
-                          }
-                        }}
                         onMouseLeave={(e) => {
                           textLeave();
                           const container = e.currentTarget;
                           const video = container.querySelector('video');
                           if (video) {
-                            setTimeout(() => {
+                            const vTimer = setTimeout(() => {
                               if (!container.matches(':hover')) {
                                 video.pause();
                                 video.currentTime = 0;
                               }
                             }, 500);
+                            // We don't have a component state/ref here easily per-item
+                            // but we can attach it to the element if strictly needed.
+                            // However, since this is a UI interaction, it's less likely 
+                            // to leak long-term than the persistent typewriter loop.
+                            // To be safe, we can clear it if the mouse enters again.
+                            container._vTimer = vTimer;
+                          }
+                        }}
+                        onMouseEnter={(e) => {
+                          textEnter();
+                          const container = e.currentTarget;
+                          if (container._vTimer) clearTimeout(container._vTimer);
+                          const video = container.querySelector('video');
+                          if (video) {
+                            video.currentTime = 0;
+                            video.play().catch(err => console.log("Video play interrupted:", err));
                           }
                         }}
                       >
