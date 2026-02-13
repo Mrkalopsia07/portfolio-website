@@ -59,7 +59,7 @@ export default function Navbar({ lenis, textEnter, textLeave }) {
     return (
         <>
             <nav className={`fixed top-0 left-0 w-full z-30 px-4 md:px-6 py-4 md:py-6 transition-transform duration-300 flex justify-center ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
-                <div className="flex items-center gap-2 p-2 bg-black/60 backdrop-blur-xl border border-white/10 rounded-sm">
+                <div className="flex items-center gap-2 p-2 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full">
 
                     {/* Profile Image with Glow Effect */}
                     <ProfileGlow
@@ -89,7 +89,7 @@ export default function Navbar({ lenis, textEnter, textLeave }) {
 
                     {/* Mobile Toggle */}
                     <button
-                        className="md:hidden flex items-center justify-center w-10 h-10 rounded-sm hover:bg-white/10 transition-colors duration-300 text-white"
+                        className="md:hidden flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 transition-colors duration-300 text-white"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                     >
                         {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -124,15 +124,15 @@ const ProfileGlow = ({ textEnter, textLeave }) => {
     return (
         <Link
             to="/"
-            className="w-10 h-10 relative group bg-transparent overflow-hidden rounded-sm"
+            className="w-10 h-10 relative group bg-transparent overflow-hidden rounded-full"
             onMouseEnter={textEnter}
             onMouseLeave={textLeave}
             onMouseMove={handleMouseMove}
             style={{ '--mouse-x': '50%', '--mouse-y': '50%' }}
         >
-            <img src={profileImg} alt="Profile" className="w-full h-full object-cover rounded-sm relative z-10" />
+            <img src={profileImg} alt="Profile" className="w-full h-full object-cover rounded-full relative z-10" />
             <div
-                className="absolute inset-0 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20"
+                className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20"
                 style={{
                     background: `radial-gradient(circle 50px at var(--mouse-x) var(--mouse-y), rgba(168, 85, 247, 0.8) 0%, rgba(147, 51, 234, 0.4) 40%, transparent 70%)`,
                 }}
@@ -165,7 +165,7 @@ const DesktopLink = ({ item, isActive, isHome, onScroll, textEnter, textLeave })
         >
             <span className="relative">
                 {item.label}
-                <span className={`absolute -bottom-1 right-0 h-[1px] bg-white transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:w-full group-hover:left-0 opacity-0 group-hover:opacity-100 transition-opacity ${isActive ? 'w-full left-0 opacity-100' : 'w-0'}`}></span>
+                <span className={`absolute -bottom-1 right-0 h-[1px] bg-white transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:w-full group-hover:left-0 opacity-0 group-hover:opacity-100 ${isActive ? 'w-full left-0 opacity-100' : 'w-0'}`}></span>
             </span>
         </a>
     );
@@ -189,7 +189,7 @@ const MobileMenu = ({ isOpen, setIsOpen, navItems, currentPath, isHome, handleSc
     return (
         <div className={`fixed inset-0 z-[100] md:hidden transition-all duration-500 bg-black/95 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
             <button
-                className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center rounded-sm border border-white/20 hover:bg-white/10 transition-colors duration-300 text-white"
+                className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center rounded-full border border-white/20 hover:bg-white/10 transition-colors duration-300 text-white"
                 onClick={() => setIsOpen(false)}
             >
                 <X size={24} />

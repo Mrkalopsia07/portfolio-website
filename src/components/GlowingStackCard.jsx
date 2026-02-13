@@ -5,7 +5,7 @@ export default function GlowingStackCard({ href }) {
     return (
         <a
             href={href}
-            className="group relative w-full aspect-[16/10] bg-[#050507] border border-white/10 flex flex-col items-center justify-center overflow-hidden hover:border-white/30 transition-colors duration-500 cursor-pointer rounded-md"
+            className="group relative w-full aspect-[16/10] bg-[#050507] border border-transparent flex flex-col items-center justify-center overflow-hidden hover:border-white/30 transition-colors duration-500 cursor-pointer rounded-sm"
         >
             {/* 1. Background Grid Pattern (Reveals on Hover) */}
             <div
@@ -37,10 +37,6 @@ export default function GlowingStackCard({ href }) {
                     [ FULL_ARCHIVE ]
                 </span>
             </div>
-
-            {/* 3. Corner Accents (Tech Feel) */}
-            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/10 group-hover:border-white/40 transition-colors duration-500"></div>
-            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/10 group-hover:border-white/40 transition-colors duration-500"></div>
         </a>
     );
 }
