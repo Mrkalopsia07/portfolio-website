@@ -10,6 +10,8 @@ export default {
         sans: ['"Work Sans"', 'sans-serif'],
         serif: ['"Playfair Display"', 'serif'],
         newsreader: ['"Newsreader"', 'serif'],
+        jetbrains: ['"JetBrains Mono"', 'monospace'],
+        'pt-serif': ['"PT Serif"', 'serif'],
       },
       animation: {
         'fade-in': 'fadeInUp 0.8s ease-out forwards',
@@ -19,6 +21,9 @@ export default {
         'float-medium': 'float 6s ease-in-out infinite',
         'float-fast': 'float 4s ease-in-out infinite',
         'ripple': 'ripple 2s cubic-bezier(0, 0.2, 0.8, 1) infinite',
+      },
+      transitionTimingFunction: {
+        'out-expo': 'cubic-bezier(0.19, 1, 0.22, 1)',
       },
       keyframes: {
         ticker: {

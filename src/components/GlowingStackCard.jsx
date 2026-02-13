@@ -20,7 +20,7 @@ export default function GlowingStackCard({ href }) {
             onMouseLeave={() => setOpacity(0)}
             className="group relative w-full aspect-[16/10] perspective-1000 block"
         >
-            <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:-translate-y-4">
+            <div className="relative w-full h-full transition-transform duration-500 ease-out">
 
                 {/* Card 3 (Bottom Stack) */}
                 <div className="absolute inset-0 bg-[#161420] rounded-2xl border border-white/5 shadow-2xl transition-all duration-500 ease-[cubic-bezier(0.25,0.8,0.25,1)] group-hover:translate-x-6 group-hover:translate-y-4 group-hover:rotate-6 group-hover:opacity-40 opacity-0 scale-95 origin-bottom-right" />

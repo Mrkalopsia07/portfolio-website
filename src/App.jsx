@@ -389,13 +389,16 @@ function AppContent() {
         <section className="py-16 px-6 relative z-20" id="work">
           <div className="max-w-7xl mx-auto">
             <FadeIn>
-              <div className="text-center mb-20"><h2 className="font-serif italic text-4xl md:text-6xl mb-4">Featured Work</h2><p className="text-zinc-400 text-lg">A selection of projects that define my creative journey</p></div>
+              <div className="text-center mb-20">
+                <h2 className="font-serif italic text-4xl md:text-6xl mb-4">Featured Work</h2>
+                <p className="text-zinc-400 text-[10px] md:text-xs font-jetbrains uppercase tracking-[0.2em]">Motion is worth a thousand words</p>
+              </div>
             </FadeIn>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
               {PROJECTS.map((project, index) => (
                 <FadeIn key={index} delay={index * 100}>
                   <div
-                    className="group flex flex-col gap-6 block"
+                    className="group flex flex-col block"
                   >
                     {project.isViewAll ? (
                       <div
@@ -409,7 +412,7 @@ function AppContent() {
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex flex-col gap-6 block"
+                        className="group flex flex-col block"
                         onMouseEnter={(e) => {
                           textEnter();
                           const video = e.currentTarget.querySelector('video');
@@ -432,7 +435,7 @@ function AppContent() {
                           }
                         }}
                       >
-                        <div className="relative aspect-[16/10] rounded-2xl overflow-hidden transition-all duration-500 bg-zinc-900">
+                        <div className="relative aspect-[16/10] rounded-2xl overflow-hidden transition-all duration-500 bg-zinc-900 mb-4">
                           <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0" />
                           <video
                             src={project.video}
@@ -443,7 +446,23 @@ function AppContent() {
                             className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                           />
                         </div>
-                        <div className="flex flex-col px-2"><h3 className="text-2xl font-medium tracking-tight text-white mb-1 group-hover:text-purple-400 transition-colors duration-300" style={{ fontFamily: "'PT Serif', serif" }}>{project.title}</h3><p className="text-zinc-500 text-sm font-medium uppercase tracking-wide">{project.category}</p></div>
+
+                        <div className="flex items-center overflow-hidden h-10 px-1">
+                          {/* Title: Slides slightly to the right */}
+                          <h3 className="text-2xl font-normal tracking-tight text-white whitespace-nowrap transition-transform duration-500 group-hover:translate-x-2">
+                            {project.title}
+                          </h3>
+
+                          {/* Hidden Details: Slide in from the left + Fade in */}
+                          <div className="flex items-center opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] ml-4 flex-1">
+                            {/* The expanding line */}
+                            <div className="h-[1px] bg-white w-8 mr-3"></div>
+                            {/* The category text */}
+                            <span className="text-zinc-500 text-sm font-normal tracking-wide whitespace-nowrap">
+                              {project.category}
+                            </span>
+                          </div>
+                        </div>
                       </a>
                     )}
                   </div>
@@ -459,24 +478,61 @@ function AppContent() {
             <FadeIn>
               <div className="text-center mb-10 md:mb-20">
                 <h2 className="font-serif italic text-4xl md:text-6xl mb-3 md:mb-4">Spotlight Moments</h2>
-                <p className="text-zinc-400 text-base md:text-lg">Recognition & Milestones</p>
+                <p className="text-zinc-400 text-[10px] md:text-xs font-jetbrains uppercase tracking-[0.2em]">Recognition & Milestones</p>
               </div>
             </FadeIn>
-            <div className="flex flex-col gap-4 md:gap-6">
+            <div className="flex flex-col gap-4">
               {SPOTLIGHT_MOMENTS.map((moment, index) => (
                 <FadeIn key={index} delay={index * 150}>
-                  <a href={moment.link} target="_blank" rel="noopener noreferrer" className="group relative flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8 p-4 md:p-6 rounded-xl md:rounded-2xl bg-white/5 hover:bg-white/10 transition-all duration-500" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                    <div className="relative w-full md:w-48 h-48 md:h-28 flex-shrink-0 rounded-lg md:rounded-xl overflow-hidden transition-colors bg-zinc-900">
-                      <img src={moment.image} alt={moment.title} className="w-full h-full object-cover" />
-                      <span className="md:hidden absolute bottom-2 left-2 text-purple-300 text-[10px] font-semibold uppercase tracking-wider bg-purple-500/20 backdrop-blur-sm border border-purple-500/30 px-2 py-1 rounded-full">{moment.role}</span>
+                  <a
+                    href={moment.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative w-full bg-zinc-900/40 border border-white/5 hover:border-white/10 transition-colors duration-500 rounded-xl overflow-hidden flex flex-col md:flex-row items-start md:items-center gap-6 p-4 md:p-6 cursor-pointer"
+                    onMouseEnter={textEnter}
+                    onMouseLeave={textLeave}
+                  >
+                    {/* Image Section - No Zoom Animation */}
+                    <div className="relative overflow-hidden shrink-0 rounded-lg w-full h-48 md:w-48 md:h-28 bg-zinc-900">
+                      {/* Dark overlay that vanishes on hover */}
+                      <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10" />
+                      <img
+                        src={moment.image}
+                        alt={moment.title}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
 
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
-                        <h3 className="text-xl md:text-2xl font-medium tracking-tight text-white group-hover:text-purple-400 transition-colors duration-300 truncate" style={{ fontFamily: "'PT Serif', serif" }}>{moment.title}</h3>
-                        <span className="hidden md:inline-flex items-center justify-center text-purple-400 text-xs font-semibold uppercase tracking-wider border border-purple-500/30 bg-purple-500/10 px-3 py-1.5 rounded-full whitespace-nowrap">{moment.role}</span>
+                    {/* Content Section */}
+                    <div className="flex-1 flex flex-col justify-center relative w-full">
+                      {/* The "Tag" - Eyebrow Style */}
+                      <div className="flex items-center space-x-3 mb-2">
+                        {/* The Line */}
+                        <span className="h-[1px] w-4 bg-zinc-600 group-hover:w-8 group-hover:bg-white transition-all duration-500"></span>
+                        {/* The Text */}
+                        <span className="text-[11px] font-jetbrains uppercase tracking-[0.2em] text-zinc-500 group-hover:text-white transition-colors duration-300">
+                          {moment.role}
+                        </span>
                       </div>
-                      <p className="text-zinc-400 text-sm md:text-base leading-relaxed group-hover:text-zinc-300 transition-colors line-clamp-2">{moment.description}</p>
+
+                      {/* Title with Precision Slide */}
+                      <div className="overflow-hidden">
+                        <h3 className="text-xl md:text-2xl font-['Work_Sans'] text-white font-medium mb-1 transform transition-transform duration-500 group-hover:translate-x-1">
+                          {moment.title}
+                        </h3>
+                      </div>
+
+                      {/* Description */}
+                      <p className="text-zinc-400 font-['Work_Sans'] text-sm md:text-base font-light leading-relaxed max-w-xl group-hover:text-zinc-300 transition-colors">
+                        {moment.description}
+                      </p>
+                    </div>
+
+                    {/* Right Arrow Interaction (Desktop only) */}
+                    <div className="hidden md:flex items-center justify-center w-12 shrink-0 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white">
+                        <path d="M5 12h14m-7-7l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
                     </div>
                   </a>
                 </FadeIn>
@@ -486,16 +542,45 @@ function AppContent() {
         </section>
 
         {/* ABOUT / TESTIMONIAL */}
-        <section className="pt-8 md:pt-16 pb-16 md:pb-32 px-4 md:px-6 relative z-20" id="about">
+        <section className="py-12 md:py-24 px-4 md:px-6 relative z-20" id="about">
           <div className="max-w-6xl mx-auto">
             <FadeIn>
-              <div className="relative p-6 md:p-20 rounded-2xl md:rounded-3xl bg-white/5 border border-white/5 text-center mb-12 md:mb-24" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                <div className="hidden md:block absolute top-10 left-10 text-purple-500/20"><Star size={64} fill="currentColor" /></div>
-                <blockquote className="italic text-xl md:text-5xl leading-snug md:leading-tight mb-6 md:mb-10 text-zinc-100" style={{ fontFamily: "'PT Serif', serif" }}>"Eashan is, without a doubt, one of the best creatives I've ever worked with—ever. He has vision most creatives don't, and a heart even fewer bring to the table."</blockquote>
-                <div className="flex flex-col items-center">
-                  <h4 className="text-base md:text-xl font-bold tracking-wide uppercase text-white mb-1 md:mb-2">Shara Senderoff</h4>
-                  <p className="text-zinc-400 text-xs md:text-sm uppercase tracking-widest mb-3 md:mb-4">Co-Founder: Futureverse, Readyverse</p>
-                  <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1 md:py-1.5 rounded-full bg-purple-500/10 text-purple-400 text-[10px] md:text-xs font-bold tracking-wider uppercase border border-purple-500/20">5-Year Remote Partnership</div>
+              <div className="relative bg-zinc-900/20 border border-white/5 rounded-2xl p-8 md:p-16 overflow-hidden" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+
+                {/* Decorative Background Quote Mark */}
+                <div className="absolute top-8 left-8 text-zinc-500/20 font-serif text-[120px] leading-none -z-10 select-none pointer-events-none">
+                  “
+                </div>
+
+                <div className="max-w-3xl mx-auto text-center space-y-10">
+                  {/* The Quote - Using PT Serif Italic */}
+                  <blockquote
+                    className="text-2xl md:text-4xl italic font-normal text-zinc-200 leading-relaxed"
+                    style={{ fontFamily: "'PT Serif', serif" }}
+                  >
+                    "Eashan is, without a doubt, one of the best creatives I've ever worked with—ever. He has vision most creatives don't, and a heart even fewer bring to the table."
+                  </blockquote>
+
+                  {/* Author Section */}
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="text-center">
+                      <cite className="not-italic block text-lg font-sans font-medium text-white mb-1">
+                        Shara Senderoff
+                      </cite>
+                      <span className="block text-sm font-sans text-zinc-500 font-light">
+                        Co-Founder: Futureverse, Readyverse
+                      </span>
+                    </div>
+
+                    {/* The Tech Tag */}
+                    <div className="flex items-center space-x-3 mt-2">
+                      <span className="h-[1px] w-8 bg-zinc-700"></span>
+                      <span className="text-[10px] font-jetbrains uppercase tracking-widest text-zinc-500">
+                        5-Year Remote Partnership
+                      </span>
+                      <span className="h-[1px] w-8 bg-zinc-700"></span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </FadeIn>
@@ -517,23 +602,49 @@ function AppContent() {
               </a>
             </FadeIn>
           </div>
-          <div className="mt-12 md:mt-24 w-full bg-black">
-            <div className="max-w-7xl mx-auto px-4 md:px-6">
-              <div className="flex flex-col items-center md:flex-row md:justify-between border-t border-white/10 pt-6 md:pt-8 pb-12 md:pb-32 gap-6 md:gap-8">
-                <p className="text-zinc-500 text-xs md:text-sm uppercase tracking-widest order-last md:order-first">© 2025 Mr. Kalopsia. Eashan Misra.</p>
-                <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8">
-                  <a href="https://instagram.com/mr.kalopsia/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-xs md:text-sm font-bold uppercase tracking-wider" onMouseEnter={textEnter} onMouseLeave={textLeave}><Instagram size={16} className="md:w-[18px] md:h-[18px]" /> Instagram</a>
-                  <a href="https://www.linkedin.com/in/eashan-misra/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-xs md:text-sm font-bold uppercase tracking-wider" onMouseEnter={textEnter} onMouseLeave={textLeave}><Linkedin size={16} className="md:w-[18px] md:h-[18px]" /> LinkedIn</a>
-                  <a href="/Resume%20-%20Eashan%20Misra.docx" download className="relative flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors text-xs md:text-sm font-bold uppercase tracking-wider border border-purple-500/30 px-3 md:px-4 py-1.5 md:py-2 rounded-full hover:bg-purple-500/10 group overflow-hidden" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                    <span className="absolute inset-0 bg-gradient-to-r from-purple-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></span>
-                    <span className="absolute inset-0 bg-purple-400 blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 scale-150"></span>
-                    <span className="relative flex items-center gap-2 transition-colors duration-300 group-hover:text-white">
-                      <Download size={16} className="md:w-[18px] md:h-[18px] transition-all duration-300 group-hover:scale-110 group-hover:translate-y-1" />
-                      <span>Resume</span>
-                    </span>
-                  </a>
-                </div>
+          <div className="mt-12 md:mt-24 w-full bg-black border-t border-white/5 pt-12 md:pt-16 pb-12 md:pb-24">
+            <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+
+              {/* LEFT: Operational Status & Copyright */}
+              <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-[10px] md:text-xs font-sans font-medium text-zinc-500 uppercase tracking-widest">
+
+                {/* Blinking Status */}
+                <span className="flex items-center gap-2 text-zinc-400">
+                  <span className="relative flex h-1.5 w-1.5 md:h-2 md:w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 md:h-2 md:w-2 bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
+                  </span>
+                  Operational
+                </span>
+
+                {/* Divider */}
+                <span className="hidden md:block text-zinc-800 select-none">|</span>
+
+                {/* Copyright */}
+                <span>© 2026 Mr. Kalopsia</span>
               </div>
+
+              {/* RIGHT: Navigation Links */}
+              <nav className="flex items-center gap-4 md:gap-6 font-sans text-[10px] md:text-xs font-medium uppercase tracking-wider text-zinc-400">
+                <a href="https://instagram.com/mr.kalopsia/" target="_blank" rel="noopener noreferrer" className="group relative py-1 hover:text-white transition-colors duration-300" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                  Instagram
+                  <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+                </a>
+
+                <span className="text-zinc-800 select-none">/</span>
+
+                <a href="https://www.linkedin.com/in/eashan-misra/" target="_blank" rel="noopener noreferrer" className="group relative py-1 hover:text-white transition-colors duration-300" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                  LinkedIn
+                  <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+                </a>
+
+                <span className="text-zinc-800 select-none">/</span>
+
+                <a href="/Resume%20-%20Eashan%20Misra.docx" download className="group relative py-1 text-white hover:text-zinc-200 transition-colors duration-300" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                  Resume
+                  <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+                </a>
+              </nav>
             </div>
           </div>
         </footer>
