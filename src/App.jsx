@@ -7,9 +7,9 @@ import VideoPlayer from './components/VideoPlayer';
 import BrandTicker from './components/BrandTicker';
 // Lazy load to keep initial load fast
 const BackgroundScene = React.lazy(() => import('./components/BackgroundScene'));
-import FloatingOrbs from './components/FloatingOrbs';
 import FadeIn from './components/FadeIn';
 import Navbar from './components/Navbar';
+import GlowingStackCard from './components/GlowingStackCard';
 import { ROLES, PROJECTS, SPOTLIGHT_MOMENTS } from './constants';
 import UnicornScene from "unicornstudio-react";
 
@@ -36,13 +36,13 @@ export default function App() {
 
 function AppContent() {
   const [cursorVariant, setCursorVariant] = useState("default");
-  
+
   // NOTE: 'isHeroVisible' performance logic removed to keep background persistent (Feedback #1 & #2)
 
   // Initialize Loading State
   const [loading, setLoading] = useState(() => !sessionStorage.getItem("introShown"));
   const [showLoader, setShowLoader] = useState(() => !sessionStorage.getItem("introShown"));
-  
+
   // Safety gate for WebGL context
   const [canMountBackground, setCanMountBackground] = useState(false);
 
@@ -52,7 +52,7 @@ function AppContent() {
   const [showWelcome, setShowWelcome] = useState(false);
   const [showReel, setShowReel] = useState(false);
   const [showPlayButton, setShowPlayButton] = useState(false);
-  
+
   const [isGalaxyLoaded, setIsGalaxyLoaded] = useState(() => !!sessionStorage.getItem("introShown"));
 
   const [text, setText] = useState('');
@@ -61,7 +61,6 @@ function AppContent() {
   const [typingSpeed, setTypingSpeed] = useState(150);
 
   const heroRef = useRef(null);
-  const orbsRef = useRef(null);
   const [lenis, setLenis] = useState(null);
 
   // 1. Initialize Lenis (Smooth Scroll)
@@ -71,7 +70,7 @@ function AppContent() {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       smoothTouch: false,
-      autoRaf: true, 
+      autoRaf: true,
     });
     setLenis(lenisInstance);
     return () => {
@@ -101,10 +100,6 @@ function AppContent() {
         heroRef.current.style.transform = `translate3d(0, ${translateY}px, 0)`;
       }
 
-      // Orb Fade
-      if (orbsRef.current) {
-        orbsRef.current.style.opacity = Math.min(scrollY / windowHeight, 1);
-      }
 
       // Play Button Toggle
       const shouldShowPlay = scrollY > windowHeight * 0.4;
@@ -147,12 +142,12 @@ function AppContent() {
       } else {
         // Gear 1: Fast (0% to 80%)
         if (current < 80) {
-           current += (2 + Math.random()); // Add +2 to +3 per frame
-        } 
+          current += (2 + Math.random()); // Add +2 to +3 per frame
+        }
         // Gear 2: Decay (80% to 99%)
         else {
-           // 'Ease-Out' formula: simulates slowing down
-           current += (99 - current) * 0.05;
+          // 'Ease-Out' formula: simulates slowing down
+          current += (99 - current) * 0.05;
         }
       }
 
@@ -169,7 +164,7 @@ function AppContent() {
       } else {
         // Load Complete
         setShowWelcome(true);
-        
+
         setTimeout(() => {
           setFadingOut(true);
           setLoading(false);
@@ -179,7 +174,7 @@ function AppContent() {
             window.dispatchEvent(new Event('resize'));
             if (lenis) lenis.resize();
           }, 100);
-          
+
         }, 800);
       }
     };
@@ -245,7 +240,7 @@ function AppContent() {
 
   return (
     <div className="text-white min-h-screen font-sans selection:bg-purple-500 selection:text-white overflow-x-hidden md:cursor-none cursor-auto relative">
-      
+
       {/* 1. LOADER */}
       {showLoader && (
         <div
@@ -309,18 +304,31 @@ function AppContent() {
 
       <main className="relative z-20">
         <div className="absolute inset-0 z-0 pointer-events-none hidden md:block" style={{
-          background: 'linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 10%, rgba(0,0,0,0.8) 15%, #000 20%, #000 85%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0.3) 95%, transparent 100%)'
+          background: `
+            linear-gradient(to bottom, transparent 0%, transparent 20%, rgba(168, 85, 247, 0.04) 25%, rgba(168, 85, 247, 0.04) 75%, transparent 80%, transparent 100%),
+            radial-gradient(circle at 10% 50%, rgba(168, 85, 247, 0.04) 0%, transparent 50%),
+            radial-gradient(circle at 90% 50%, rgba(139, 92, 246, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 30% 50%, rgba(236, 72, 153, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 70% 50%, rgba(59, 130, 246, 0.025) 0%, transparent 50%),
+            linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 10%, rgba(0,0,0,0.8) 15%, #000 20%, #000 85%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0.3) 95%, transparent 100%)
+          `
         }}></div>
-         <div className="absolute inset-0 z-0 pointer-events-none md:hidden" style={{
-          background: 'linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.8) 12%, #000 15%, #000 100%)'
+        <div className="absolute inset-0 z-0 pointer-events-none md:hidden" style={{
+          background: `
+            linear-gradient(to bottom, transparent 0%, transparent 15%, rgba(168, 85, 247, 0.04) 20%, rgba(168, 85, 247, 0.04) 85%, transparent 90%, transparent 100%),
+            radial-gradient(circle at 10% 50%, rgba(168, 85, 247, 0.04) 0%, transparent 50%),
+            radial-gradient(circle at 90% 50%, rgba(139, 92, 246, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 30% 50%, rgba(236, 72, 153, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 70% 50%, rgba(59, 130, 246, 0.025) 0%, transparent 50%),
+            linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.8) 12%, #000 15%, #000 100%)
+          `
         }}></div>
-        
-        <FloatingOrbs ref={orbsRef} />
+
 
         {/* HERO */}
         <section ref={heroRef} className="relative z-10 min-h-[100dvh] flex flex-col items-center justify-center px-6 text-center py-24">
           <div className="flex flex-col items-center justify-center mb-5">
-             <span className="inline-flex items-center justify-center px-4 py-2 rounded-full border border-white/10 bg-black/60 backdrop-blur-xl text-white text-[11px] tracking-[0.05em] uppercase font-medium gap-3">
+            <span className="inline-flex items-center justify-center px-4 py-2 rounded-full border border-white/10 bg-black/60 backdrop-blur-xl text-white text-[11px] tracking-[0.05em] uppercase font-medium gap-3">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-500 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
@@ -386,47 +394,45 @@ function AppContent() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
               {PROJECTS.map((project, index) => (
                 <FadeIn key={index} delay={index * 100}>
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <div
                     className="group flex flex-col gap-6 block"
-                    onMouseEnter={(e) => {
-                      textEnter();
-                      if (!project.isViewAll) {
-                        const video = e.currentTarget.querySelector('video');
-                        if (video) {
-                          video.currentTime = 0;
-                          video.play().catch(err => console.log("Video play interrupted:", err));
-                        }
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      textLeave();
-                      if (!project.isViewAll) {
-                        const container = e.currentTarget;
-                        const video = container.querySelector('video');
-                        if (video) {
-                          setTimeout(() => {
-                            if (!container.matches(':hover')) {
-                              video.pause();
-                              video.currentTime = 0;
-                            }
-                          }, 500);
-                        }
-                      }
-                    }}
                   >
-                    <div className={`relative aspect-[16/10] rounded-2xl overflow-hidden transition-all duration-500 ${project.isViewAll ? 'bg-gradient-to-br from-purple-500/10 to-purple-900/20 border border-purple-500/20 group-hover:border-purple-500/40' : 'bg-zinc-900'}`}>
-                      {project.isViewAll ? (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="flex items-center gap-3 text-purple-300 group-hover:text-purple-200 transition-colors">
-                            <span className="text-xl font-medium tracking-wide">View All Projects</span>
-                            <ArrowRight size={24} className="transform group-hover:translate-x-1 transition-transform" />
-                          </div>
-                        </div>
-                      ) : (
-                        <>
+                    {project.isViewAll ? (
+                      <div
+                        onMouseEnter={textEnter}
+                        onMouseLeave={textLeave}
+                      >
+                        <GlowingStackCard href={project.link} />
+                      </div>
+                    ) : (
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex flex-col gap-6 block"
+                        onMouseEnter={(e) => {
+                          textEnter();
+                          const video = e.currentTarget.querySelector('video');
+                          if (video) {
+                            video.currentTime = 0;
+                            video.play().catch(err => console.log("Video play interrupted:", err));
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          textLeave();
+                          const container = e.currentTarget;
+                          const video = container.querySelector('video');
+                          if (video) {
+                            setTimeout(() => {
+                              if (!container.matches(':hover')) {
+                                video.pause();
+                                video.currentTime = 0;
+                              }
+                            }, 500);
+                          }
+                        }}
+                      >
+                        <div className="relative aspect-[16/10] rounded-2xl overflow-hidden transition-all duration-500 bg-zinc-900">
                           <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0" />
                           <video
                             src={project.video}
@@ -436,13 +442,11 @@ function AppContent() {
                             preload="none"
                             className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                           />
-                        </>
-                      )}
-                    </div>
-                    {!project.isViewAll && (
-                      <div className="flex flex-col px-2"><h3 className="text-2xl font-medium tracking-tight text-white mb-1 group-hover:text-purple-400 transition-colors duration-300" style={{ fontFamily: "'PT Serif', serif" }}>{project.title}</h3><p className="text-zinc-500 text-sm font-medium uppercase tracking-wide">{project.category}</p></div>
+                        </div>
+                        <div className="flex flex-col px-2"><h3 className="text-2xl font-medium tracking-tight text-white mb-1 group-hover:text-purple-400 transition-colors duration-300" style={{ fontFamily: "'PT Serif', serif" }}>{project.title}</h3><p className="text-zinc-500 text-sm font-medium uppercase tracking-wide">{project.category}</p></div>
+                      </a>
                     )}
-                  </a>
+                  </div>
                 </FadeIn>
               ))}
             </div>
@@ -480,7 +484,7 @@ function AppContent() {
             </div>
           </div>
         </section>
-        
+
         {/* ABOUT / TESTIMONIAL */}
         <section className="pt-8 md:pt-16 pb-16 md:pb-32 px-4 md:px-6 relative z-20" id="about">
           <div className="max-w-6xl mx-auto">

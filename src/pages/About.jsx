@@ -4,7 +4,6 @@ import Navbar from '../components/Navbar';
 import CustomCursor from '../components/CustomCursor';
 import FadeIn from '../components/FadeIn';
 import BackgroundScene from '../components/BackgroundScene';
-import FloatingOrbs from '../components/FloatingOrbs';
 import { ArrowLeft, ChevronDown, Mail } from 'lucide-react';
 
 export default function About() {
@@ -45,14 +44,26 @@ export default function About() {
             <main className="relative z-20">
                 {/* Gradient Overlay - exact copy from App.jsx */}
                 <div className="absolute inset-0 z-0 pointer-events-none hidden md:block" style={{
-                    background: 'linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 10%, rgba(0,0,0,0.8) 15%, #000 20%, #000 85%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0.3) 95%, transparent 100%)'
+                    background: `
+                        linear-gradient(to bottom, transparent 0%, transparent 20%, rgba(168, 85, 247, 0.04) 25%, rgba(168, 85, 247, 0.04) 75%, transparent 80%, transparent 100%),
+                        radial-gradient(circle at 10% 50%, rgba(168, 85, 247, 0.04) 0%, transparent 50%),
+                        radial-gradient(circle at 90% 50%, rgba(139, 92, 246, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 30% 50%, rgba(236, 72, 153, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(59, 130, 246, 0.025) 0%, transparent 50%),
+                        linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 10%, rgba(0,0,0,0.8) 15%, #000 20%, #000 85%, rgba(0,0,0,0.6) 90%, rgba(0,0,0,0.3) 95%, transparent 100%)
+                    `
                 }}></div>
                 <div className="absolute inset-0 z-0 pointer-events-none md:hidden" style={{
-                    background: 'linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.8) 12%, #000 15%, #000 100%)'
+                    background: `
+                        linear-gradient(to bottom, transparent 0%, transparent 15%, rgba(168, 85, 247, 0.04) 20%, rgba(168, 85, 247, 0.04) 85%, transparent 90%, transparent 100%),
+                        radial-gradient(circle at 10% 50%, rgba(168, 85, 247, 0.04) 0%, transparent 50%),
+                        radial-gradient(circle at 90% 50%, rgba(139, 92, 246, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 30% 50%, rgba(236, 72, 153, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(59, 130, 246, 0.025) 0%, transparent 50%),
+                        linear-gradient(to bottom, transparent 0%, transparent 5%, rgba(0,0,0,0.4) 8%, rgba(0,0,0,0.8) 12%, #000 15%, #000 100%)
+                    `
                 }}></div>
 
-                {/* Floating Gradient Orbs - exact copy from App.jsx */}
-                <FloatingOrbs />
 
                 {/* Hero Section */}
                 <section className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 pt-28 pb-16 overflow-hidden">

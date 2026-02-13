@@ -3,7 +3,6 @@ import Lenis from 'lenis';
 import Navbar from '../components/Navbar';
 import CustomCursor from '../components/CustomCursor';
 import FadeIn from '../components/FadeIn';
-import FloatingOrbs from '../components/FloatingOrbs';
 import { Download, ArrowLeft } from 'lucide-react';
 
 export default function Resume() {
@@ -30,11 +29,18 @@ export default function Resume() {
     const textLeave = () => setCursorVariant("default");
 
     return (
-        <div className="text-white min-h-screen font-sans selection:bg-purple-500 selection:text-white md:cursor-none cursor-auto bg-black">
+        <div className="text-white min-h-screen font-sans selection:bg-purple-500 selection:text-white md:cursor-none cursor-auto relative" style={{
+            background: `
+                radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 90% 10%, rgba(139, 92, 246, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(236, 72, 153, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 90%, rgba(59, 130, 246, 0.025) 0%, transparent 50%),
+                #000000
+            `
+        }}>
             <CustomCursor cursorVariant={cursorVariant} />
             <Navbar lenis={lenis} textEnter={textEnter} textLeave={textLeave} />
 
-            <FloatingOrbs />
 
             <main className="relative z-10 pt-32 pb-20 px-6 md:px-12 max-w-5xl mx-auto" onMouseEnter={textEnter} onMouseLeave={textLeave}>
                 <FadeIn>
