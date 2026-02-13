@@ -338,7 +338,7 @@ function AppContent() {
         {/* HERO */}
         <section ref={heroRef} className="relative z-10 min-h-[100dvh] flex flex-col items-center justify-center px-6 text-center py-24">
           <div className="flex flex-col items-center justify-center mb-5">
-            <span className="inline-flex items-center justify-center px-4 py-2 rounded-full border border-white/10 bg-black/60 backdrop-blur-xl text-white text-[11px] tracking-[0.05em] uppercase font-medium gap-3">
+            <span className="inline-flex items-center justify-center px-4 py-2 rounded-sm border border-white/10 bg-black/60 backdrop-blur-xl text-white text-[11px] tracking-[0.05em] uppercase font-medium gap-3">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-500 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
@@ -364,8 +364,7 @@ function AppContent() {
               onMouseLeave={textLeave}
               className="group relative flex items-center gap-3 font-['Work_Sans',sans-serif] text-[10px] md:text-xs font-medium uppercase tracking-widest text-white py-2"
             >
-              {/* Play Icon Circle */}
-              <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]">
+              <div className="w-8 h-8 rounded-sm border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]">
                 <Play
                   className="w-3 h-3 fill-current transform translate-x-[1px] transition-transform duration-300 group-hover:scale-110"
                 />
@@ -463,7 +462,7 @@ function AppContent() {
                           }
                         }}
                       >
-                        <div className="relative aspect-[16/10] rounded-2xl overflow-hidden transition-all duration-500 bg-zinc-900 mb-4">
+                        <div className="relative aspect-[16/10] rounded-sm overflow-hidden transition-all duration-500 bg-zinc-900 mb-4">
                           <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0" />
                           <video
                             src={project.video}
@@ -521,7 +520,7 @@ function AppContent() {
                     onMouseLeave={textLeave}
                   >
                     {/* Image Section - No Zoom Animation */}
-                    <div className="relative overflow-hidden shrink-0 rounded-lg w-full h-48 md:w-48 md:h-28 bg-zinc-900">
+                    <div className="relative overflow-hidden shrink-0 rounded-sm w-full h-48 md:w-48 md:h-28 bg-zinc-900">
                       {/* Dark overlay that vanishes on hover */}
                       <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10" />
                       <img
@@ -573,7 +572,7 @@ function AppContent() {
         <section className="py-12 md:py-24 px-4 md:px-6 relative z-20" id="about">
           <div className="max-w-6xl mx-auto">
             <FadeIn>
-              <div className="relative bg-zinc-900/20 border border-white/5 rounded-2xl p-8 md:p-16 overflow-hidden" onMouseEnter={textEnter} onMouseLeave={textLeave}>
+              <div className="relative bg-zinc-900/20 border border-white/5 rounded-md p-8 md:p-16 overflow-hidden" onMouseEnter={textEnter} onMouseLeave={textLeave}>
 
                 {/* Decorative Background Quote Mark */}
                 <div className="absolute top-8 left-8 text-zinc-500/20 font-serif text-[120px] leading-none -z-10 select-none pointer-events-none">

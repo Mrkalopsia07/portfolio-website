@@ -152,7 +152,7 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
             {/* Desktop & Mobile Preview */}
             <section className="w-full flex justify-center py-6 md:py-12">
                 <div
-                    className={`relative w-full max-w-[85%] md:max-w-7xl mx-auto aspect-[4/5] md:aspect-[21/9] rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl z-20 ${!showReel || !isVideoPlaying ? 'cursor-none' : ''}`}
+                    className={`relative w-full max-w-[85%] md:max-w-7xl mx-auto aspect-[4/5] md:aspect-[21/9] rounded-sm md:rounded-md overflow-hidden shadow-2xl z-20 ${!showReel || !isVideoPlaying ? 'cursor-none' : ''}`}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                     onClick={handleVideoClick}
@@ -167,7 +167,7 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
                     {/* Play Button Overlay for Mobile */}
                     {isMobile && (
                         <div className="absolute inset-0 z-[2] flex items-center justify-center bg-black/40">
-                            <div className="flex items-center gap-3 px-6 py-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
+                            <div className="flex items-center gap-3 px-6 py-4 rounded-sm bg-white/10 backdrop-blur-md border border-white/20">
                                 <Play size={20} className="text-white fill-white" />
                                 <span className="text-white font-medium text-lg">Play Showreel</span>
                             </div>
@@ -189,7 +189,7 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
                     {/* Desktop Controls */}
                     {!isMobile && (
                         <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-10 transition-opacity duration-500 ${showControls ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onMouseEnter={(e) => { e.stopPropagation(); setCursorVariant('video-playing'); setShowControls(true); if (hideControlsTimeout.current) clearTimeout(hideControlsTimeout.current); }} onMouseLeave={(e) => { e.stopPropagation(); if (!showReel || !isVideoPlaying) setCursorVariant('video'); if (showReel && isVideoPlaying) { hideControlsTimeout.current = setTimeout(() => setShowControls(false), 2000); } }}>
-                            <div className="bg-white/95 backdrop-blur-md rounded-full px-5 py-3 shadow-2xl flex items-center gap-4">
+                            <div className="bg-white/95 backdrop-blur-md rounded-sm px-5 py-3 shadow-2xl flex items-center gap-4">
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
@@ -208,7 +208,7 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
                                     <input
                                         type="range" min="0" max="100" value={videoProgress}
                                         onChange={(e) => { if (videoRef.current) { const newTime = (e.target.value / 100) * duration; videoRef.current.currentTime = newTime; setVideoProgress(e.target.value); } }}
-                                        className="flex-1 h-1 bg-black/10 rounded-full appearance-none cursor-pointer"
+                                        className="flex-1 h-1 bg-black/10 rounded-sm appearance-none cursor-pointer"
                                         style={{ background: `linear-gradient(to right, #000 0%, #000 ${videoProgress}%, rgba(0,0,0,0.1) ${videoProgress}%, rgba(0,0,0,0.1) 100%)` }}
                                     />
                                     <div className="text-black/60 text-xs font-medium whitespace-nowrap">{Math.floor(currentTime / 60)}:{String(Math.floor(currentTime % 60)).padStart(2, '0')}</div>

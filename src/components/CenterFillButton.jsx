@@ -21,7 +21,7 @@ export default function CenterFillButton({ children, onClick, href, className = 
             onClick={onClick}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className={`relative px-14 py-5 text-sm font-medium tracking-[1.5px] uppercase border-2 border-white rounded-full overflow-hidden cursor-pointer ${className}`}
+            className={`relative px-14 py-5 text-sm font-medium tracking-[1.5px] uppercase border-2 border-white rounded-sm overflow-hidden cursor-pointer ${className}`}
             style={{
                 color: isHovered ? '#0a0a0a' : '#fff',
                 backgroundColor: 'transparent',

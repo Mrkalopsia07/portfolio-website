@@ -5,7 +5,7 @@ export default function GlowingStackCard({ href }) {
     return (
         <a
             href={href}
-            className="group relative w-full aspect-[16/10] bg-[#050507] border border-white/10 flex flex-col items-center justify-center overflow-hidden hover:border-white/30 transition-colors duration-500 cursor-pointer rounded-2xl"
+            className="group relative w-full aspect-[16/10] bg-[#050507] border border-white/10 flex flex-col items-center justify-center overflow-hidden hover:border-white/30 transition-colors duration-500 cursor-pointer rounded-md"
         >
             {/* 1. Background Grid Pattern (Reveals on Hover) */}
             <div

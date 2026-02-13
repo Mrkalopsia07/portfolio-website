@@ -112,7 +112,7 @@ export default function About() {
                         <FadeIn>
                             <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
                                 {/* Adobe Feature Image - no shadow/stroke */}
-                                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-black order-2 md:order-1">
+                                <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-black order-2 md:order-1">
                                     <img
                                         src="/assets/about/adobe-feature.jpg"
                                         alt="Adobe Feature - Mr. Kalopsia"
@@ -185,15 +185,15 @@ export default function About() {
                                     The result? <span className="text-white font-medium">I hit the bullseye on all three fronts.</span>
                                 </p>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                                    <div className="group p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-500 text-left cursor-default">
+                                    <div className="group p-6 rounded-md bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-500 text-left cursor-default">
                                         <div className="text-xl md:text-2xl font-['Work_Sans',sans-serif] font-medium text-white mb-2 transition-transform duration-500 group-hover:translate-x-1">Lead Designer</div>
                                         <p className="text-zinc-400 text-sm font-['Work_Sans',sans-serif] font-light transition-colors duration-300 group-hover:text-zinc-300">Promoted to manage a 30-person team</p>
                                     </div>
-                                    <div className="group p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-500 text-left cursor-default">
+                                    <div className="group p-6 rounded-md bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-500 text-left cursor-default">
                                         <div className="text-xl md:text-2xl font-['Work_Sans',sans-serif] font-medium text-white mb-2 transition-transform duration-500 group-hover:translate-x-1">100K Followers</div>
                                         <p className="text-zinc-400 text-sm font-['Work_Sans',sans-serif] font-light transition-colors duration-300 group-hover:text-zinc-300">Kalopsia grew exponentially</p>
                                     </div>
-                                    <div className="group p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-500 text-left cursor-default">
+                                    <div className="group p-6 rounded-md bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-500 text-left cursor-default">
                                         <div className="text-xl md:text-2xl font-['Work_Sans',sans-serif] font-medium text-white mb-2 transition-transform duration-500 group-hover:translate-x-1">Major Clients</div>
                                         <p className="text-zinc-400 text-sm font-['Work_Sans',sans-serif] font-light transition-colors duration-300 group-hover:text-zinc-300">Logan Paul, Gillette & more</p>
                                     </div>
@@ -212,7 +212,7 @@ export default function About() {
                         <FadeIn>
                             <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
                                 {/* Image - no shadow/stroke */}
-                                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-black order-2 md:order-1">
+                                <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-black order-2 md:order-1">
                                     <img
                                         src="/assets/about/evolution.jpg"
                                         alt="Evolution Through Experimentation"
@@ -288,7 +288,7 @@ export default function About() {
                     <div className="max-w-4xl mx-auto mt-16">
                         <FadeIn>
                             <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-                                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-black w-full max-w-xs mx-auto md:mx-0">
+                                <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-black w-full max-w-xs mx-auto md:mx-0">
                                     <img
                                         src="/assets/about/viewsonic.jpg"
                                         alt="ViewSonic ColorPro Awards Judge"
@@ -315,7 +315,7 @@ export default function About() {
                                         My work was showcased in <span className="text-white font-medium">public installations across Paris</span>, bringing digital art to physical spaces through Artpoint.
                                     </p>
                                 </div>
-                                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-black order-1 md:order-2 w-full max-w-xs mx-auto md:mx-0">
+                                <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-black order-1 md:order-2 w-full max-w-xs mx-auto md:mx-0">
                                     <video
                                         src="/assets/about/paris.mp4"
                                         autoPlay
@@ -336,7 +336,7 @@ export default function About() {
                         <FadeIn>
                             <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
                                 {/* Image - no shadow/stroke */}
-                                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-black order-2 md:order-1">
+                                <div className="relative aspect-[4/5] rounded-sm overflow-hidden bg-black order-2 md:order-1">
                                     <img
                                         src="/assets/about/paris.jpg"
                                         alt="The Kid Who Never Grew Up"

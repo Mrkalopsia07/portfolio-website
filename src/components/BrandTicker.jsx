@@ -94,7 +94,7 @@ export default function BrandTicker({ textEnter, textLeave }) {
                 {brands.map((brand) => (
                     <div
                         key={brand}
-                        className="flex items-center justify-center px-8 md:px-14 opacity-50 hover:opacity-100 transition-all duration-300 cursor-none"
+                        className="flex items-center justify-center px-8 md:px-12 opacity-40 hover:opacity-100 transition-opacity duration-500 ease-out cursor-none"
                         onMouseEnter={textEnter}
                         onMouseLeave={textLeave}
                     >
