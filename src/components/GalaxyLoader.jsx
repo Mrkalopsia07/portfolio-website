@@ -79,6 +79,14 @@ const GalaxyLoader = () => {
       }
     };
 
+    const handleResize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+      // Don't reset stars on resize - just update canvas dimensions
+    };
+
     const animate = () => {
       // Trail effect: Use a semi-transparent color that matches the darker part of the gradient
       // to keep the galactic feel while allowing the background gradient to show through.
@@ -100,12 +108,12 @@ const GalaxyLoader = () => {
       requestRef.current = requestAnimationFrame(animate);
     };
 
-    window.addEventListener('resize', init);
+    window.addEventListener('resize', handleResize);
     init();
     animate();
 
     return () => {
-      window.removeEventListener('resize', init);
+      window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(requestRef.current);
     };
   }, []);

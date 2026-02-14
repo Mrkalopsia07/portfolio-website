@@ -1,12 +1,11 @@
 // [uploaded file: mrkalopsia07/portfolio-website/portfolio-website-dcd06201a526ad5f111f6220273abccb01376cc0/src/App.jsx]
-import React, { useEffect, useRef, useState, Suspense } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
 import { Play, Mail, Instagram, Linkedin, Download, Star, ArrowRight } from 'lucide-react';
 import CustomCursor from './components/CustomCursor';
 import VideoPlayer from './components/VideoPlayer';
 import BrandTicker from './components/BrandTicker';
-// Lazy load to keep initial load fast
-const BackgroundScene = React.lazy(() => import('./components/BackgroundScene'));
+import BackgroundScene from './components/BackgroundScene';
 import FadeIn from './components/FadeIn';
 import Navbar from './components/Navbar';
 import GlowingStackCard from './components/GlowingStackCard';
@@ -296,13 +295,10 @@ function AppContent() {
       <CustomCursor cursorVariant={cursorVariant} />
       <Navbar lenis={lenis} textEnter={textEnter} textLeave={textLeave} />
 
-      {/* 2. BACKGROUND SCENE (Lazy + Warmup) */}
+      {/* 2. BACKGROUND SCENE (Immediate) */}
       {!isMobile && (
         <div className="fixed inset-0 z-0 pointer-events-none">
-          <Suspense fallback={null}>
-            {/* Changed: Always render if 'canMountBackground' is true. No more scroll-based unmounting. */}
-            {canMountBackground && <BackgroundScene />}
-          </Suspense>
+          {canMountBackground && <BackgroundScene />}
         </div>
       )}
 
