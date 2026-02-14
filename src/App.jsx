@@ -328,7 +328,7 @@ function AppContent() {
             Multi-disciplinary Design Lead solving problems across <span className="font-['Playfair_Display',serif] italic font-medium text-white lining-nums">3D</span>, <span className="font-['Playfair_Display',serif] italic font-medium text-white lining-nums">Motion</span>, and <span className="font-['Playfair_Display',serif] italic font-medium text-white lining-nums">Video</span>.
           </p>
 
-          <div className="flex items-center justify-center gap-12 mb-24">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 mb-24">
             {/* Primary: Watch Reel */}
             <button
               onClick={() => {
@@ -337,7 +337,7 @@ function AppContent() {
               }}
               onMouseEnter={textEnter}
               onMouseLeave={textLeave}
-              className="group relative flex items-center gap-3 font-['Work_Sans',sans-serif] text-[10px] md:text-xs font-medium uppercase tracking-widest text-white py-2"
+              className="group relative flex items-center gap-3 font-['Work_Sans',sans-serif] text-[10px] md:text-xs font-medium uppercase tracking-widest text-white py-3 px-6 md:py-2 md:px-0 bg-white/5 md:bg-transparent rounded-full md:rounded-none border border-white/10 md:border-none"
             >
               <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]">
                 <Play
@@ -356,7 +356,7 @@ function AppContent() {
               href="/about"
               onMouseEnter={textEnter}
               onMouseLeave={textLeave}
-              className="group relative font-['Work_Sans',sans-serif] text-[10px] md:text-xs font-medium uppercase tracking-widest text-white transition-colors duration-300 py-2"
+              className="group relative font-['Work_Sans',sans-serif] text-[10px] md:text-xs font-medium uppercase tracking-widest text-white transition-colors duration-300 py-3 px-6 md:py-2 md:px-0 bg-white/5 md:bg-transparent rounded-full md:rounded-none border border-white/10 md:border-none"
             >
               About Me
               {/* Underline Animation */}

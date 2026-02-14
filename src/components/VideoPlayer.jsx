@@ -152,7 +152,7 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
             {/* Desktop & Mobile Preview */}
             <section className="w-full flex justify-center py-6 md:py-12">
                 <div
-                    className={`relative w-full max-w-[85%] md:max-w-7xl mx-auto aspect-[4/5] md:aspect-[21/9] rounded-sm md:rounded-md overflow-hidden shadow-2xl z-20 ${!showReel || !isVideoPlaying ? 'cursor-none' : ''}`}
+                    className={`relative w-full max-w-[90%] md:max-w-7xl mx-auto aspect-video md:aspect-[21/9] rounded-2xl md:rounded-md overflow-hidden shadow-2xl z-20 ${!showReel || !isVideoPlaying ? 'cursor-none' : ''}`}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                     onClick={handleVideoClick}
@@ -166,10 +166,9 @@ export default function VideoPlayer({ showReel, setShowReel, showPlay, textEnter
 
                     {/* Play Button Overlay for Mobile */}
                     {isMobile && (
-                        <div className="absolute inset-0 z-[2] flex items-center justify-center bg-black/60">
-                            <div className="flex items-center gap-3 px-6 py-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20">
-                                <Play size={20} className="text-white fill-white" />
-                                <span className="text-white font-medium text-lg">Play Showreel</span>
+                        <div className="absolute bottom-4 right-4 z-[2] flex items-center justify-center">
+                            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white">
+                                <Play size={20} className="fill-current transform translate-x-[1px]" />
                             </div>
                         </div>
                     )}
