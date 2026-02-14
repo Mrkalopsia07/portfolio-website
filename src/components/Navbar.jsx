@@ -59,7 +59,7 @@ export default function Navbar({ lenis, textEnter, textLeave }) {
     return (
         <>
             <nav className={`fixed top-0 left-0 w-full z-30 px-0 md:px-6 py-0 md:py-6 transition-transform duration-300 flex justify-center ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
-                <div className="flex items-center gap-2 p-4 md:p-2 bg-black/60 backdrop-blur-xl border-b md:border border-white/10 w-full md:w-auto md:rounded-full justify-between md:justify-start transition-all">
+                <div className="flex items-center gap-2 p-4 md:p-2 bg-[#050507] md:bg-black/60 backdrop-blur-xl md:border border-white/10 w-full md:w-auto md:rounded-full justify-between md:justify-start transition-all">
 
                     {/* Profile Image with Glow Effect */}
                     <ProfileGlow
