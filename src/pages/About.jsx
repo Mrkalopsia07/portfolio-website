@@ -41,7 +41,7 @@ export default function About() {
     const textLeave = () => setCursorVariant("default");
 
     return (
-        <div className="text-white min-h-screen font-sans selection:bg-purple-500 selection:text-white md:cursor-none cursor-auto bg-charcoal overflow-x-hidden relative">
+        <div className="text-white min-h-screen font-sans md:cursor-none cursor-auto bg-charcoal overflow-x-hidden relative">
             <CustomCursor cursorVariant={cursorVariant} />
             <Navbar lenis={lenis} textEnter={textEnter} textLeave={textLeave} />
 
@@ -71,9 +71,9 @@ export default function About() {
                     <FadeIn>
                         <div className="text-center max-w-4xl mx-auto relative z-10">
                             {/* Unified Title with Mixed Typography - Matching CTASection font size */}
-                            <h1 className="text-4xl md:text-6xl lg:text-7xl leading-[1.1] tracking-tight text-white font-['Work_Sans',sans-serif] font-light mb-12 text-center">
-                                Eashan Misra is <br />
-                                <span className="font-['Playfair_Display',serif] italic text-white/90">Mr. Kalopsia</span>
+                            <h1 className="leading-[1.1] tracking-tight text-white mb-6 text-center">
+                                <span className="block text-2xl md:text-3xl lg:text-4xl font-['Work_Sans',sans-serif] font-light mb-2 opacity-80">Eashan Misra is</span>
+                                <span className="block text-5xl md:text-7xl lg:text-8xl font-serif italic text-white/90 mt-2">Mr. Kalopsia</span>
                             </h1>
 
                             {/* Subtitle */}
@@ -144,7 +144,7 @@ export default function About() {
                                         <span className="text-[10px] font-jetbrains uppercase tracking-[0.2em] text-zinc-500">The Accidental Beginning</span>
                                     </div>
                                     <h2 className="text-3xl md:text-5xl leading-tight text-white font-['Work_Sans',sans-serif] font-light tracking-tight">
-                                        I wanted to be an <span className="font-['Playfair_Display',serif] italic text-zinc-200">astronaut.</span>
+                                        I wanted to be an <span className="font-serif italic text-zinc-200">astronaut.</span>
                                     </h2>
                                     <p className="text-white/70 text-[16px] leading-relaxed font-light">
                                         When that wasn't in the cards, I found another way to explore the cosmos: through art. I taught myself Photoshop and started creating space-themed digital art under the name "Kalopsia," posting every single day on Instagram.
@@ -171,7 +171,7 @@ export default function About() {
                                     <span className="text-[10px] font-jetbrains uppercase tracking-[0.2em] text-zinc-500">The Defining Moment</span>
                                 </div>
                                 <h2 className="text-3xl md:text-5xl leading-tight mb-8 text-white font-['Work_Sans',sans-serif] font-light tracking-tight" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                                    "Don't spread yourself <span className="font-['Playfair_Display',serif] italic text-zinc-200">too thin.</span>"
+                                    "Don't spread yourself <span className="font-serif italic text-zinc-200">too thin.</span>"
                                 </h2>
                             </div>
 
@@ -244,7 +244,7 @@ export default function About() {
                                         <span className="text-[10px] font-jetbrains uppercase tracking-[0.2em] text-zinc-500">Evolution Through Experimentation</span>
                                     </div>
                                     <h2 className="text-3xl md:text-5xl leading-tight text-white font-['Work_Sans',sans-serif] font-light tracking-tight">
-                                        I get bored once I've <span className="font-['Playfair_Display',serif] italic text-zinc-200">mastered</span> a tool.
+                                        I get bored once I've <span className="font-serif italic text-zinc-200">mastered</span> a tool.
                                     </h2>
                                     <p className="text-white/70 text-[16px] leading-relaxed font-light">
                                         What started as Photoshop art evolved into motion graphics, 3D animation, and immersive environments. I taught myself <span className="text-white font-normal">After Effects, Cinema 4D, Unreal Engine 5, Blender</span>. Not to be a jack of all trades, but because I crave the challenge of the unknown.
@@ -273,7 +273,7 @@ export default function About() {
                                     <span className="text-[10px] font-jetbrains uppercase tracking-[0.2em] text-zinc-500">Career Journey</span>
                                 </div>
                                 <h2 className="text-3xl md:text-5xl leading-tight mb-8 text-white font-['Work_Sans',sans-serif] font-light tracking-tight" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                                    From Brand Partnerships to <span className="font-['Playfair_Display',serif] italic text-zinc-200">Career-Defining</span> Roles
+                                    From Brand Partnerships to <span className="font-serif italic text-zinc-200">Career-Defining</span> Roles
                                 </h2>
                             </div>
 
@@ -306,7 +306,7 @@ export default function About() {
                                     />
                                 </div>
                                 <div className="space-y-4 text-left" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                                    <h3 className="text-2xl md:text-3xl text-white font-['Work_Sans',sans-serif] font-light tracking-tight">ViewSonic <span className="font-['Playfair_Display',serif] italic text-zinc-200">ColorPro</span> Awards</h3>
+                                    <h3 className="text-2xl md:text-3xl text-white font-['Work_Sans',sans-serif] font-light tracking-tight">ViewSonic <span className="font-serif italic text-zinc-200">ColorPro</span> Awards</h3>
                                     <p className="text-white/70 text-[16px] leading-relaxed font-light">
                                         I became a <span className="text-white font-normal">judge for ViewSonic's ColorPro Awards</span> in 2024 and 2025, evaluating creative work from artists around the world.
                                     </p>
@@ -320,7 +320,7 @@ export default function About() {
                         <FadeIn>
                             <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                                 <div className="space-y-4 text-left order-2 md:order-1" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                                    <h3 className="text-2xl md:text-3xl text-white font-['Work_Sans',sans-serif] font-light tracking-tight">Paris Art <span className="font-['Playfair_Display',serif] italic text-zinc-200">Installations</span></h3>
+                                    <h3 className="text-2xl md:text-3xl text-white font-['Work_Sans',sans-serif] font-light tracking-tight">Paris Art <span className="font-serif italic text-zinc-200">Installations</span></h3>
                                     <p className="text-white/70 text-[16px] leading-relaxed font-light">
                                         My work was showcased in <span className="text-white font-normal">public installations across Paris</span>, bringing digital art to physical spaces through Artpoint.
                                     </p>
@@ -368,7 +368,7 @@ export default function About() {
                                         <span className="text-[10px] font-jetbrains uppercase tracking-[0.2em] text-zinc-500">The Journey Continues</span>
                                     </div>
                                     <h2 className="text-3xl md:text-5xl leading-tight text-white font-['Work_Sans',sans-serif] font-light tracking-tight">
-                                        The kid who <span className="font-['Playfair_Display',serif] italic text-zinc-200">never</span> grew up.
+                                        The kid who <span className="font-serif italic text-zinc-200">never</span> grew up.
                                     </h2>
                                     <p className="text-white/70 text-[16px] leading-relaxed font-light">
                                         When we were kids, we all wanted to be astronauts. I like to consider myself as that kid who never grew up. I'm still exploring the universe, just through a different lens.
@@ -395,7 +395,7 @@ export default function About() {
                                     <span className="text-[10px] font-jetbrains uppercase tracking-[0.2em] text-zinc-500">Looking Ahead</span>
                                 </div>
                                 <h2 className="text-3xl md:text-5xl leading-tight mb-8 text-white font-['Work_Sans',sans-serif] font-light tracking-tight" onMouseEnter={textEnter} onMouseLeave={textLeave}>
-                                    What I Bring to the <span className="font-['Playfair_Display',serif] italic text-zinc-200">Table</span>
+                                    What I Bring to the <span className="font-serif italic text-zinc-200">Table</span>
                                 </h2>
                             </div>
 

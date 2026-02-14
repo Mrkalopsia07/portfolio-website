@@ -241,7 +241,7 @@ function AppContent() {
   const textLeave = React.useCallback(() => setCursorVariant("default"), []);
 
   return (
-    <div className="text-white min-h-screen font-sans selection:bg-purple-500 selection:text-white overflow-x-hidden md:cursor-none cursor-auto relative">
+    <div className="text-white min-h-screen font-sans overflow-x-hidden md:cursor-none cursor-auto relative">
 
       {/* 1. LOADER */}
       {showLoader && (
@@ -327,10 +327,12 @@ function AppContent() {
             </span>
           </div>
 
-          <h1 className="font-serif italic text-5xl md:text-[5.5rem] leading-none mb-5 w-full text-center tracking-[-0.02em]">Mr. Kalopsia</h1>
+          <h1 className="font-serif italic text-5xl md:text-[5.5rem] leading-none mb-5 mt-4 w-full text-center tracking-[-0.02em]">
+            Mr. Kalopsia
+          </h1>
 
           <p className="text-white/70 max-w-[450px] text-[16px] leading-relaxed mb-10 font-['Work_Sans',sans-serif] font-normal text-center mx-auto">
-            Multi-disciplinary Design Lead solving problems across <span className="font-['Playfair_Display',serif] italic font-medium text-white lining-nums">3D</span>, <span className="font-['Playfair_Display',serif] italic font-medium text-white lining-nums">Motion</span>, and <span className="font-['Playfair_Display',serif] italic font-medium text-white lining-nums">Video</span>.
+            Multi-disciplinary Design Lead solving problems across <span className="font-serif italic font-medium text-white lining-nums">3D</span>, <span className="font-serif italic font-medium text-white lining-nums">Motion</span>, and <span className="font-serif italic font-medium text-white lining-nums">Video</span>.
           </p>
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-12 mb-24">

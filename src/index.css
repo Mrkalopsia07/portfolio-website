@@ -1,5 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400&display=swap');
 
+@font-face {
+  font-family: 'Kalopsia';
+  src: url('./assets/fonts/Kalopsia-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Kalopsia';
+  src: url('./assets/fonts/Kalopsia-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+::selection {
+  background: #ffffff;
+  color: #000000;
+}
+
+::-moz-selection {
+  background: #ffffff;
+  color: #000000;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

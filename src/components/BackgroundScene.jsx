@@ -2,10 +2,20 @@ import React, { memo, useRef, useEffect, useState, useCallback } from 'react';
 import { UnicornScene } from 'unicornstudio-react';
 
 export default React.memo(function BackgroundScene({ width = "100%", height = "100%" }) {
+    const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+        // Quick fade-in to mask initialization
+        const timer = setTimeout(() => setVisible(true), 200);
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <div style={{
             width,
             height,
+            opacity: visible ? 1 : 0,
+            transition: 'opacity 1.2s ease-out'
         }}>
             <UnicornScene
                 jsonFilePath="/scene-config.json"

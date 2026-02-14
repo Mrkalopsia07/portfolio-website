@@ -8,7 +8,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['"Work Sans"', 'sans-serif'],
-        serif: ['"Playfair Display"', 'serif'],
+        serif: ['"Kalopsia"', 'serif'],
         newsreader: ['"Newsreader"', 'serif'],
         jetbrains: ['"JetBrains Mono"', 'monospace'],
         'pt-serif': ['"PT Serif"', 'serif'],
