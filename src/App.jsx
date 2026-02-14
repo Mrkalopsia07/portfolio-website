@@ -348,7 +348,7 @@ function AppContent() {
               }}
               onMouseEnter={textEnter}
               onMouseLeave={textLeave}
-              className="group relative flex items-center gap-3 font-['Work_Sans',sans-serif] text-[10px] md:text-xs font-medium uppercase tracking-widest text-white py-3 px-6 md:py-2 md:px-0 bg-white/5 md:bg-transparent rounded-full md:rounded-none border border-white/10 md:border-none"
+              className="group relative flex items-center gap-3 font-['Work_Sans',sans-serif] text-[10px] md:text-xs font-medium uppercase tracking-widest text-black md:text-white py-3 px-6 md:py-2 md:px-0 bg-white md:bg-transparent rounded-full md:rounded-none"
             >
               <div className="hidden md:flex w-8 h-8 rounded-full border border-white/20 items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]">
                 <Play
@@ -381,7 +381,7 @@ function AppContent() {
           <div className="absolute bottom-24 left-0 right-0 overflow-hidden flex justify-center">
             <BrandTicker textEnter={textEnter} textLeave={textLeave} />
           </div>
-          <div className="absolute bottom-7 left-1/2 -translate-x-1/2 flex items-center justify-center opacity-40 hover:opacity-80 transition-opacity duration-300 cursor-pointer animate-[gentleBounce_2s_ease-in-out_infinite]">
+          <div className="absolute bottom-7 left-0 right-0 flex items-center justify-center opacity-40 hover:opacity-80 transition-opacity duration-300 cursor-pointer animate-[gentleBounce_2s_ease-in-out_infinite]">
             <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 stroke-white">
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
