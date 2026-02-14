@@ -11,7 +11,7 @@ import FadeIn from './components/FadeIn';
 import Navbar from './components/Navbar';
 import GlowingStackCard from './components/GlowingStackCard';
 import { ROLES, PROJECTS, SPOTLIGHT_MOMENTS } from './constants';
-import UnicornScene from "unicornstudio-react";
+import GalaxyLoader from './components/GalaxyLoader';
 import CTASection from './components/CTASection';
 import Typewriter from './components/Typewriter';
 
@@ -45,17 +45,19 @@ function AppContent() {
   const [loading, setLoading] = useState(() => !sessionStorage.getItem("introShown"));
   const [showLoader, setShowLoader] = useState(() => !sessionStorage.getItem("introShown"));
 
-  // Safety gate for WebGL context
-  const [canMountBackground, setCanMountBackground] = useState(false);
+  // Safety gate for WebGL context - Now immediate since WebGL loader is gone
+  const [canMountBackground, setCanMountBackground] = useState(true);
 
   const [loadingProgress, setLoadingProgress] = useState(0);
   const progressRef = useRef(0); // Track float value for smooth decay
+  const loaderStartTimeRef = useRef(Date.now());
   const [fadingOut, setFadingOut] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
   const [showReel, setShowReel] = useState(false);
   const [showPlayButton, setShowPlayButton] = useState(false);
 
-  const [isGalaxyLoaded, setIsGalaxyLoaded] = useState(() => !!sessionStorage.getItem("introShown"));
+  // GalaxyLoader is code-based and immediate, so we consider it loaded by default
+  const [isGalaxyLoaded, setIsGalaxyLoaded] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
 
   const heroRef = useRef(null);
@@ -135,11 +137,6 @@ function AppContent() {
   // 3. REAL LOADER LOGIC (Two-Gear System)
   useEffect(() => {
     if (!loading || !isGalaxyLoaded) {
-      if (!loading && !canMountBackground) {
-        // Wait 200ms after loader finishes before asking GPU to render Main Scene
-        const timer = setTimeout(() => setCanMountBackground(true), 200);
-        return () => clearTimeout(timer);
-      }
       return;
     }
 
@@ -149,9 +146,11 @@ function AppContent() {
     const updateProgress = () => {
       let current = progressRef.current;
       const isComplete = document.readyState === 'complete';
+      const timeElapsed = Date.now() - loaderStartTimeRef.current;
+      const minDurationMet = timeElapsed >= 2000;
 
-      if (isComplete) {
-        // If loaded, smoothly accelerate to 100%
+      if (isComplete && minDurationMet) {
+        // If loaded and at least 2s passed, smoothly accelerate to 100%
         current += (100 - current) * 0.1;
         if (current > 99.5) current = 100;
       } else {
@@ -248,8 +247,10 @@ function AppContent() {
       {/* 1. LOADER */}
       {showLoader && (
         <div
-          className="fixed inset-0 z-[10000] bg-charcoal flex flex-col items-center justify-center px-8"
+          className="fixed inset-0 z-[10000] flex flex-col items-center justify-center px-8"
           style={{
+            backgroundColor: '#5d59b5',
+            backgroundImage: 'radial-gradient(circle at center, rgba(93, 89, 181, 1) 0%, rgba(39, 39, 115, 1) 44%, rgba(15, 15, 15, 1) 100%)',
             transform: loading ? 'translateY(0)' : 'translateY(-100%)',
             transition: 'transform 1s cubic-bezier(0.76, 0, 0.24, 1)'
           }}
@@ -259,20 +260,17 @@ function AppContent() {
             }
           }}
         >
+          {/* Dark overlay to reduce overall brightness while preserving gradient vibrancy */}
+          <div className="absolute inset-0 bg-black/50 z-0" />
+
           <div className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden pointer-events-none"
-            style={{ opacity: fadingOut ? 0 : 1, transition: 'opacity 1s ease-out', transform: 'scaleX(-1)' }}>
-            {showLoader && !isMobile && (
-              <UnicornScene
-                jsonFilePath="/galaxy.json"
-                scale={1}
-                dpi={1} // Optimized for Intel HD
-                className="w-full h-full object-cover"
-                onLoad={() => setIsGalaxyLoaded(true)}
-              />
+            style={{ transition: 'opacity 1s ease-out' }}>
+            {showLoader && (
+              <GalaxyLoader />
             )}
           </div>
 
-          <div className="relative z-10 flex flex-col items-center mt-24" style={{ opacity: fadingOut ? 0 : 1, transition: 'opacity 1s ease-out' }}>
+          <div className="relative z-10 flex flex-col items-center mt-24" style={{ transition: 'opacity 1s ease-out' }}>
             <div className="relative mb-8">
               <div className={`loader-orb ${showWelcome ? 'settled' : ''}`}>
                 <div style={{ opacity: showWelcome ? 0 : 1, transform: showWelcome ? 'scale(0.8)' : 'scale(1)', transition: 'all 0.5s ease-out', position: 'absolute' }} className={showWelcome ? 'hidden' : 'block'}>
