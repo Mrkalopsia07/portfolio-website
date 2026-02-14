@@ -352,7 +352,7 @@ function AppContent() {
             >
               <div className="hidden md:flex w-8 h-8 rounded-full border border-white/20 items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]">
                 <Play
-                  className="w-3 h-3 fill-current transform translate-x-[1px] transition-transform duration-300 group-hover:scale-110"
+                  className="w-3 h-3 fill-current transform transition-transform duration-300 group-hover:scale-110"
                 />
               </div>
               <Play
