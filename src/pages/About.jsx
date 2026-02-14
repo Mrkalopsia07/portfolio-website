@@ -10,6 +10,14 @@ import CTASection from '../components/CTASection';
 export default function About() {
     const [cursorVariant, setCursorVariant] = useState("default");
     const [lenis, setLenis] = useState(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     useEffect(() => {
         const lenisInstance = new Lenis({
@@ -38,9 +46,11 @@ export default function About() {
             <Navbar lenis={lenis} textEnter={textEnter} textLeave={textLeave} />
 
             {/* Background Scene - same as home page */}
-            <div className="fixed inset-0 z-0 pointer-events-none">
-                <BackgroundScene />
-            </div>
+            {!isMobile && (
+                <div className="fixed inset-0 z-0 pointer-events-none">
+                    <BackgroundScene />
+                </div>
+            )}
 
             <main className="relative z-20">
                 {/* Gradient Overlay - clean black fade only, no purple */}
