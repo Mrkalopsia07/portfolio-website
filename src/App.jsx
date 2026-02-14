@@ -56,10 +56,19 @@ function AppContent() {
   const [showPlayButton, setShowPlayButton] = useState(false);
 
   const [isGalaxyLoaded, setIsGalaxyLoaded] = useState(() => !!sessionStorage.getItem("introShown"));
+  const [isMobile, setIsMobile] = useState(false);
 
   const heroRef = useRef(null);
   const showreelRef = useRef(null);
   const [lenis, setLenis] = useState(null);
+
+  // 0. Detect Mobile (for WebGL blocking)
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // 1. Initialize Lenis (Smooth Scroll)
   useEffect(() => {
@@ -252,7 +261,7 @@ function AppContent() {
         >
           <div className="absolute inset-0 z-0 flex items-center justify-center overflow-hidden pointer-events-none"
             style={{ opacity: fadingOut ? 0 : 1, transition: 'opacity 1s ease-out', transform: 'scaleX(-1)' }}>
-            {showLoader && (
+            {showLoader && !isMobile && (
               <UnicornScene
                 jsonFilePath="/galaxy.json"
                 scale={1}
@@ -290,12 +299,14 @@ function AppContent() {
       <Navbar lenis={lenis} textEnter={textEnter} textLeave={textLeave} />
 
       {/* 2. BACKGROUND SCENE (Lazy + Warmup) */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <Suspense fallback={null}>
-          {/* Changed: Always render if 'canMountBackground' is true. No more scroll-based unmounting. */}
-          {canMountBackground && <BackgroundScene />}
-        </Suspense>
-      </div>
+      {!isMobile && (
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <Suspense fallback={null}>
+            {/* Changed: Always render if 'canMountBackground' is true. No more scroll-based unmounting. */}
+            {canMountBackground && <BackgroundScene />}
+          </Suspense>
+        </div>
+      )}
 
       <main className="relative z-20">
         <div className="absolute inset-0 z-0 pointer-events-none hidden md:block" style={{
