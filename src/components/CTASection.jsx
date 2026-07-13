@@ -49,17 +49,29 @@ const EmailLink = ({ email }) => {
 }
 
 // --- MAIN COMPONENT ---
-const CTASection = () => {
+const CTASection = ({ headline, description }) => {
+    const defaultHeadline = (
+        <>
+            Have an <span className="font-['Playfair_Display',serif] italic text-zinc-200">idea</span> that keeps <br className="hidden md:block" />
+            you up at night?
+        </>
+    );
+
     return (
         <section className="relative w-full py-32 px-6 flex flex-col items-center justify-center overflow-hidden">
 
             <div className="relative z-10 max-w-4xl mx-auto text-center space-y-12">
 
                 {/* Headline: Mixed Typography */}
-                <h2 className="text-4xl md:text-6xl lg:text-7xl leading-[1.1] tracking-tight text-white font-['Work_Sans',sans-serif] font-light">
-                    Have an <span className="font-['Playfair_Display',serif] italic text-zinc-200">idea</span> that keeps <br className="hidden md:block" />
-                    you up at night?
+                <h2 className="text-balance text-4xl md:text-6xl lg:text-7xl leading-[1.1] tracking-tight text-white font-['Work_Sans',sans-serif] font-light">
+                    {headline || defaultHeadline}
                 </h2>
+
+                {description && (
+                    <p className="mx-auto max-w-2xl text-pretty text-[15px] font-light leading-relaxed text-white/60">
+                        {description}
+                    </p>
+                )}
 
                 {/* The Email Interaction */}
                 <div className="pt-4">

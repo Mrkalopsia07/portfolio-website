@@ -6,6 +6,7 @@ import App from './App.jsx'
 import NotFound from './components/NotFound.jsx'
 import Resume from './pages/Resume.jsx'
 import About from './pages/About.jsx'
+import MediaKit from './pages/MediaKit.jsx'
 import WilderWorld from './pages/WilderWorld.jsx'
 
 function Main() {
@@ -15,6 +16,7 @@ function Main() {
         <Route path="/" element={<App />} />
         <Route path="/about" element={<About />} />
         <Route path="/resume" element={<Resume />} />
+        <Route path="/media-kit" element={<MediaKit />} />
         {/* Hidden URL for Wilder World - use /hidden/wilder-world to access */}
         <Route path="/hidden/wilder-world" element={<WilderWorld />} />
         {/* Public URL shows 404 */}
